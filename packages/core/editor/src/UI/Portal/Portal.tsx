@@ -18,12 +18,15 @@ const Portal = (props: Props) => {
 
     if (!editorEl) return;
 
-    const overlays = editorEl.querySelector('.yoopta-overlays');
+    const overlays = editorEl.querySelector('.yoopta-overlays') as HTMLElement;
     if (!overlays) {
       rootEl.current = document.createElement('div');
       rootEl.current.className = 'yoopta-overlays';
-      editorEl.appendChild(rootEl.current);
+    } else {
+      rootEl.current = overlays;
     }
+
+    editorEl.appendChild(rootEl.current);
 
     return () => {
       if (rootEl.current) {

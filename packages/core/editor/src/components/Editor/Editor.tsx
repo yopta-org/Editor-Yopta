@@ -14,6 +14,7 @@ import { SelectionBox } from '../SelectionBox/SelectionBox';
 import { Blocks } from '../../editor/blocks';
 import { useMultiSelection } from './selection';
 import { Paths } from '../../editor/paths';
+import { FocusManager } from '../../contexts/FocusManager/FocusManager';
 
 type Props = {
   marks?: YooptaMark<any>[];
@@ -62,6 +63,7 @@ const Editor = ({
   const handleEmptyZoneClick = (e: React.MouseEvent) => {
     const editorEl = editor.refElement;
     if (!editorEl) return;
+    if (e.target instanceof HTMLElement && e.target.closest('.yoopta-overlays')) return;
 
     const { bottom } = editorEl.getBoundingClientRect();
     const paddingBottom = parseInt(getComputedStyle(editorEl).paddingBottom, 10);
@@ -315,25 +317,27 @@ const Editor = ({
   });
 
   return (
-    <div
-      ref={(ref) => (editor.refElement = ref)}
-      className={className ? `yoopta-editor ${className}` : 'yoopta-editor'}
-      style={editorStyles}
-      onMouseDown={onMouseDown}
-      onBlur={onBlur}
-      onCopy={onCopy}
-      onCut={onCopy}
-    >
-      <RenderBlocks editor={editor} marks={marks} placeholder={placeholder} />
-      {selectionBoxRoot !== false && (
-        <SelectionBox
-          origin={selectionBox.origin}
-          coords={selectionBox.coords}
-          isOpen={selectionBox.selection && !isReadOnly}
-        />
-      )}
-      {children}
-    </div>
+    <FocusManager>
+      <div
+        ref={(ref) => (editor.refElement = ref)}
+        className={className ? `yoopta-editor ${className}` : 'yoopta-editor'}
+        style={editorStyles}
+        onMouseDown={onMouseDown}
+        onBlur={onBlur}
+        onCopy={onCopy}
+        onCut={onCopy}
+      >
+        <RenderBlocks editor={editor} marks={marks} placeholder={placeholder} />
+        {selectionBoxRoot !== false && (
+          <SelectionBox
+            origin={selectionBox.origin}
+            coords={selectionBox.coords}
+            isOpen={selectionBox.selection && !isReadOnly}
+          />
+        )}
+        {children}
+      </div>
+    </FocusManager>
   );
 };
 

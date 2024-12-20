@@ -2,6 +2,7 @@ import { HTMLAttributes, ReactElement, ReactNode } from 'react';
 import { RenderElementProps as RenderSlateElementProps, RenderLeafProps } from 'slate-react';
 import { SlateEditor, SlateElement, YooEditor, YooptaBlockBaseMeta, YooptaBlockData } from '../editor/types';
 import { EditorEventHandlers } from '../types/eventHandlers';
+import { PropEditor } from '../types/propsEditor';
 import { HOTKEYS_TYPE } from '../utils/hotkeys';
 
 export enum NodeType {
@@ -27,14 +28,19 @@ export type PluginElementOptions = {
   draggable?: boolean;
 };
 
-export type PluginElementExtendRenderProps = RenderSlateElementProps & {
+export type PluginElementExtendRenderProps<T extends SlateElement = SlateElement> = Omit<
+  RenderSlateElementProps,
+  'element'
+> & {
+  element: T;
   blockId: string;
   HTMLAttributes?: HTMLAttributes<HTMLElement>;
 };
 
-export type PluginElementRenderProps = PluginElementExtendRenderProps & {
-  extendRender?: (props: PluginElementExtendRenderProps) => JSX.Element;
-};
+export type PluginElementRenderProps<T extends SlateElement = SlateElement> =
+  PluginElementExtendRenderProps<SlateElement> & {
+    extendRender?: (props: PluginElementExtendRenderProps) => JSX.Element;
+  };
 
 export type PluginCustomEditorRenderProps = {
   blockId: string;
@@ -43,13 +49,14 @@ export type PluginCustomEditorRenderProps = {
 export type PluginDefaultProps = { nodeType?: 'block' | 'inline' | 'void' | 'inlineVoid' };
 export type PluginElementProps<T> = PluginDefaultProps & T;
 
-export type PluginElement<T> = {
+export type PluginElement<TProps> = {
   render: (props: PluginElementRenderProps) => JSX.Element;
-  props?: PluginElementProps<T>;
+  props?: PluginElementProps<TProps>;
   options?: PluginElementOptions;
   asRoot?: boolean;
   children?: string[];
   rootPlugin?: string;
+  editors?: Record<keyof TProps, PropEditor>;
 };
 
 export type PluginElementsMap<TKeys extends string = string, TProps = PluginDefaultProps> = {

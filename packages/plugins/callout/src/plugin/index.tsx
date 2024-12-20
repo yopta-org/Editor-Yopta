@@ -19,6 +19,20 @@ const Callout = new YooptaPlugin<CalloutElementMap>({
       props: {
         theme: 'default',
       },
+      editors: {
+        theme: {
+          type: 'select',
+          label: 'Theme',
+          description: 'Select the theme of the callout',
+          options: [
+            { value: 'default', label: 'Default' },
+            { value: 'info', label: 'Info' },
+            { value: 'warning', label: 'Warning' },
+            { value: 'success', label: 'Success' },
+            { value: 'danger', label: 'Danger' },
+          ],
+        },
+      },
     },
   },
   commands: CalloutCommands,

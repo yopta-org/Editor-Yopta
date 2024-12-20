@@ -9,6 +9,7 @@ import { SlateEditorComponent } from '../../plugins/SlateEditorComponent';
 import { useYooptaDragDrop } from './dnd';
 import { useYooptaReadOnly } from '../../contexts/YooptaContext/YooptaContext';
 import { FloatingBlockActions } from '../Block/FloatingBlockActions';
+import { EditElementPropsToolbar } from '../EditElementPropsToolbar/EditElementPropsToolbar';
 
 const DEFAULT_EDITOR_KEYS = [];
 
@@ -80,6 +81,7 @@ const RenderBlocks = ({ editor, marks, placeholder }: Props) => {
       <SortableContext disabled={isReadOnly} items={childrenKeys} strategy={verticalListSortingStrategy}>
         {blocks}
         <FloatingBlockActions editor={editor} dragHandleProps={dragHandleProps} />
+        <EditElementPropsToolbar />
       </SortableContext>
     </DndContext>
   );

@@ -13,7 +13,8 @@ import { IS_FOCUSED_EDITOR } from '../utils/weakMaps';
 import { deserializeHTML } from '../parsers/deserializeHTML';
 import { useEventHandlers, useSlateEditor } from './hooks';
 import { SlateElement } from '../editor/types';
-import { Paths } from '../editor/paths';
+import { useFocusedElement, useSetFocusedElement } from '../contexts/FocusManager/FocusManager';
+import { Blocks } from '../editor/blocks';
 
 type Props<TElementMap extends Record<string, SlateElement>, TOptions> = Plugin<TElementMap, TOptions> & {
   id: string;
@@ -52,6 +53,8 @@ const SlateEditorComponent = <TElementMap extends Record<string, SlateElement>, 
   let initialValue = useRef(block.value).current;
   const ELEMENTS_MAP = useMemo(() => getMappedElements(elements), [elements]);
   const MARKS_MAP = useMemo(() => getMappedMarks(marks), [marks]);
+  const focusedElement = useFocusedElement();
+  const setFocusedElement = useSetFocusedElement();
 
   const slate = useSlateEditor(id, editor, block, elements, withExtensions);
   const eventHandlers = useEventHandlers(events, editor, block, slate);
@@ -76,14 +79,42 @@ const SlateEditorComponent = <TElementMap extends Record<string, SlateElement>, 
       const ElementComponent = ELEMENTS_MAP[elementProps.element.type];
       const { attributes, ...props } = elementProps;
       attributes['data-element-type'] = props.element.type;
+      attributes['data-element-id'] = props.element.id;
 
       if (!ElementComponent) return <DefaultElement {...props} attributes={attributes} />;
+
+      if (!editor.readOnly) {
+        attributes['onClick'] = (event) => {
+          event.stopPropagation();
+
+          if (props.element?.id === focusedElement?.id) return;
+          const block = Blocks.getBlock(editor, { at: editor.path.current });
+          if (!block || !props.element) return;
+          const plugin = editor.plugins[block.type];
+          if (!plugin) return;
+
+          const editors = plugin.elements[props.element.type].editors;
+
+          setFocusedElement({
+            id: props.element.id,
+            type: props.element.type,
+            props: props.element.props,
+            blockId: id,
+            editors,
+          });
+        };
+
+        const isFocused = focusedElement?.type === props.element.type && focusedElement?.id === props.element.id;
+        if (isFocused) {
+          attributes['data-element-focused'] = isFocused;
+        }
+      }
 
       return (
         <ElementComponent {...props} attributes={attributes} blockId={id} HTMLAttributes={options?.HTMLAttributes} />
       );
     },
-    [elements],
+    [elements, focusedElement?.id, setFocusedElement, editor.path.current, editor.readOnly],
   );
 
   const renderLeaf = useCallback(

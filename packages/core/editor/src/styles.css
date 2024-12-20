@@ -107,3 +107,9 @@
 .yoopta-align-right {
   @apply yoo-editor-justify-end yoo-editor-text-right
 }
+
+
+[data-element-focused="true"] {
+  @apply yoo-editor-bg-blue-50/50 yoo-editor-relative yoo-editor-ring-2 yoo-editor-ring-blue-500/20 yoo-editor-ring-offset-2 yoo-editor-transition-all yoo-editor-duration-200;
+  border-radius: 0.1rem;
+}
