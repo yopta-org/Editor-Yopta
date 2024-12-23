@@ -1,7 +1,7 @@
 {
-  "name": "@yoopta/toolbar",
+  "name": "@yoopta/elementsEditor",
   "version": "4.9.2",
-  "description": "Toolbar tool for Yoopta Editor",
+  "description": "ElementsEditor tool for Yoopta Editor",
   "author": "Darginec05 <devopsbanda@gmail.com>",
   "homepage": "https://github.com/Darginec05/Yoopta-Editor#readme",
   "license": "MIT",
@@ -26,7 +26,7 @@
     "url": "git+https://github.com/Darginec05/Yoopta-Editor.git"
   },
   "scripts": {
-    "test": "node ./__tests__/@yoopta/paragraph.test.js",
+    "test": "node ./__tests__/@yoopta/elements-editor.test.js",
     "start": "rollup --config rollup.config.js --watch --bundleConfigAsCjs --environment NODE_ENV:development",
     "prepublishOnly": "yarn build",
     "build": "rollup --config rollup.config.js --bundleConfigAsCjs --environment NODE_ENV:production"
@@ -37,8 +37,9 @@
   "dependencies": {
     "@floating-ui/react": "^0.26.9",
     "@radix-ui/react-icons": "^1.3.0",
-    "@radix-ui/react-toolbar": "^1.0.4",
-    "lodash.throttle": "^4.1.1"
+    "@radix-ui/react-elementsEditor": "^1.0.4",
+    "lodash.throttle": "^4.1.1",
+    "lodash.debounce": "^4.1.1"
   },
   "gitHead": "054fb22aef8ca890d17616d00928eb855e77ec29"
 }

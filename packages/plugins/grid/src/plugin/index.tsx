@@ -15,7 +15,7 @@ const Grid = new YooptaPlugin<GridElementMap>({
     grid: {
       render: GridRender,
       props: {
-        columns: 2,
+        columns: 'auto-fill',
         gap: 'md',
         minItemWidth: '200px',
         padding: 'none',
@@ -74,13 +74,41 @@ const Grid = new YooptaPlugin<GridElementMap>({
         background: 'none',
         border: false,
       },
-      children: ['grid-item-header', 'grid-item-media', 'grid-item-content', 'grid-item-footer'],
+      children: ['grid-item-header', 'grid-item-image', 'grid-item-content', 'grid-item-footer'],
+      editors: {
+        colspan: {
+          type: 'number',
+          label: 'Colspan',
+        },
+        rowspan: {
+          type: 'number',
+          label: 'Rowspan',
+        },
+        variant: {
+          type: 'select',
+          label: 'Variant',
+          options: [
+            { label: 'Default', value: 'default' },
+            { label: 'Card', value: 'card' },
+            { label: 'Simple', value: 'simple' },
+          ],
+        },
+        aspectRatio: {
+          type: 'select',
+          label: 'Aspect Ratio',
+          options: [
+            { label: '1:1', value: '1:1' },
+            { label: '16:9', value: '16:9' },
+            { label: '4:3', value: '4:3' },
+            { label: '3:2', value: '3:2' },
+            { label: '2:1', value: '2:1' },
+          ],
+        },
+      },
     },
     'grid-item-header': {
       render: GridItemHeaderRender,
-      props: {
-        align: 'left',
-      },
+      props: { align: 'left' },
       children: ['grid-item-title', 'grid-item-subtitle'],
     },
     'grid-item-title': {
@@ -103,7 +131,7 @@ const Grid = new YooptaPlugin<GridElementMap>({
     'grid-item-subtitle': {
       render: GridItemSubtitleRender,
     },
-    'grid-item-media': {
+    'grid-item-image': {
       render: GridItemMediaRender,
       props: {
         position: 'top',
@@ -127,10 +155,11 @@ const Grid = new YooptaPlugin<GridElementMap>({
           options: [
             { label: 'Cover', value: 'cover' },
             { label: 'Contain', value: 'contain' },
+            { label: 'Fill', value: 'fill' },
           ],
         },
         src: {
-          type: 'url',
+          type: 'upload',
           label: 'Image URL',
         },
       },

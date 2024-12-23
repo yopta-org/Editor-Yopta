@@ -10,7 +10,7 @@ import {
   TextAlignLeftIcon,
   TextAlignCenterIcon,
 } from '@radix-ui/react-icons';
-import * as Toolbar from '@radix-ui/react-toolbar';
+import * as ElementsEditor from '@radix-ui/toolbar';
 import { useFloating, offset, flip, shift, inline, autoUpdate } from '@floating-ui/react';
 import { CSSProperties, MouseEvent, useEffect, useRef, useState } from 'react';
 import { HighlightColor } from './HighlightColor';
@@ -25,7 +25,7 @@ import {
   YooptaBlockData,
 } from '@yoopta/editor';
 import { Editor, Element, NodeEntry, Range, Transforms } from 'slate';
-import { ToolbarRenderProps } from '../types';
+import { ElementsEditorRenderProps } from '../types';
 import { buildActionMenuRenderProps } from './utils';
 
 const { Overlay, Portal } = UI;
@@ -61,7 +61,11 @@ const getLinkEntry = (slate) => {
 const DEFAULT_MODALS = { link: false, highlight: false, actionMenu: false };
 type ModalsState = typeof DEFAULT_MODALS;
 
-const DefaultToolbarRender = ({ activeBlock, editor, toggleHoldToolbar }: ToolbarRenderProps) => {
+const DefaultElementEditorContainerRender = ({
+  activeBlock,
+  editor,
+  toggleHoldElementsEditor,
+}: ElementsEditorRenderProps) => {
   const [modals, setModals] = useState<ModalsState>({ link: false, highlight: false, actionMenu: false });
   const [linkValues, setLinkValues] = useState<LinkValues>(DEFAULT_LINK_VALUE);
   const lastSelection = useRef<Range | null>(null);
@@ -123,7 +127,7 @@ const DefaultToolbarRender = ({ activeBlock, editor, toggleHoldToolbar }: Toolba
     const onKeyDown = (e: KeyboardEvent) => {
       if (HOTKEYS.isEscape(e)) {
         setModals(DEFAULT_MODALS);
-        toggleHoldToolbar?.(false);
+        toggleHoldElementsEditor?.(false);
         return;
       }
 
@@ -182,7 +186,7 @@ const DefaultToolbarRender = ({ activeBlock, editor, toggleHoldToolbar }: Toolba
 
       onChangeModal('link', false);
       setLinkValues(DEFAULT_LINK_VALUE);
-      toggleHoldToolbar?.(false);
+      toggleHoldElementsEditor?.(false);
     });
   };
 
@@ -195,7 +199,7 @@ const DefaultToolbarRender = ({ activeBlock, editor, toggleHoldToolbar }: Toolba
 
     onChangeModal('link', false);
     setLinkValues(DEFAULT_LINK_VALUE);
-    toggleHoldToolbar?.(false);
+    toggleHoldElementsEditor?.(false);
   };
 
   const onClickLinkOverlay = (e: MouseEvent) => {
@@ -204,7 +208,7 @@ const DefaultToolbarRender = ({ activeBlock, editor, toggleHoldToolbar }: Toolba
 
     if (linkToolRefs.floating.current?.contains(e.target as Node)) return;
 
-    toggleHoldToolbar?.(false);
+    toggleHoldElementsEditor?.(false);
     setModals(DEFAULT_MODALS);
   };
 
@@ -236,40 +240,40 @@ const DefaultToolbarRender = ({ activeBlock, editor, toggleHoldToolbar }: Toolba
   const actionMenuRenderProps = buildActionMenuRenderProps({ editor, onClose: onCloseActionMenu, view: 'small' });
 
   return (
-    <Toolbar.Root className="yoopta-toolbar-root">
-      <Toolbar.ToggleGroup className="yoopta-toolbar-group" type="single" aria-label="Block formatting">
-        <Toolbar.ToggleItem
-          className="yoopta-button yoopta-toolbar-item"
+    <ElementsEditor.Root className="yoopta-elements-editor-root">
+      <ElementsEditor.ToggleGroup className="yoopta-elements-editor-group" type="single" aria-label="Block formatting">
+        <ElementsEditor.ToggleItem
+          className="yoopta-button yoopta-elements-editor-item"
           value={blockLabel}
           aria-label={blockLabel}
           ref={actionMenuRefs.setReference}
           onClick={() => onChangeModal('actionMenu', !modals.actionMenu)}
           style={getModalTriggerStyle('actionMenu')}
         >
-          <span className="yoo-toolbar-mr-0">{blockLabel}</span>
+          <span className="yoo-elements-editor-mr-0">{blockLabel}</span>
           {modals.actionMenu && !!ActionMenu && (
-            <Portal id="yoo-toolbar-action-menu-list-portal">
+            <Portal id="yoo-elements-editor-action-menu-list-portal">
               <div style={actionMenuStyles} ref={actionMenuRefs.setFloating} onClick={(e) => e.stopPropagation()}>
                 <ActionMenu {...actionMenuRenderProps} />
               </div>
             </Portal>
           )}
-        </Toolbar.ToggleItem>
-      </Toolbar.ToggleGroup>
-      <Toolbar.Separator className="yoopta-toolbar-separator" />
-      <Toolbar.ToggleGroup className="yoopta-toolbar-group" type="single" aria-label="Block formatting">
-        <Toolbar.ToggleItem
-          className="yoopta-button yoopta-toolbar-item"
+        </ElementsEditor.ToggleItem>
+      </ElementsEditor.ToggleGroup>
+      <ElementsEditor.Separator className="yoopta-elements-editor-separator" />
+      <ElementsEditor.ToggleGroup className="yoopta-elements-editor-group" type="single" aria-label="Block formatting">
+        <ElementsEditor.ToggleItem
+          className="yoopta-button yoopta-elements-editor-item"
           value="LinkTool"
           aria-label="LinkTool"
           ref={linkToolRefs.setReference}
           onClick={() => {
             onChangeModal('link', !modals.link);
-            toggleHoldToolbar?.(true);
+            toggleHoldElementsEditor?.(true);
           }}
           style={getModalTriggerStyle('link')}
         >
-          <span className="yoo-toolbar-mr-0">Link</span>
+          <span className="yoo-elements-editor-mr-0">Link</span>
           {modals.link && !!LinkTool && (
             <Portal id="yoo-link-tool-portal">
               <Overlay lockScroll className="z-[100]" onClick={onClickLinkOverlay}>
@@ -279,78 +283,78 @@ const DefaultToolbarRender = ({ activeBlock, editor, toggleHoldToolbar }: Toolba
               </Overlay>
             </Portal>
           )}
-        </Toolbar.ToggleItem>
-      </Toolbar.ToggleGroup>
-      <Toolbar.Separator className="yoopta-toolbar-separator" />
-      <Toolbar.ToggleGroup className="yoopta-toolbar-group" type="multiple" aria-label="Text formatting">
+        </ElementsEditor.ToggleItem>
+      </ElementsEditor.ToggleGroup>
+      <ElementsEditor.Separator className="yoopta-elements-editor-separator" />
+      <ElementsEditor.ToggleGroup className="yoopta-elements-editor-group" type="multiple" aria-label="Text formatting">
         {editor.formats.bold && (
-          <Toolbar.ToggleItem
-            className="yoopta-button yoopta-toolbar-item-mark"
+          <ElementsEditor.ToggleItem
+            className="yoopta-button yoopta-elements-editor-item-mark"
             value="bold"
             aria-label="Bold"
             style={getItemStyle('bold')}
             onClick={() => onToggleMark('bold')}
           >
             <FontBoldIcon width={20} height={20} />
-          </Toolbar.ToggleItem>
+          </ElementsEditor.ToggleItem>
         )}
         {editor.formats.italic && (
-          <Toolbar.ToggleItem
-            className="yoopta-button yoopta-toolbar-item-mark"
+          <ElementsEditor.ToggleItem
+            className="yoopta-button yoopta-elements-editor-item-mark"
             value="italic"
             aria-label="Italic"
             style={getItemStyle('italic')}
             onClick={() => onToggleMark('italic')}
           >
             <FontItalicIcon width={20} height={20} />
-          </Toolbar.ToggleItem>
+          </ElementsEditor.ToggleItem>
         )}
         {editor.formats.underline && (
-          <Toolbar.ToggleItem
-            className="yoopta-button yoopta-toolbar-item-mark"
+          <ElementsEditor.ToggleItem
+            className="yoopta-button yoopta-elements-editor-item-mark"
             value="underline"
             aria-label="Underline"
             style={getItemStyle('underline')}
             onClick={() => onToggleMark('underline')}
           >
             <UnderlineIcon width={20} height={20} />
-          </Toolbar.ToggleItem>
+          </ElementsEditor.ToggleItem>
         )}
 
         {editor.formats.strike && (
-          <Toolbar.ToggleItem
-            className="yoopta-button yoopta-toolbar-item-mark"
+          <ElementsEditor.ToggleItem
+            className="yoopta-button yoopta-elements-editor-item-mark"
             value="strike"
             aria-label="Strike"
             style={getItemStyle('strike')}
             onClick={() => onToggleMark('strike')}
           >
             <StrikethroughIcon width={20} height={20} />
-          </Toolbar.ToggleItem>
+          </ElementsEditor.ToggleItem>
         )}
         {editor.formats.code && (
-          <Toolbar.ToggleItem
-            className="yoopta-button yoopta-toolbar-item-mark"
+          <ElementsEditor.ToggleItem
+            className="yoopta-button yoopta-elements-editor-item-mark"
             value="code"
             aria-label="Code"
             style={getItemStyle('code')}
             onClick={() => onToggleMark('code')}
           >
             <CodeIcon width={20} height={20} />
-          </Toolbar.ToggleItem>
+          </ElementsEditor.ToggleItem>
         )}
-      </Toolbar.ToggleGroup>
-      <Toolbar.Separator className="yoopta-toolbar-separator" />
-      <Toolbar.ToggleGroup className="yoopta-toolbar-group" type="multiple" aria-label="Text formatting">
-        <Toolbar.ToggleItem
-          className="yoopta-button yoopta-toolbar-item-mark"
+      </ElementsEditor.ToggleGroup>
+      <ElementsEditor.Separator className="yoopta-elements-editor-separator" />
+      <ElementsEditor.ToggleGroup className="yoopta-elements-editor-group" type="multiple" aria-label="Text formatting">
+        <ElementsEditor.ToggleItem
+          className="yoopta-button yoopta-elements-editor-item-mark"
           value="align"
           aria-label="Alignment"
           style={getItemStyle('align')}
           onClick={onToggleAlign}
         >
           <AlignIcon width={20} height={20} />
-        </Toolbar.ToggleItem>
+        </ElementsEditor.ToggleItem>
         {editor.formats.highlight && (
           <>
             {modals.highlight && (
@@ -363,22 +367,22 @@ const DefaultToolbarRender = ({ activeBlock, editor, toggleHoldToolbar }: Toolba
               />
             )}
 
-            <Toolbar.ToggleItem
-              className="yoopta-button yoopta-toolbar-item-mark"
+            <ElementsEditor.ToggleItem
+              className="yoopta-button yoopta-elements-editor-item-mark"
               value="highlight"
               aria-label="Highlight"
               style={getHighlightTriggerStyle()}
               ref={highlightPickerRefs.setReference}
               onClick={() => onChangeModal('highlight', !modals.highlight)}
             >
-              <span className="yoopta-toolbar-color-text">A</span>
+              <span className="yoopta-elements-editor-color-text">A</span>
               {modals.highlight ? <ChevronUpIcon width={10} /> : <ChevronDownIcon width={10} />}
-            </Toolbar.ToggleItem>
+            </ElementsEditor.ToggleItem>
           </>
         )}
-      </Toolbar.ToggleGroup>
-    </Toolbar.Root>
+      </ElementsEditor.ToggleGroup>
+    </ElementsEditor.Root>
   );
 };
 
-export { DefaultToolbarRender };
+export { DefaultElementEditorContainerRender };

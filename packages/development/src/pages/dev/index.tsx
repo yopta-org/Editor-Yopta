@@ -23,12 +23,12 @@ const data = {
         id: 'b49e1ec5-2d7f-4ee7-a5a4-53ec8c00c99d',
         type: 'grid',
         props: {
-          columns: 3,
+          columns: 'auto-fill',
           gap: 'md',
-          minItemWidth: '200px',
+          minItemWidth: '150px',
           padding: 'none',
           containerWidth: 'full',
-          background: 'transparent',
+          background: '#fff',
           border: false,
         },
         children: [
@@ -73,7 +73,7 @@ const data = {
               },
               {
                 id: '91ba612b-c832-420a-9d72-b460b95a3340',
-                type: 'grid-item-media',
+                type: 'grid-item-image',
                 children: [
                   {
                     text: '',
@@ -139,7 +139,7 @@ const data = {
               },
               {
                 id: '41ba612b-c832-420a-9d72-b460b95a3340',
-                type: 'grid-item-media',
+                type: 'grid-item-image',
                 children: [
                   {
                     text: '',

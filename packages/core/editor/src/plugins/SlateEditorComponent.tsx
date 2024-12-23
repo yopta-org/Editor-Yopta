@@ -13,7 +13,7 @@ import { IS_FOCUSED_EDITOR } from '../utils/weakMaps';
 import { deserializeHTML } from '../parsers/deserializeHTML';
 import { useEventHandlers, useSlateEditor } from './hooks';
 import { SlateElement } from '../editor/types';
-import { useFocusedElement, useSetFocusedElement } from '../contexts/FocusManager/FocusManager';
+import { useFocusedEntity, useSetFocusedEntity } from '../contexts/FocusManager/FocusManager';
 import { Blocks } from '../editor/blocks';
 
 type Props<TElementMap extends Record<string, SlateElement>, TOptions> = Plugin<TElementMap, TOptions> & {
@@ -53,8 +53,8 @@ const SlateEditorComponent = <TElementMap extends Record<string, SlateElement>, 
   let initialValue = useRef(block.value).current;
   const ELEMENTS_MAP = useMemo(() => getMappedElements(elements), [elements]);
   const MARKS_MAP = useMemo(() => getMappedMarks(marks), [marks]);
-  const focusedElement = useFocusedElement();
-  const setFocusedElement = useSetFocusedElement();
+  const focused = useFocusedEntity();
+  const setFocusedEntity = useSetFocusedEntity();
 
   const slate = useSlateEditor(id, editor, block, elements, withExtensions);
   const eventHandlers = useEventHandlers(events, editor, block, slate);
@@ -87,7 +87,7 @@ const SlateEditorComponent = <TElementMap extends Record<string, SlateElement>, 
         attributes['onClick'] = (event) => {
           event.stopPropagation();
 
-          if (props.element?.id === focusedElement?.id) return;
+          if (props.element?.id === focused?.element.id) return;
           const block = Blocks.getBlock(editor, { at: editor.path.current });
           if (!block || !props.element) return;
           const plugin = editor.plugins[block.type];
@@ -95,16 +95,14 @@ const SlateEditorComponent = <TElementMap extends Record<string, SlateElement>, 
 
           const editors = plugin.elements[props.element.type].editors;
 
-          setFocusedElement({
-            id: props.element.id,
-            type: props.element.type,
-            props: props.element.props,
+          setFocusedEntity({
+            element: props.element,
             blockId: id,
             editors,
           });
         };
 
-        const isFocused = focusedElement?.type === props.element.type && focusedElement?.id === props.element.id;
+        const isFocused = focused?.element.type === props.element.type && focused?.element.id === props.element.id;
         if (isFocused) {
           attributes['data-element-focused'] = isFocused;
         }
@@ -114,7 +112,7 @@ const SlateEditorComponent = <TElementMap extends Record<string, SlateElement>, 
         <ElementComponent {...props} attributes={attributes} blockId={id} HTMLAttributes={options?.HTMLAttributes} />
       );
     },
-    [elements, focusedElement?.id, setFocusedElement, editor.path.current, editor.readOnly],
+    [elements, focused?.element.id, setFocusedEntity, editor.path.current, editor.readOnly],
   );
 
   const renderLeaf = useCallback(

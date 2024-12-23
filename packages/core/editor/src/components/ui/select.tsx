@@ -1,79 +1,77 @@
-// @ts-ignore
-// @ts-nocheck
 import * as React from 'react';
 import * as SelectPrimitive from '@radix-ui/react-select';
 import { Check, ChevronDown, ChevronUp } from 'lucide-react';
-
 import cn from 'classnames';
+import { useYooptaEditor } from '../../contexts/YooptaContext/YooptaContext';
 
-const Select: any = SelectPrimitive.Root;
+const Select = SelectPrimitive.Root;
+const SelectGroup = SelectPrimitive.Group;
+const SelectValue = SelectPrimitive.Value;
 
-const SelectGroup: any = SelectPrimitive.Group;
-
-const SelectValue: any = SelectPrimitive.Value;
-
-const SelectTrigger: any = React.forwardRef<
-  React.ElementRef<any>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
+const SelectTrigger = ({
+  className,
+  children,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>) => (
   <SelectPrimitive.Trigger
-    ref={ref}
     className={cn(
-      'flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
+      'yoo-editor-flex yoo-editor-h-6 yoo-editor-w-full yoo-editor-items-center yoo-editor-justify-between yoo-editor-whitespace-nowrap yoo-editor-rounded-md yoo-editor-border yoo-editor-border-input yoo-editor-bg-transparent yoo-editor-px-2 yoo-editor-py-1 yoo-editor-text-xs yoo-editor-shadow-sm yoo-editor-ring-offset-background yoo-placeholder:yoo-editor-text-muted-foreground focus:yoo-editor-outline-none focus:yoo-editor-ring-1 focus:yoo-editor-ring-ring disabled:yoo-editor-cursor-not-allowed disabled:yoo-editor-opacity-50 [&>span]:yoo-editor-line-clamp-1',
       className,
     )}
     {...props}
   >
     {children}
     <SelectPrimitive.Icon asChild>
-      <ChevronDown className="h-4 w-4 opacity-50" />
+      <ChevronDown className="yoo-editor-h-4 yoo-editor-w-4 yoo-editor-opacity-50" />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
-));
-SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
-
-const SelectScrollUpButton: React.ForwardRefExoticComponent<
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton> & React.RefAttributes<any>
-> = React.forwardRef<React.ElementRef<any>, React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>>(
-  ({ className, ...props }, ref) => (
-    <SelectPrimitive.ScrollUpButton
-      ref={ref}
-      className={cn('flex cursor-default items-center justify-center py-1', className)}
-      {...props}
-    >
-      <ChevronUp className="h-4 w-4" />
-    </SelectPrimitive.ScrollUpButton>
-  ),
 );
-SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName;
 
-// @ts-expect-error
-const SelectScrollDownButton: React.ForwardRefExoticComponent<
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton> & React.RefAttributes<any>
-> = React.forwardRef<React.ElementRef<any>, React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>>(
-  ({ className, ...props }, ref) => (
-    <SelectPrimitive.ScrollDownButton
-      ref={ref}
-      className={cn('flex cursor-default items-center justify-center py-1', className)}
-      {...props}
-    >
-      <ChevronDown className="h-4 w-4" />
-    </SelectPrimitive.ScrollDownButton>
-  ),
+const SelectScrollUpButton = ({
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>) => (
+  <SelectPrimitive.ScrollUpButton
+    className={cn(
+      'yoo-editor-flex yoo-editor-cursor-default yoo-editor-items-center yoo-editor-justify-center yoo-editor-py-1',
+      className,
+    )}
+    {...props}
+  >
+    <ChevronUp className="h-4 w-4" />
+  </SelectPrimitive.ScrollUpButton>
 );
-SelectScrollDownButton.displayName = SelectPrimitive.ScrollDownButton.displayName;
 
-const SelectContent: React.ForwardRefExoticComponent<
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content> & React.RefAttributes<any>
-> = React.forwardRef<React.ElementRef<any>, React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>>(
-  ({ className, children, position = 'popper', ...props }, ref) => (
-    <SelectPrimitive.Portal>
+const SelectScrollDownButton = ({
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>) => (
+  <SelectPrimitive.ScrollDownButton
+    className={cn(
+      'yoo-editor-flex yoo-editor-cursor-default yoo-editor-items-center yoo-editor-justify-center yoo-editor-py-1',
+      className,
+    )}
+    {...props}
+  >
+    <ChevronDown className="yoo-editor-h-4 yoo-editor-w-4" />
+  </SelectPrimitive.ScrollDownButton>
+);
+
+const SelectContent = ({
+  className,
+  children,
+  position = 'popper',
+  ...props
+}: React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>) => {
+  const editor = useYooptaEditor();
+
+  return (
+    <SelectPrimitive.Portal container={editor.refElement}>
       <SelectPrimitive.Content
-        ref={ref}
         className={cn(
-          'relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
+          'yoo-editor-bg-white yoo-editor-relative yoo-editor-z-50 yoo-editor-max-h-96 yoo-editor-min-w-[8rem] yoo-editor-overflow-hidden yoo-editor-rounded-md yoo-editor-border yoo-editor-bg-popover yoo-editor-text-popover-foreground yoo-editor-shadow-md data-[state=open]:yoo-editor-animate-in data-[state=closed]:yoo-editor-animate-out data-[state=closed]:yoo-editor-fade-out-0 data-[state=open]:yoo-editor-fade-in-0 data-[state=closed]:yoo-editor-zoom-out-95 data-[state=open]:yoo-editor-zoom-in-95 data-[side=bottom]:yoo-editor-slide-in-from-top-2 data-[side=left]:yoo-editor-slide-in-from-right-2 data-[side=right]:yoo-editor-slide-in-from-left-2 data-[side=top]:yoo-editor-slide-in-from-bottom-2',
           position === 'popper' &&
-            'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
+            'data-[side=bottom]:yoo-editor-translate-y-1 data-[side=left]:yoo-editor--translate-x-1 data-[side=right]:yoo-editor-translate-x-1 data-[side=top]:yoo-editor--translate-y-1',
           className,
         )}
         position={position}
@@ -82,9 +80,9 @@ const SelectContent: React.ForwardRefExoticComponent<
         <SelectScrollUpButton />
         <SelectPrimitive.Viewport
           className={cn(
-            'p-1',
+            'yoo-editor-p-1',
             position === 'popper' &&
-              'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]',
+              'yoo-editor-h-[var(--radix-select-trigger-height)] yoo-editor-w-full yoo-editor-min-w-[var(--radix-select-trigger-width)]',
           )}
         >
           {children}
@@ -92,50 +90,39 @@ const SelectContent: React.ForwardRefExoticComponent<
         <SelectScrollDownButton />
       </SelectPrimitive.Content>
     </SelectPrimitive.Portal>
-  ),
-);
-SelectContent.displayName = SelectPrimitive.Content.displayName;
+  );
+};
 
-const SelectLabel: React.ForwardRefExoticComponent<
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label> & React.RefAttributes<any>
-> = React.forwardRef<React.ElementRef<any>, React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>>(
-  ({ className, ...props }, ref) => (
-    <SelectPrimitive.Label ref={ref} className={cn('px-2 py-1.5 text-sm font-semibold', className)} {...props} />
-  ),
+const SelectLabel = ({ className, ...props }: React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>) => (
+  <SelectPrimitive.Label
+    className={cn('yoo-editor-px-2 yoo-editor-py-1.5 yoo-editor-text-sm yoo-editor-font-semibold', className)}
+    {...props}
+  />
 );
-SelectLabel.displayName = SelectPrimitive.Label.displayName;
 
-const SelectItem: React.ForwardRefExoticComponent<
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item> & React.RefAttributes<any>
-> = React.forwardRef<React.ElementRef<any>, React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>>(
-  ({ className, children, ...props }, ref) => (
-    <SelectPrimitive.Item
-      ref={ref}
-      className={cn(
-        'relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-        className,
-      )}
-      {...props}
-    >
-      <span className="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">
-        <SelectPrimitive.ItemIndicator>
-          <Check className="h-4 w-4" />
-        </SelectPrimitive.ItemIndicator>
-      </span>
-      <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
-    </SelectPrimitive.Item>
-  ),
+const SelectItem = ({ className, children, ...props }: React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>) => (
+  <SelectPrimitive.Item
+    className={cn(
+      'yoo-editor-relative yoo-editor-flex yoo-editor-w-full yoo-editor-cursor-default yoo-editor-select-none yoo-editor-items-center yoo-editor-rounded-sm yoo-editor-py-1.5 yoo-editor-pl-2 yoo-editor-pr-8 yoo-editor-text-sm yoo-editor-outline-none focus:yoo-editor-bg-accent focus:yoo-editor-text-accent-foreground data-[disabled]:yoo-editor-pointer-events-none data-[disabled]:yoo-editor-opacity-50',
+      className,
+    )}
+    {...props}
+  >
+    <span className="yoo-editor-absolute yoo-editor-right-2 yoo-editor-flex yoo-editor-h-3.5 yoo-editor-w-3.5 yoo-editor-items-center yoo-editor-justify-center">
+      <SelectPrimitive.ItemIndicator>
+        <Check className="yoo-editor-h-4 yoo-editor-w-4" />
+      </SelectPrimitive.ItemIndicator>
+    </span>
+    <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+  </SelectPrimitive.Item>
 );
-SelectItem.displayName = SelectPrimitive.Item.displayName;
 
-const SelectSeparator: React.ForwardRefExoticComponent<
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator> & React.RefAttributes<any>
-> = React.forwardRef<React.ElementRef<any>, React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>>(
-  ({ className, ...props }, ref) => (
-    <SelectPrimitive.Separator ref={ref} className={cn('-mx-1 my-1 h-px bg-muted', className)} {...props} />
-  ),
+const SelectSeparator = ({ className, ...props }: React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>) => (
+  <SelectPrimitive.Separator
+    className={cn('yoo-editor--mx-1 yoo-editor-my-1 yoo-editor-h-px yoo-editor-bg-muted', className)}
+    {...props}
+  />
 );
-SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 
 export {
   Select,

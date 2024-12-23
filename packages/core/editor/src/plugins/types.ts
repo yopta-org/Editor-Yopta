@@ -56,7 +56,7 @@ export type PluginElement<TProps> = {
   asRoot?: boolean;
   children?: string[];
   rootPlugin?: string;
-  editors?: Record<keyof TProps, PropEditor>;
+  editors?: Record<string, PropEditor>;
 };
 
 export type PluginElementsMap<TKeys extends string = string, TProps = PluginDefaultProps> = {

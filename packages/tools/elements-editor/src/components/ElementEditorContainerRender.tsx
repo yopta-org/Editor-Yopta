@@ -1,21 +1,21 @@
 import { useEffect, useState } from 'react';
-import { DefaultToolbarRender } from './DefaultToolbarRender';
 import { useFloating, offset, flip, shift, inline, autoUpdate, useTransitionStyles } from '@floating-ui/react';
 import throttle from 'lodash.throttle';
 import { useYooptaEditor, UI } from '@yoopta/editor';
-import { ToolbarToolProps } from '../types';
+import { ElementsEditorToolProps } from '../types';
+import { DefaultElementEditorContainerRender } from './DefaultElementEditorContainerRender';
 
 const { Portal } = UI;
 
-const Toolbar = ({ render }: ToolbarToolProps) => {
+const ElementEditorContainerRender = ({ render }: ElementsEditorToolProps) => {
   const editor = useYooptaEditor();
-  const [isToolbarOpen, setIsToolbarOpen] = useState(false);
+  const [isElementsEditorOpen, setIsElementsEditorOpen] = useState(false);
   const [hold, setHold] = useState(false);
 
   const { refs, floatingStyles, context } = useFloating({
     placement: 'top',
-    open: isToolbarOpen,
-    onOpenChange: setIsToolbarOpen,
+    open: isElementsEditorOpen,
+    onOpenChange: setIsElementsEditorOpen,
     middleware: [inline(), flip(), shift(), offset(10)],
     whileElementsMounted: autoUpdate,
   });
@@ -30,7 +30,7 @@ const Toolbar = ({ render }: ToolbarToolProps) => {
     const domSelection = window.getSelection();
 
     if (!domSelection || domSelection?.isCollapsed || domSelection?.anchorOffset === domSelection?.focusOffset) {
-      return setIsToolbarOpen(false);
+      return setIsElementsEditorOpen(false);
     }
 
     const domRange = domSelection.getRangeAt(0);
@@ -49,7 +49,7 @@ const Toolbar = ({ render }: ToolbarToolProps) => {
     }
 
     if (!editor.refElement?.contains(ancestor) || isInsideCustomEditor) {
-      return setIsToolbarOpen(false);
+      return setIsElementsEditorOpen(false);
     }
 
     if (domRange && text.length > 0) {
@@ -58,7 +58,7 @@ const Toolbar = ({ render }: ToolbarToolProps) => {
         getClientRects: () => domRange.getClientRects(),
       });
 
-      setIsToolbarOpen(true);
+      setIsElementsEditorOpen(true);
     }
   };
 
@@ -74,15 +74,24 @@ const Toolbar = ({ render }: ToolbarToolProps) => {
   const activeBlock = Object.values(editor.blocks).find((block) => block.isActive());
   const style = { ...floatingStyles, ...transitionStyles };
 
-  const toggleHoldToolbar = (hold: boolean) => setHold(hold);
+  const toggleHoldElementsEditor = (hold: boolean) => setHold(hold);
 
   if (render) {
     const RenderComponent = render;
 
     return (
-      <Portal id="yoo-toolbar-portal">
-        <div style={style} ref={refs.setFloating} className="yoo-toolbar-z-[99]" onClick={(e) => e.stopPropagation()}>
-          <RenderComponent activeBlock={activeBlock} editor={editor} toggleHoldToolbar={toggleHoldToolbar} />
+      <Portal id="yoo-elements-editor-portal">
+        <div
+          style={style}
+          ref={refs.setFloating}
+          className="yoo-elements-editor-z-[99]"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <RenderComponent
+            activeBlock={activeBlock}
+            editor={editor}
+            toggleHoldElementsEditor={toggleHoldElementsEditor}
+          />
         </div>
       </Portal>
     );
@@ -90,12 +99,21 @@ const Toolbar = ({ render }: ToolbarToolProps) => {
 
   return (
     // [TODO] - take care about SSR
-    <Portal id="yoo-toolbar-portal">
-      <div style={style} ref={refs.setFloating} className="yoo-toolbar-z-[99]" onClick={(e) => e.stopPropagation()}>
-        <DefaultToolbarRender activeBlock={activeBlock} editor={editor} toggleHoldToolbar={toggleHoldToolbar} />
+    <Portal id="yoo-elements-editor-portal">
+      <div
+        style={style}
+        ref={refs.setFloating}
+        className="yoo-elements-editor-z-[99]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <DefaultElementEditorContainerRender
+          activeBlock={activeBlock}
+          editor={editor}
+          toggleHoldElementsEditor={toggleHoldElementsEditor}
+        />
       </div>
     </Portal>
   );
 };
 
-export { Toolbar };
+export { ElementEditorContainerRender };

@@ -7,7 +7,7 @@ export const GRID_ELEMENTS = {
   GridItemHeader: 'grid-item-header',
   GridItemTitle: 'grid-item-title',
   GridItemSubtitle: 'grid-item-subtitle',
-  GridItemMedia: 'grid-item-media',
+  GridItemMedia: 'grid-item-image',
   GridItemContent: 'grid-item-content',
   GridItemFooter: 'grid-item-footer',
 } as const;

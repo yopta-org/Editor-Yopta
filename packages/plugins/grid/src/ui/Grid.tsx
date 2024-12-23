@@ -1,6 +1,5 @@
 import cn from 'classnames';
 import { PluginElementRenderProps } from '@yoopta/editor';
-import { PlusIcon } from 'lucide-react';
 import { GridElement, GridElementProps } from '../types';
 
 const PADDING_STYLES = {
@@ -34,7 +33,7 @@ const GridRender = ({ element, attributes, blockId, children }: PluginElementRen
     border,
   } = element.props as GridElementProps;
 
-  console.log('GridRender columns:', element.props);
+  console.log('GridRender columns:', columns);
 
   const gridColumns =
     typeof columns === 'number'
@@ -62,13 +61,13 @@ const GridRender = ({ element, attributes, blockId, children }: PluginElementRen
       }}
     >
       {children}
-      <button
+      {/* <button
         type="button"
         className="flex items-center justify-center w-full h-full p-4 text-gray-400 bg-gray-100 rounded-lg"
         onClick={() => {}}
       >
         <PlusIcon size={24} />
-      </button>
+      </button> */}
     </div>
   );
 };

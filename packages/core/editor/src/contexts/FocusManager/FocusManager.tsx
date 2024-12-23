@@ -4,83 +4,69 @@ import { SlateElement } from '../../editor/types';
 import { PropEditor } from '../../types/propsEditor';
 import { useYooptaEditor } from '../YooptaContext/YooptaContext';
 
-type FocusedElement =
-  | (Pick<SlateElement, 'id' | 'type' | 'props'> & {
-      blockId: string;
-      editors: Record<string, PropEditor> | undefined;
-    })
-  | null;
+type FocusedEntity = {
+  element: SlateElement;
+  blockId: string;
+  editors: Record<string, PropEditor> | undefined;
+} | null;
 
 type FocusContextValue = {
-  focusedElement: FocusedElement;
-  onFocus: (element: FocusedElement) => void;
+  focused: FocusedEntity;
+  onFocus: (focusEntity: FocusedEntity) => void;
 };
 
 const FocusContext = createContext<FocusContextValue>({
-  focusedElement: null,
+  focused: null,
   onFocus: () => {},
 });
 
 export const FocusManager: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [focusedElement, setFocusedElement] = useState<FocusedElement>(null);
+  const [focused, setFocusedEntity] = useState<FocusedEntity>(null);
   const editor = useYooptaEditor();
 
-  const onFocus = (element: FocusedElement) => {
-    if (element?.id === focusedElement?.id) return;
-    const block = Blocks.getBlock(editor, { at: editor.path.current });
-    if (!block || !element) return;
+  const onFocus = (entity: FocusedEntity) => {
+    console.log('onFocus', entity);
+    if (entity?.element.id === focused?.element.id) return;
 
-    console.log('setFocusedElement block', block);
+    const block = Blocks.getBlock(editor, { at: editor.path.current });
+    if (!block || !entity?.element) return;
 
     const plugin = editor.plugins[block.type];
-    console.log('setFocusedElement plugin', plugin);
+    if (!plugin || !entity?.element) return;
 
-    if (!plugin) return;
-
-    const editors = plugin.elements[element.type].editors;
-
-    console.log('setFocusedElement editors', editors);
-    setFocusedElement({ ...element, blockId: block.id, editors });
+    const editors = plugin.elements[entity.element.type].editors;
+    setFocusedEntity({ element: entity.element, blockId: block.id, editors });
   };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        setFocusedElement(null);
+        setFocusedEntity(null);
       }
     };
 
-    const handleSelectionChange = () => {
-      const block = Blocks.getBlock(editor, { at: editor.path.current });
-      if (!block) return;
-      const slate = Blocks.getBlockSlate(editor, { id: block.id });
-      if (!slate) return;
-    };
-
     editor.refElement?.addEventListener('keydown', handleKeyDown);
-    window.document.addEventListener('selectionchange', handleSelectionChange);
 
     return () => {
       editor.refElement?.removeEventListener('keydown', handleKeyDown);
-      window.document.removeEventListener('selectionchange', handleSelectionChange);
     };
   }, [editor.refElement, editor.path.current]);
 
-  return <FocusContext.Provider value={{ focusedElement, onFocus }}>{children}</FocusContext.Provider>;
+  return <FocusContext.Provider value={{ focused, onFocus }}>{children}</FocusContext.Provider>;
 };
 
-export const useFocusedElement = () => {
+export const useFocusedEntity = () => {
   const context = useContext(FocusContext);
   if (!context) {
-    throw new Error('useFocusedElement must be used within FocusManager');
+    throw new Error('useFocusedEntity must be used within FocusManager');
   }
-  return context.focusedElement;
+  return context.focused;
 };
 
-export const useSetFocusedElement = () => {
+export const useSetFocusedEntity = () => {
   const context = useContext(FocusContext);
   if (!context) {
-    throw new Error('useSetFocusedElement must be used within FocusManager');
+    throw new Error('useSetFocusedEntity must be used within FocusManager');
   }
   return context.onFocus;
 };

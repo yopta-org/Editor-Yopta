@@ -41,10 +41,17 @@ export type SizePropEditor = BasePropEditor & {
   units: ('px' | 'rem' | '%')[];
 };
 
+export type UploadPropEditor = BasePropEditor & {
+  type: 'upload';
+  accept?: string;
+  maxSize?: number;
+};
+
 export type PropEditor =
   | SelectPropEditor
   | ColorPropEditor
   | NumberPropEditor
   | TogglePropEditor
   | TextPropEditor
-  | SizePropEditor;
+  | SizePropEditor
+  | UploadPropEditor;

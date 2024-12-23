@@ -1,6 +1,7 @@
 import cn from 'classnames';
 import { PluginElementRenderProps } from '@yoopta/editor';
 import { GridItemElement, GridItemElementProps } from '../types';
+import { Card } from '../components/card';
 
 const VARIANT_STYLES = {
   default: 'bg-white shadow-sm',
@@ -30,6 +31,8 @@ const GridItemRender = ({ element, attributes, children }: PluginElementRenderPr
     border = false,
   } = element.props as GridItemElementProps;
 
+  // console.log('GridItemRender variant', element.props.variant);
+
   return (
     <div
       {...attributes}
@@ -47,8 +50,7 @@ const GridItemRender = ({ element, attributes, children }: PluginElementRenderPr
         },
       )}
     >
-      {/* Grid Layout для внутреннего содержимого */}
-      <div className="grid h-full grid-rows-[auto_1fr_auto]">{children}</div>
+      <Card className="grid h-full grid-rows-[auto_1fr_auto]">{children}</Card>
     </div>
   );
 };

@@ -2,25 +2,20 @@ import * as React from 'react';
 import * as SwitchPrimitives from '@radix-ui/react-switch';
 import cn from 'classnames';
 
-const Switch = React.forwardRef<
-  React.ElementRef<typeof SwitchPrimitives.Root>,
-  React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root>
->(({ className, ...props }, ref) => (
+const Switch = ({ className, ...props }: React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root>) => (
   <SwitchPrimitives.Root
     className={cn(
-      'peer inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input',
+      'yoo-editor-peer yoo-editor-inline-flex yoo-editor-h-5 yoo-editor-w-9 yoo-editor-shrink-0 yoo-editor-cursor-pointer yoo-editor-items-center yoo-editor-rounded-full yoo-editor-border-2 yoo-editor-border-transparent yoo-editor-shadow-sm yoo-editor-transition-colors focus-visible:yoo-editor-outline-none focus-visible:yoo-editor-ring-2 focus-visible:yoo-editor-ring-ring focus-visible:yoo-editor-ring-offset-2 focus-visible:yoo-editor-ring-offset-background disabled:yoo-editor-cursor-not-allowed disabled:yoo-editor-opacity-50 data-[state=checked]:yoo-editor-bg-primary data-[state=unchecked]:yoo-editor-bg-input',
       className,
     )}
     {...props}
-    ref={ref}
   >
     <SwitchPrimitives.Thumb
       className={cn(
-        'pointer-events-none block h-4 w-4 rounded-full bg-background shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-4 data-[state=unchecked]:translate-x-0',
+        'yoo-editor-pointer-events-none yoo-editor-block yoo-editor-h-4 yoo-editor-w-4 yoo-editor-rounded-full yoo-editor-bg-background yoo-editor-shadow-lg yoo-editor-ring-0 yoo-editor-transition-transform data-[state=checked]:yoo-editor-translate-x-4 data-[state=unchecked]:yoo-editor-translate-x-0',
       )}
     />
   </SwitchPrimitives.Root>
-));
-Switch.displayName = SwitchPrimitives.Root.displayName;
+);
 
 export { Switch };

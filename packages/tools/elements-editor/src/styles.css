@@ -1,0 +1,26 @@
+@tailwind utilities;
+
+.yoopta-elements-editor-root {
+  /* @apply yoo-elements-editor-bg-[#FFFFFF] yoo-elements-editor-flex yoo-elements-editor-z-50 yoo-elements-editor-p-[5px] yoo-elements-editor-rounded-md yoo-elements-editor-shadow-md yoo-elements-editor-border-[1px] yoo-elements-editor-border-solid yoo-elements-editor-border-[#e3e3e3] yoo-elements-editor-shadow-y-[4px] */
+  @apply yoo-elements-editor-bg-[#FFFFFF] yoo-elements-editor-flex yoo-elements-editor-z-50 yoo-elements-editor-p-[5px] yoo-elements-editor-rounded-md yoo-elements-editor-shadow-md yoo-elements-editor-border-[1px] yoo-elements-editor-border-solid yoo-elements-editor-border-[#e3e3e3]
+}
+
+.yoopta-elements-editor-group {
+  @apply yoo-elements-editor-flex yoo-elements-editor-items-center
+}
+
+.yoopta-elements-editor-item {
+  @apply yoo-elements-editor-h-full yoo-elements-editor-text-[16px] yoo-elements-editor-px-[10px] yoo-elements-editor-py-0 hover:yoo-elements-editor-bg-[#f4f4f5] yoo-elements-editor-rounded-md
+}
+
+.yoopta-elements-editor-item-mark {
+  @apply yoo-elements-editor-ml-[2px] yoo-elements-editor-h-[32px] hover:yoo-elements-editor-bg-[#f4f4f5] yoo-elements-editor-rounded-md yoo-elements-editor-cursor-pointer yoo-elements-editor-inline-flex yoo-elements-editor-px-[5px] yoo-elements-editor-py-0 yoo-elements-editor-items-center yoo-elements-editor-justify-center
+}
+
+.yoopta-elements-editor-separator {
+  @apply yoo-elements-editor-bg-[#dbd8e0] yoo-elements-editor-mx-[6px] yoo-elements-editor-my-0 yoo-elements-editor-w-[1px]
+}
+
+.yoopta-elements-editor-color-text {
+  @apply yoo-elements-editor-text-lg yoo-elements-editor-px-1 yoo-elements-editor-font-serif
+}

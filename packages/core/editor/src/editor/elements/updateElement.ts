@@ -38,6 +38,10 @@ export function updateElement<TElementKeys extends string, TElementProps>(
     const elementToUpdate = elementEntry?.[0];
     const elementToUpdatePath = elementEntry?.[1];
 
+    console.log('elementToUpdate:', elementToUpdate);
+    console.log('elementToUpdatePath:', elementToUpdatePath);
+    console.log('element:', element);
+
     const props = elementToUpdate?.props || {};
     const updatedElement = { props: { ...props, ...element.props } };
 

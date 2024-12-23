@@ -4,7 +4,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import { YooptaBlockData } from '../../editor/types';
 import { useBlockStyles } from './hooks';
 import { Paths } from '../../editor/paths';
-import { useSetFocusedElement } from '../../contexts/FocusManager/FocusManager';
+import { useSetFocusedEntity } from '../../contexts/FocusManager/FocusManager';
 
 type BlockProps = {
   children: React.ReactNode;
@@ -15,7 +15,7 @@ type BlockProps = {
 
 const Block = memo(({ children, block, blockId, onActiveDragHandleChange }: BlockProps) => {
   const editor = useYooptaEditor();
-  const setFocusElement = useSetFocusedElement();
+  const setFocusElement = useSetFocusedEntity();
 
   const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition, isOver, isDragging } =
     useSortable({ id: blockId, disabled: editor.readOnly });
