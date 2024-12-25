@@ -91,6 +91,34 @@ const Image = new YooptaPlugin<ImageElementMap, ImagePluginOptions>({
       serialize: (element, text) => {
         return `![${element.props.alt}](${element.props.src})\n`;
       },
+      deserialize: {
+        parse: (markdown) => {
+          const imageRegex = /!\[(.*?)\]\((.*?)\)/;
+          const match = imageRegex.exec(markdown);
+          if (match) {
+            const [_, alt, src] = match;
+            const sizes = { width: 650, height: 500 };
+
+            const props: SlateElement<'image', ImageElementProps>['props'] = {
+              nodeType: 'void',
+              src,
+              alt,
+              srcSet: '',
+              fit: 'contain',
+              sizes,
+            };
+
+            const node: SlateElement = {
+              id: generateId(),
+              type: 'image',
+              children: [{ text: '' }],
+              props,
+            };
+
+            return node;
+          }
+        },
+      },
     },
     email: {
       serialize: (element, text, blockMeta) => {
