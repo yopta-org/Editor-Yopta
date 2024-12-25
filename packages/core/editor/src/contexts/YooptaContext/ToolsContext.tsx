@@ -11,6 +11,7 @@ export type Tools = {
   ActionMenu: ToolProps;
   Toolbar: ToolProps;
   LinkTool: ToolProps;
+  ElementPropsEditor: ToolProps;
   [key: string]: ToolProps;
 };
 
@@ -39,7 +40,7 @@ export const ToolsProvider = ({ children, tools }: Props) => {
     }, {});
   }, [tools]);
 
-  const toolsRender = useMemo(() => {
+  const toolsComponent = useMemo(() => {
     if (!tools || isReadOnly) return null;
 
     return Object.keys(tools).map((toolname) => {
@@ -55,7 +56,7 @@ export const ToolsProvider = ({ children, tools }: Props) => {
   return (
     <ToolsContext.Provider value={contextValue}>
       <>
-        {toolsRender}
+        {toolsComponent}
         {children}
       </>
     </ToolsContext.Provider>

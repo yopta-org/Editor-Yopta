@@ -1,13 +1,12 @@
-import { Grid } from './plugin';
+import { GridCard } from './plugin';
 import {
   GridElement,
-  GridElementProps,
   GridItemContentElement,
   GridItemElement,
   GridItemFooterElement,
   GridItemHeaderElement,
   GridItemMediaElement,
-  GridItemSubtitleElement,
+  GridItemDescriptionElement,
   GridItemTitleElement,
 } from './types';
 import './styles.css';
@@ -19,20 +18,20 @@ declare module 'slate' {
       | GridItemElement
       | GridItemHeaderElement
       | GridItemTitleElement
-      | GridItemSubtitleElement
+      | GridItemDescriptionElement
       | GridItemMediaElement
       | GridItemContentElement
       | GridItemFooterElement;
   }
 }
 
-export default Grid;
+export default GridCard;
 export {
   GridElement,
   GridItemElement,
   GridItemHeaderElement,
   GridItemTitleElement,
-  GridItemSubtitleElement,
+  GridItemDescriptionElement,
   GridItemMediaElement,
   GridItemContentElement,
   GridItemFooterElement,

@@ -41,8 +41,8 @@ export {
   YooptaEventsMap,
   YooptaEditorEventKeys,
 } from './editor/types';
-export { buildBlockData, buildBlockElement } from './components/Editor/utils';
-export { buildBlockElementsStructure } from './utils/blockElements';
+export { buildBlockData } from './components/Editor/utils';
+export { buildBlockElementsStructure } from './editor/elements/utils';
 export { buildSlateEditor } from './utils/buildSlate';
 
 export {
@@ -56,6 +56,7 @@ export {
 } from './plugins/types';
 
 export { Elements } from './editor/elements';
+export { buildBlockElement } from './editor/elements/utils';
 export { Blocks } from './editor/blocks';
 export { Paths } from './editor/paths';
 export {
@@ -73,6 +74,9 @@ export {
   YooptaOperation,
 } from './editor/core/applyTransforms';
 
-import './styles.css';
+export type { ElementPropEditor, ElementPropEditorType } from './types/propsEditor';
 export default YooptaEditor;
 export { YooptaEditorProps, YooptaOnChangeOptions };
+export { useFocusedElement, useSetFocusedElement } from './contexts/ElementFocusManager/ElementFocusManager';
+
+import './styles.css';

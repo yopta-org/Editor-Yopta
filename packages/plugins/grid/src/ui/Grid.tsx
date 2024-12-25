@@ -1,28 +1,30 @@
 import cn from 'classnames';
-import { PluginElementRenderProps } from '@yoopta/editor';
+import { Elements, PluginElementRenderProps, useYooptaEditor } from '@yoopta/editor';
 import { GridElement, GridElementProps } from '../types';
+import { PlusIcon } from 'lucide-react';
 
 const PADDING_STYLES = {
-  none: 'p-0',
-  sm: 'p-4',
-  md: 'p-6',
-  lg: 'p-8',
+  none: 'yoo-grid-p-0',
+  sm: 'yoo-grid-p-4',
+  md: 'yoo-grid-p-6',
+  lg: 'yoo-grid-p-8',
 } as const;
 
 const GAP_STYLES = {
-  none: 'gap-0',
-  sm: 'gap-4',
-  md: 'gap-6',
-  lg: 'gap-8',
+  none: 'yoo-grid-gap-0',
+  sm: 'yoo-grid-gap-4',
+  md: 'yoo-grid-gap-6',
+  lg: 'yoo-grid-gap-8',
 } as const;
 
 const CONTAINER_WIDTH_STYLES = {
-  full: 'w-full',
-  container: 'max-w-7xl mx-auto',
-  narrow: 'max-w-5xl mx-auto',
+  full: 'yoo-grid-w-full',
+  container: 'yoo-grid-max-w-7xl yoo-grid-mx-auto',
+  narrow: 'yoo-grid-max-w-5xl yoo-grid-mx-auto',
 } as const;
 
 const GridRender = ({ element, attributes, blockId, children }: PluginElementRenderProps<GridElement>) => {
+  const editor = useYooptaEditor();
   const {
     columns = 2,
     gap = 'md',
@@ -33,18 +35,16 @@ const GridRender = ({ element, attributes, blockId, children }: PluginElementRen
     border,
   } = element.props as GridElementProps;
 
-  console.log('GridRender columns:', columns);
-
   const gridColumns =
     typeof columns === 'number'
-      ? `grid-cols-${columns}`
-      : `grid-template-columns: repeat(${columns}, minmax(${minItemWidth}, 1fr))`;
+      ? `yoo-grid-grid-cols-${columns}`
+      : `yoo-grid-grid-template-columns: repeat(${columns}, minmax(${minItemWidth}, 1fr))`;
 
   return (
     <div
       {...attributes}
       className={cn(
-        'grid mt-2 w-full',
+        'yoo-grid-grid yoo-grid-mt-2 yoo-grid-w-full yoo-grid-overflow-hidden yoo-grid-transition-all yoo-grid-hover:yoo-grid-shadow-lg',
         GAP_STYLES[gap],
         PADDING_STYLES[padding],
         CONTAINER_WIDTH_STYLES[containerWidth],
@@ -61,15 +61,41 @@ const GridRender = ({ element, attributes, blockId, children }: PluginElementRen
       }}
     >
       {children}
-      {/* <button
+      <button
         type="button"
-        className="flex items-center justify-center w-full h-full p-4 text-gray-400 bg-gray-100 rounded-lg"
-        onClick={() => {}}
+        className="yoo-grid-flex yoo-grid-items-center yoo-grid-justify-center yoo-grid-w-full yoo-grid-h-full yoo-grid-p-2 yoo-grid-text-gray-400 yoo-grid-bg-gray-100 yoo-grid-rounded-lg yoo-grid-border yoo-grid-border-gray-300 yoo-grid-border-dashed yoo-grid-transition-all yoo-grid-hover:yoo-grid-bg-[#e5e7eb] yoo-grid-hover:yoo-grid-text-gray-500"
+        onClick={(e) => {
+          e.stopPropagation();
+          Elements.insertElement(editor, blockId, {
+            type: 'grid-item',
+            path: 'next',
+          });
+        }}
       >
         <PlusIcon size={24} />
-      </button> */}
+      </button>
     </div>
   );
 };
 
 export { GridRender };
+
+// grid
+//   grid-item
+//     grid-item-header
+//       grid-item-image
+//     grid-item-content
+//       grid-item-title
+//       grid-item-description
+//     grid-item-footer
+//   grid-item
+//     grid-item-header
+//       grid-item-image
+//     grid-item-content
+//       grid-item-title
+//       grid-item-description
+//     grid-item-footer
+//     grid-item
+//       grid-item-header
+//       grid-item-content
+//       grid-item-footer

@@ -1,22 +1,23 @@
 import { PluginElementRenderProps } from '@yoopta/editor';
 import { GridItemContentElement, GridItemContentElementProps } from '../types';
-import cn from 'classnames';
+import { CardContent } from '../components/card';
+import { cn } from '../lib/utils';
 
 const GridItemContentRender = ({ element, attributes, children }: PluginElementRenderProps<GridItemContentElement>) => {
   const { padding = 'md' } = element.props as GridItemContentElementProps;
 
   return (
-    <div
+    <CardContent
       {...attributes}
-      className={cn('flex-1', {
-        'p-0': padding === 'none',
-        'p-3': padding === 'sm',
-        'p-4': padding === 'md',
-        'p-6': padding === 'lg',
+      className={cn('yoo-grid-flex-1', {
+        'yoo-grid-p-0': padding === 'none',
+        'yoo-grid-p-3': padding === 'sm',
+        'yoo-grid-p-4': padding === 'md',
+        'yoo-grid-p-6': padding === 'lg',
       })}
     >
       {children}
-    </div>
+    </CardContent>
   );
 };
 

@@ -1,5 +1,5 @@
 {
-  "name": "@yoopta/elementsEditor",
+  "name": "@yoopta/element-props-editor",
   "version": "4.9.2",
   "description": "ElementsEditor tool for Yoopta Editor",
   "author": "Darginec05 <devopsbanda@gmail.com>",
@@ -35,11 +35,18 @@
     "url": "https://github.com/Darginec05/Yoopta-Editor/issues"
   },
   "dependencies": {
-    "@floating-ui/react": "^0.26.9",
+    "@floating-ui/react": "^0.27.2",
+    "@radix-ui/react-dialog": "^1.1.4",
     "@radix-ui/react-icons": "^1.3.0",
-    "@radix-ui/react-elementsEditor": "^1.0.4",
+    "@radix-ui/react-label": "^2.1.1",
+    "@radix-ui/react-popover": "^1.1.4",
+    "@radix-ui/react-select": "^2.1.4",
+    "@radix-ui/react-switch": "^1.1.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "lodash.throttle": "^4.1.1",
-    "lodash.debounce": "^4.1.1"
-  },
-  "gitHead": "054fb22aef8ca890d17616d00928eb855e77ec29"
+    "lucide-react": "^0.469.0",
+    "tailwind-merge": "^2.6.0",
+    "tailwindcss-animate": "^1.0.7"
+  }
 }

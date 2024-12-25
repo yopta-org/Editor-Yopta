@@ -7,6 +7,7 @@ export type GetBlockSlateOptions = {
 
 export function getBlockSlate(editor: YooEditor, options: GetBlockSlateOptions): SlateEditor {
   if (!options?.id && typeof options?.at !== 'number') {
+    console.warn('getBlockSlate requires either an id or at');
     throw new Error('getBlockSlate requires either an id or at');
   }
 

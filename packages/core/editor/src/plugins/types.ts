@@ -2,7 +2,7 @@ import { HTMLAttributes, ReactElement, ReactNode } from 'react';
 import { RenderElementProps as RenderSlateElementProps, RenderLeafProps } from 'slate-react';
 import { SlateEditor, SlateElement, YooEditor, YooptaBlockBaseMeta, YooptaBlockData } from '../editor/types';
 import { EditorEventHandlers } from '../types/eventHandlers';
-import { PropEditor } from '../types/propsEditor';
+import { ElementPropEditor } from '../types/propsEditor';
 import { HOTKEYS_TYPE } from '../utils/hotkeys';
 
 export enum NodeType {
@@ -56,7 +56,9 @@ export type PluginElement<TProps> = {
   asRoot?: boolean;
   children?: string[];
   rootPlugin?: string;
-  editors?: Record<string, PropEditor>;
+  editors?: {
+    [K in keyof TProps]: ElementPropEditor;
+  };
 };
 
 export type PluginElementsMap<TKeys extends string = string, TProps = PluginDefaultProps> = {

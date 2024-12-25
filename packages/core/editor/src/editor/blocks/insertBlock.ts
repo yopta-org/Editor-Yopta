@@ -1,7 +1,7 @@
-import { buildBlockElementsStructure } from '../../utils/blockElements';
 import { generateId } from '../../utils/generateId';
 import { YooEditor, YooptaBlockData, YooptaPathIndex } from '../types';
 import { YooptaOperation } from '../core/applyTransforms';
+import { buildBlockElementsStructure } from '../elements/utils';
 
 export type InsertBlockOptions = {
   at?: YooptaPathIndex;

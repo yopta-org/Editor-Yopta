@@ -12,7 +12,7 @@ export const AccordionItemContent = ({ extendRender, ...props }: PluginElementRe
 
   const isExpanded = parentListItem?.props?.isExpanded;
 
-  if (extendRender) return extendRender(props);
+  if (typeof extendRender === 'function') return extendRender(props);
 
   return (
     <div

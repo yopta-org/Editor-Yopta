@@ -9,8 +9,8 @@ import { GridItemMediaRender } from '../ui/GridItemMedia';
 import { GridItemSubtitleRender } from '../ui/GridItemSubtitle';
 import { GridItemTitleRender } from '../ui/GridItemTitle';
 
-const Grid = new YooptaPlugin<GridElementMap>({
-  type: 'Grid',
+const GridCard = new YooptaPlugin<GridElementMap>({
+  type: 'GridCard',
   elements: {
     grid: {
       render: GridRender,
@@ -24,7 +24,7 @@ const Grid = new YooptaPlugin<GridElementMap>({
         border: false,
       },
       asRoot: true,
-      children: ['grid-item'],
+      children: ['grid-item', 'grid-item', 'grid-item'],
       editors: {
         columns: {
           type: 'select',
@@ -56,7 +56,18 @@ const Grid = new YooptaPlugin<GridElementMap>({
         background: {
           type: 'color',
           label: 'Background',
-          presets: ['transparent', '#ffffff', '#f3f4f6'],
+          presets: [
+            'transparent',
+            '#000000',
+            '#FFFFFF',
+            '#F3F4F6',
+            '#EF4444',
+            '#F59E0B',
+            '#10B981',
+            '#3B82F6',
+            '#6366F1',
+            '#8B5CF6',
+          ],
         },
         border: {
           type: 'toggle',
@@ -74,7 +85,7 @@ const Grid = new YooptaPlugin<GridElementMap>({
         background: 'none',
         border: false,
       },
-      children: ['grid-item-header', 'grid-item-image', 'grid-item-content', 'grid-item-footer'],
+      children: ['grid-item-header', 'grid-item-content', 'grid-item-footer'],
       editors: {
         colspan: {
           type: 'number',
@@ -109,7 +120,20 @@ const Grid = new YooptaPlugin<GridElementMap>({
     'grid-item-header': {
       render: GridItemHeaderRender,
       props: { align: 'left' },
-      children: ['grid-item-title', 'grid-item-subtitle'],
+      children: ['grid-item-image'],
+    },
+    'grid-item-content': {
+      render: GridItemContentRender,
+      props: {
+        padding: 'md',
+      },
+      children: ['grid-item-title', 'grid-item-description'],
+    },
+    'grid-item-footer': {
+      render: GridItemFooterRender,
+      props: {
+        align: 'left',
+      },
     },
     'grid-item-title': {
       render: GridItemTitleRender,
@@ -128,27 +152,17 @@ const Grid = new YooptaPlugin<GridElementMap>({
         },
       },
     },
-    'grid-item-subtitle': {
+    'grid-item-description': {
       render: GridItemSubtitleRender,
     },
     'grid-item-image': {
       render: GridItemMediaRender,
       props: {
-        position: 'top',
         fit: 'cover',
         nodeType: 'void',
         src: '',
       },
       editors: {
-        position: {
-          type: 'select',
-          label: 'Position',
-          options: [
-            { label: 'Top', value: 'top' },
-            { label: 'Bottom', value: 'bottom' },
-            { label: 'Background', value: 'background' },
-          ],
-        },
         fit: {
           type: 'select',
           label: 'Fit',
@@ -164,19 +178,20 @@ const Grid = new YooptaPlugin<GridElementMap>({
         },
       },
     },
-    'grid-item-content': {
-      render: GridItemContentRender,
-      props: {
-        padding: 'none',
-      },
-    },
-    'grid-item-footer': {
-      render: GridItemFooterRender,
-      props: {
-        align: 'left',
-      },
-    },
+  },
+  extensions: (slate, editor) => {
+    const { isSelectable } = slate;
+
+    slate.isSelectable = (element) => {
+      if (element.type === 'grid-item-image') {
+        return false;
+      }
+
+      return isSelectable(element);
+    };
+
+    return slate;
   },
 });
 
-export { Grid };
+export { GridCard };

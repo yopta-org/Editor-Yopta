@@ -25,6 +25,39 @@ const Image = new YooptaPlugin<ImageElementMap, ImagePluginOptions>({
         sizes: { width: 650, height: 500 },
         nodeType: 'void',
       },
+      editors: {
+        src: {
+          type: 'upload',
+          label: 'Image',
+        },
+        alt: {
+          type: 'text',
+          label: 'Alt Text',
+        },
+        fit: {
+          type: 'select',
+          label: 'Fit',
+          options: [
+            { label: 'Contain', value: 'contain' },
+            { label: 'Cover', value: 'cover' },
+            { label: 'Fill', value: 'fill' },
+            { label: 'None', value: 'none' },
+            { label: 'Scale-down', value: 'scale-down' },
+          ],
+        },
+        bgColor: {
+          type: 'color',
+          label: 'Background Color',
+        },
+        sizes: {
+          type: 'range-size',
+          label: 'Size',
+          options: {
+            width: { label: 'Width', min: 0, max: 1000 },
+            height: { label: 'Height', min: 0, max: 1000 },
+          },
+        },
+      },
     },
   },
   commands: ImageCommands,

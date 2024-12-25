@@ -18,12 +18,11 @@ export const AccordionItemHeading = ({ extendRender, ...props }: PluginElementRe
     });
 
     if (listItemElement) {
-      Elements.updateElement(
-        editor,
-        blockId,
-        { type: 'accordion-list-item', props: { isExpanded: !listItemElement.props?.isExpanded } },
-        { path: parentPath },
-      );
+      Elements.updateElement(editor, blockId, {
+        type: 'accordion-list-item',
+        props: { isExpanded: !listItemElement.props?.isExpanded },
+        path: parentPath,
+      });
     }
   };
 
@@ -35,12 +34,12 @@ export const AccordionItemHeading = ({ extendRender, ...props }: PluginElementRe
     const listItemPath = parentPath;
     const nextListItemPath = Path.next(listItemPath);
 
-    Elements.createElement(
-      editor,
-      blockId,
-      { type: 'accordion-list-item', props: { isExpanded: true } },
-      { path: nextListItemPath, focus: true },
-    );
+    Elements.insertElement(editor, blockId, {
+      type: 'accordion-list-item',
+      props: { isExpanded: true },
+      path: nextListItemPath,
+      focus: true,
+    });
   };
 
   const onDeleteAccordionItem = (e: MouseEvent) => {

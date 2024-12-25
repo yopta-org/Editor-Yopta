@@ -7,7 +7,9 @@ export type GetBlockOptions = {
 
 export function getBlock(editor: YooEditor, options: GetBlockOptions) {
   if (!options?.id && typeof options?.at !== 'number') {
-    throw new Error('getBlock requires either an id or at');
+    console.warn('getBlock requires either an id or at');
+    // throw new Error('getBlock requires either an id or at');
+    return;
   }
 
   if (options?.id) {

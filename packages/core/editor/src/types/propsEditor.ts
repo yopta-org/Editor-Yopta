@@ -1,7 +1,15 @@
-export type PropEditorType = 'select' | 'color' | 'number' | 'toggle' | 'text' | 'size';
+export type ElementPropEditorType =
+  | 'select'
+  | 'color'
+  | 'number'
+  | 'toggle'
+  | 'text'
+  | 'size'
+  | 'upload'
+  | 'range-size';
 
 export type BasePropEditor = {
-  type: PropEditorType;
+  type: ElementPropEditorType;
   label: string;
   description?: string;
 };
@@ -41,17 +49,34 @@ export type SizePropEditor = BasePropEditor & {
   units: ('px' | 'rem' | '%')[];
 };
 
+export type RangeSizePropEditor = BasePropEditor & {
+  type: 'range-size';
+  options: {
+    width: {
+      label: string;
+      min: number;
+      max: number;
+    };
+    height: {
+      label: string;
+      min: number;
+      max: number;
+    };
+  };
+};
+
 export type UploadPropEditor = BasePropEditor & {
   type: 'upload';
   accept?: string;
   maxSize?: number;
 };
 
-export type PropEditor =
+export type ElementPropEditor =
   | SelectPropEditor
   | ColorPropEditor
   | NumberPropEditor
   | TogglePropEditor
   | TextPropEditor
   | SizePropEditor
-  | UploadPropEditor;
+  | UploadPropEditor
+  | RangeSizePropEditor;

@@ -4,7 +4,8 @@
   "exclude": ["dist", "src/**/*.test.tsx", "src/**/*.stories.tsx"],
   "compilerOptions": {
     "rootDir": "./src",
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "baseUrl": "."
   },
   "references": [
     {

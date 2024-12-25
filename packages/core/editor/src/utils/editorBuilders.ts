@@ -2,12 +2,13 @@ import { SlateElement, YooEditor, YooptaBlockData } from '../editor/types';
 import { Plugin, PluginElementsMap } from '../plugins/types';
 import { YooptaMark } from '../marks';
 import { findPluginBlockByPath } from '../utils/findPluginBlockByPath';
-import { buildBlockElementsStructure, getRootBlockElement } from './blockElements';
+import { getRootBlockElement } from './blockElements';
 import { buildSlateEditor } from './buildSlate';
 import { getValue } from '../editor/textFormats/getValue';
 import { isActive } from '../editor/textFormats/isActive';
 import { toggle } from '../editor/textFormats/toggle';
 import { update } from '../editor/textFormats/update';
+import { buildBlockElementsStructure } from '../editor/elements/utils';
 
 export function buildMarks(editor, marks: YooptaMark<any>[]) {
   const formats: YooEditor['formats'] = {};

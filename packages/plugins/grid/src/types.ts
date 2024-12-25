@@ -1,12 +1,11 @@
 import { SlateElement } from '@yoopta/editor';
 
-// Константы для типов элементов
 export const GRID_ELEMENTS = {
   Grid: 'grid',
   GridItem: 'grid-item',
   GridItemHeader: 'grid-item-header',
   GridItemTitle: 'grid-item-title',
-  GridItemSubtitle: 'grid-item-subtitle',
+  GridItemDescription: 'grid-item-description',
   GridItemMedia: 'grid-item-image',
   GridItemContent: 'grid-item-content',
   GridItemFooter: 'grid-item-footer',
@@ -50,9 +49,10 @@ export type GridItemTitleElementProps = {
 };
 
 export type GridItemMediaElementProps = {
-  position?: GridMediaPosition;
+  // position?: GridMediaPosition;
   fit?: GridMediaFit;
   src?: string;
+  alt?: string;
 };
 
 export type GridItemContentElementProps = {
@@ -67,7 +67,7 @@ export type GridElement = SlateElement<typeof GRID_ELEMENTS.Grid, GridElementPro
 export type GridItemElement = SlateElement<typeof GRID_ELEMENTS.GridItem, GridItemElementProps>;
 export type GridItemHeaderElement = SlateElement<typeof GRID_ELEMENTS.GridItemHeader, GridItemHeaderElementProps>;
 export type GridItemTitleElement = SlateElement<typeof GRID_ELEMENTS.GridItemTitle, GridItemTitleElementProps>;
-export type GridItemSubtitleElement = SlateElement<typeof GRID_ELEMENTS.GridItemSubtitle>;
+export type GridItemDescriptionElement = SlateElement<typeof GRID_ELEMENTS.GridItemDescription>;
 export type GridItemMediaElement = SlateElement<typeof GRID_ELEMENTS.GridItemMedia, GridItemMediaElementProps>;
 export type GridItemContentElement = SlateElement<typeof GRID_ELEMENTS.GridItemContent, GridItemContentElementProps>;
 export type GridItemFooterElement = SlateElement<typeof GRID_ELEMENTS.GridItemFooter, GridItemFooterElementProps>;
@@ -77,7 +77,7 @@ export type GridElementMap = {
   [GRID_ELEMENTS.GridItem]: GridItemElement;
   [GRID_ELEMENTS.GridItemHeader]: GridItemHeaderElement;
   [GRID_ELEMENTS.GridItemTitle]: GridItemTitleElement;
-  [GRID_ELEMENTS.GridItemSubtitle]: GridItemSubtitleElement;
+  [GRID_ELEMENTS.GridItemDescription]: GridItemDescriptionElement;
   [GRID_ELEMENTS.GridItemMedia]: GridItemMediaElement;
   [GRID_ELEMENTS.GridItemContent]: GridItemContentElement;
   [GRID_ELEMENTS.GridItemFooter]: GridItemFooterElement;

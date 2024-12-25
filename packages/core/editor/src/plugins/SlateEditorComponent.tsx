@@ -13,7 +13,7 @@ import { IS_FOCUSED_EDITOR } from '../utils/weakMaps';
 import { deserializeHTML } from '../parsers/deserializeHTML';
 import { useEventHandlers, useSlateEditor } from './hooks';
 import { SlateElement } from '../editor/types';
-import { useFocusedEntity, useSetFocusedEntity } from '../contexts/FocusManager/FocusManager';
+import { useFocusedElement, useSetFocusedElement } from '../contexts/ElementFocusManager/ElementFocusManager';
 import { Blocks } from '../editor/blocks';
 
 type Props<TElementMap extends Record<string, SlateElement>, TOptions> = Plugin<TElementMap, TOptions> & {
@@ -53,8 +53,8 @@ const SlateEditorComponent = <TElementMap extends Record<string, SlateElement>, 
   let initialValue = useRef(block.value).current;
   const ELEMENTS_MAP = useMemo(() => getMappedElements(elements), [elements]);
   const MARKS_MAP = useMemo(() => getMappedMarks(marks), [marks]);
-  const focused = useFocusedEntity();
-  const setFocusedEntity = useSetFocusedEntity();
+  const focused = useFocusedElement();
+  const setFocusedEntity = useSetFocusedElement();
 
   const slate = useSlateEditor(id, editor, block, elements, withExtensions);
   const eventHandlers = useEventHandlers(events, editor, block, slate);
@@ -93,12 +93,9 @@ const SlateEditorComponent = <TElementMap extends Record<string, SlateElement>, 
           const plugin = editor.plugins[block.type];
           if (!plugin) return;
 
-          const editors = plugin.elements[props.element.type].editors;
-
           setFocusedEntity({
             element: props.element,
             blockId: id,
-            editors,
           });
         };
 

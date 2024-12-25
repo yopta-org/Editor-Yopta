@@ -34,7 +34,7 @@
     "@yoopta/lists": "*",
     "@yoopta/marks": "*",
     "@yoopta/paragraph": "*",
-    "@yoopta/starter-kit": "*",
+    "@yoopta/element-props-editor": "*",
     "@yoopta/table": "*",
     "@yoopta/toolbar": "*",
     "@yoopta/video": "*",

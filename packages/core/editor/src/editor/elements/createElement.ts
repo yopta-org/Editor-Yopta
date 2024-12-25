@@ -1,8 +1,8 @@
 import { Editor, Path, Span, Transforms } from 'slate';
-import { buildBlockElement } from '../../components/Editor/utils';
-import { findSlateBySelectionPath } from '../../utils/findSlateBySelectionPath';
+import { Blocks } from '../blocks';
 import { SlateElement, YooEditor } from '../types';
 import { getElementEntry } from './getElementEntry';
+import { buildBlockElement } from './utils';
 
 export type CreateBlockElementOptions = {
   path?: 'next' | 'prev' | Path | Span;
@@ -26,7 +26,7 @@ export function createElement<TElementKeys extends string, TElementProps>(
     throw new Error(`Block with id ${blockId} not found`);
   }
 
-  const slate = findSlateBySelectionPath(editor, { at: blockData.meta.order });
+  const slate = Blocks.getBlockSlate(editor, { id: blockId });
   if (!slate) {
     console.warn('No slate found');
     return;

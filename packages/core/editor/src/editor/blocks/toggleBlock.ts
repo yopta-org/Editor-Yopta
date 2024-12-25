@@ -1,11 +1,11 @@
 import { Descendant, Editor, Element, Text, Transforms } from 'slate';
-import { buildBlockElementsStructure } from '../../utils/blockElements';
 import { buildSlateEditor } from '../../utils/buildSlate';
 
 import { findPluginBlockByPath } from '../../utils/findPluginBlockByPath';
 import { findSlateBySelectionPath } from '../../utils/findSlateBySelectionPath';
 import { generateId } from '../../utils/generateId';
 import { YooptaOperation } from '../core/applyTransforms';
+import { buildBlockElementsStructure } from '../elements/utils';
 import { YooEditor, YooptaBlockData, SlateEditor, FocusAt, SlateElement, YooptaPathIndex } from '../types';
 
 export type ToggleBlockOptions = {

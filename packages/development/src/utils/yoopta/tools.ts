@@ -2,6 +2,7 @@ import ActionMenuList, { DefaultActionMenuRender } from '@yoopta/action-menu-lis
 import { Tools } from '@yoopta/editor';
 import LinkTool, { DefaultLinkToolRender } from '@yoopta/link-tool';
 import Toolbar, { DefaultToolbarRender } from '@yoopta/toolbar';
+import ElementPropsEditor, { DefaultElementEditorContainerRender } from '@yoopta/element-props-editor';
 
 export const TOOLS: Tools = {
   ActionMenu: {
@@ -15,5 +16,9 @@ export const TOOLS: Tools = {
   LinkTool: {
     render: DefaultLinkToolRender,
     tool: LinkTool,
+  },
+  ElementPropsEditor: {
+    render: DefaultElementEditorContainerRender,
+    tool: ElementPropsEditor,
   },
 };

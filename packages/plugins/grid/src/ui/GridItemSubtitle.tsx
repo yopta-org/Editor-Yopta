@@ -1,11 +1,12 @@
 import { PluginElementRenderProps } from '@yoopta/editor';
-import { GridItemSubtitleElement } from '../types';
+import { CardDescription } from '../components/card';
+import { GridItemDescriptionElement } from '../types';
 
-const GridItemSubtitleRender = ({ attributes, children }: PluginElementRenderProps<GridItemSubtitleElement>) => {
+const GridItemSubtitleRender = ({ attributes, children }: PluginElementRenderProps<GridItemDescriptionElement>) => {
   return (
-    <div {...attributes} className="text-sm text-gray-500">
+    <CardDescription {...attributes} className="yoo-grid-text-sm yoo-grid-text-gray-500">
       {children}
-    </div>
+    </CardDescription>
   );
 };
 

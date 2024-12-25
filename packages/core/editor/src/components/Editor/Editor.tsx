@@ -14,7 +14,7 @@ import { SelectionBox } from '../SelectionBox/SelectionBox';
 import { Blocks } from '../../editor/blocks';
 import { useMultiSelection } from './selection';
 import { Paths } from '../../editor/paths';
-import { FocusManager } from '../../contexts/FocusManager/FocusManager';
+import { ElementFocusManager } from '../../contexts/ElementFocusManager/ElementFocusManager';
 
 type Props = {
   marks?: YooptaMark<any>[];
@@ -31,6 +31,7 @@ const getEditorStyles = (styles: CSSProperties) => ({
   ...styles,
   width: styles.width || 400,
   paddingBottom: typeof styles.paddingBottom === 'number' ? styles.paddingBottom : 100,
+  position: 'relative',
 });
 
 const Editor = ({
@@ -317,7 +318,7 @@ const Editor = ({
   });
 
   return (
-    <FocusManager>
+    <ElementFocusManager>
       <div
         ref={(ref) => (editor.refElement = ref)}
         className={className ? `yoopta-editor ${className}` : 'yoopta-editor'}
@@ -337,7 +338,7 @@ const Editor = ({
         )}
         {children}
       </div>
-    </FocusManager>
+    </ElementFocusManager>
   );
 };
 

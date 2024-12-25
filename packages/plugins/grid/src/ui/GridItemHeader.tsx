@@ -1,21 +1,22 @@
 import { PluginElementRenderProps } from '@yoopta/editor';
+import { CardHeader } from '../components/card';
+import { cn } from '../lib/utils';
 import { GridItemHeaderElement, GridItemHeaderElementProps } from '../types';
-import cn from 'classnames';
 
 const GridItemHeaderRender = ({ element, attributes, children }: PluginElementRenderProps<GridItemHeaderElement>) => {
   const { align = 'left' } = element.props as GridItemHeaderElementProps;
 
   return (
-    <header
+    <CardHeader
       {...attributes}
-      className={cn('p-4 space-y-1', {
-        'text-left': align === 'left',
-        'text-center': align === 'center',
-        'text-right': align === 'right',
+      className={cn('yoo-grid-p-0 yoo-grid-space-y-1', {
+        'yoo-grid-text-left': align === 'left',
+        'yoo-grid-text-center': align === 'center',
+        'yoo-grid-text-right': align === 'right',
       })}
     >
       {children}
-    </header>
+    </CardHeader>
   );
 };
 

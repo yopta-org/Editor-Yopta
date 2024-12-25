@@ -1,5 +1,5 @@
 import { Elements, useYooptaEditor, useYooptaPluginOptions } from '@yoopta/editor';
-import { ImageElementProps, ImagePluginElements, ImagePluginOptions } from '../types';
+import { ImageElement, ImageElementProps, ImagePluginElements, ImagePluginOptions } from '../types';
 import { limitSizes } from '../utils/limitSizes';
 
 type Props = {
@@ -31,7 +31,7 @@ const FileUploader = ({ accept = 'image/*', onClose, blockId, onSetLoading }: Pr
         height: maxSizes!.maxHeight!,
       });
 
-      Elements.updateElement<ImagePluginElements, ImageElementProps>(editor, blockId, {
+      Elements.updateElement<ImageElement>(editor, blockId, {
         type: 'image',
         props: {
           src: data.src,

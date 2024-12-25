@@ -31,26 +31,24 @@ const GridItemRender = ({ element, attributes, children }: PluginElementRenderPr
     border = false,
   } = element.props as GridItemElementProps;
 
-  // console.log('GridItemRender variant', element.props.variant);
-
   return (
     <div
       {...attributes}
       className={cn(
-        'relative flex flex-col overflow-hidden rounded-lg transition-shadow rounded-xl border bg-card text-card-foreground shadow',
+        'yoo-grid-relative yoo-grid-flex yoo-grid-flex-col yoo-grid-overflow-hidden yoo-grid-rounded-lg yoo-grid-transition-shadow yoo-grid-rounded-xl yoo-grid-border yoo-grid-bg-card yoo-grid-text-card-foreground yoo-grid-shadow hover:yoo-grid-shadow-lg',
         {
-          [`col-span-${colspan}`]: colspan > 1,
-          [`row-span-${rowspan}`]: rowspan > 1,
+          [`yoo-grid-col-span-${colspan}`]: colspan > 1,
+          [`yoo-grid-row-span-${rowspan}`]: rowspan > 1,
         },
         VARIANT_STYLES[variant],
         aspectRatio && ASPECT_RATIO_STYLES[aspectRatio],
         BACKGROUND_STYLES[background],
         {
-          'ring-1 ring-gray-200': border,
+          'yoo-grid-ring-1 yoo-grid-ring-gray-200': border,
         },
       )}
     >
-      <Card className="grid h-full grid-rows-[auto_1fr_auto]">{children}</Card>
+      <Card className="yoo-grid-grid yoo-grid-h-full yoo-grid-grid-rows-[auto_1fr_auto]">{children}</Card>
     </div>
   );
 };

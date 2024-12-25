@@ -62,8 +62,12 @@ const ImageRender = ({ extendRender, ...props }: PluginElementRenderProps) => {
       },
       onResizeStop: (e, direction, ref) => {
         if (isReadOnly) return;
+        const path = Elements.getElementPath(editor, blockId, element);
+        if (!path) return;
+
         Elements.updateElement(editor, blockId, {
           type: 'image',
+          path,
           props: {
             sizes: { width: ref.offsetWidth, height: ref.offsetHeight },
           },

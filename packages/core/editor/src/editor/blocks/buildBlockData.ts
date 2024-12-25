@@ -1,17 +1,6 @@
 import { YooptaBlockData, SlateElement, YooptaBlockBaseMeta } from '../../editor/types';
 import { generateId } from '../../utils/generateId';
-
-export const buildBlockElement = (element?: Partial<SlateElement>): SlateElement => {
-  return {
-    id: generateId(),
-    type: element?.type || 'paragraph',
-    children: element?.children || [{ text: '' }],
-    props: {
-      nodeType: 'block',
-      ...element?.props,
-    },
-  };
-};
+import { buildBlockElement } from '../elements/utils';
 
 type BuildBlockDataOptions = Partial<Omit<YooptaBlockData<SlateElement>, 'meta'>> & {
   value?: SlateElement[];

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { cloneElement, useMemo, useState } from 'react';
 import { DndContext, closestCenter } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 
@@ -9,7 +9,8 @@ import { SlateEditorComponent } from '../../plugins/SlateEditorComponent';
 import { useYooptaDragDrop } from './dnd';
 import { useYooptaReadOnly } from '../../contexts/YooptaContext/YooptaContext';
 import { FloatingBlockActions } from '../Block/FloatingBlockActions';
-import { EditElementPropsToolbar } from '../EditElementPropsToolbar/EditElementPropsToolbar';
+// import { EditElementPropsToolbar } from '../EditElementPropsToolbar/EditElementPropsToolbar';
+import { useYooptaTools } from '../../contexts/YooptaContext/ToolsContext';
 
 const DEFAULT_EDITOR_KEYS = [];
 
@@ -23,6 +24,7 @@ const RenderBlocks = ({ editor, marks, placeholder }: Props) => {
   const isReadOnly = useYooptaReadOnly();
   const { sensors, handleDragEnd, handleDragStart } = useYooptaDragDrop({ editor });
   const [dragHandleProps, setActiveDragHandleProps] = useState(null);
+  const tools = useYooptaTools();
 
   const childrenUnorderedKeys = Object.keys(editor.children);
   const childrenKeys = useMemo(() => {
@@ -68,6 +70,7 @@ const RenderBlocks = ({ editor, marks, placeholder }: Props) => {
     );
   }
 
+  const ElementPropsEditor = tools?.ElementPropsEditor;
   if (isReadOnly) return <>{blocks}</>;
 
   return (
@@ -81,7 +84,7 @@ const RenderBlocks = ({ editor, marks, placeholder }: Props) => {
       <SortableContext disabled={isReadOnly} items={childrenKeys} strategy={verticalListSortingStrategy}>
         {blocks}
         <FloatingBlockActions editor={editor} dragHandleProps={dragHandleProps} />
-        <EditElementPropsToolbar />
+        {!!ElementPropsEditor ? <ElementPropsEditor /> : null}
       </SortableContext>
     </DndContext>
   );
