@@ -23,6 +23,7 @@ export const DefaultElementEditorContainerRender = () => {
   });
 
   useEffect(() => {
+    console.log('DefaultElementEditorContainerRender focusedElement', focusedElement);
     if (!focusedElement) return;
 
     const element = document.querySelector(`[data-element-id="${focusedElement.element.id}"]`);
@@ -42,23 +43,25 @@ export const DefaultElementEditorContainerRender = () => {
     };
   }, [focusedElement, update]);
 
-  const editors = useMemo<Record<ElementPropEditorType, ElementPropEditor>>(() => {
+  const editors = useMemo(() => {
     const EMPTY_EDITORS = {} as Record<ElementPropEditorType, ElementPropEditor>;
     if (!focusedElement) return EMPTY_EDITORS;
 
     const block = Blocks.getBlock(editor, { at: editor.path.current });
+
     if (!block || !focusedElement?.element) return EMPTY_EDITORS;
 
     const plugin = editor.plugins[block.type];
     if (!plugin || !focusedElement?.element) return EMPTY_EDITORS;
 
-    const elementEditors = plugin.elements[focusedElement.element.type].editors;
+    const elementEditors = plugin.elements?.[focusedElement?.element?.type]?.editors;
     return elementEditors || EMPTY_EDITORS;
-  }, [focusedElement]);
+  }, [focusedElement, editor.path]);
 
   if (!focusedElement) return null;
 
   const editorEntries = Object.entries(editors) as Array<[ElementPropEditorType, ElementPropEditor]>;
+  console.log('DefaultElementEditorContainerRender editors', editors);
   if (editorEntries.length === 0) return null;
 
   return (
@@ -66,9 +69,10 @@ export const DefaultElementEditorContainerRender = () => {
       <div
         ref={refs.setFloating}
         onClick={(e) => e.stopPropagation()}
-        onBlur={() => {
-          console.log('DefaultElementEditorContainerRender onBlur');
-        }}
+        onMouseDown={(e) => e.stopPropagation()}
+        // onBlur={() => {
+        //   console.log('DefaultElementEditorContainerRender onBlur');
+        // }}
         style={floatingStyles}
         className="yoo-elements-z-50 yoo-elements-w-full yoo-elements-max-w-[220px] yoo-elements-p-2 yoo-elements-bg-white yoo-elements-rounded-lg yoo-elements-shadow-lg yoo-elements-border yoo-elements-border-gray-200 yoo-elements-max-h-[264px] yoo-elements-overflow-y-auto"
       >

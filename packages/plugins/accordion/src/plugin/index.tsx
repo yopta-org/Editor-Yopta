@@ -104,17 +104,13 @@ const Accordion = new YooptaPlugin<AccordionElementMap>({
           if (currentElement?.type === ACCORDION_ELEMENTS.AccordionListItemHeading && listItemEntry) {
             const [listItem, listItemPath] = listItemEntry;
 
-            Elements.updateElement(
-              editor,
-              currentBlock.id,
-              {
-                type: ACCORDION_ELEMENTS.AccordionListItem,
-                props: {
-                  isExpanded: !listItem?.props?.isExpanded,
-                },
+            Elements.updateElement(editor, currentBlock.id, {
+              type: ACCORDION_ELEMENTS.AccordionListItem,
+              props: {
+                isExpanded: !listItem?.props?.isExpanded,
               },
-              { path: listItemPath },
-            );
+              path: listItemPath,
+            });
 
             return;
           }

@@ -28,12 +28,14 @@ const GridRender = ({ element, attributes, blockId, children }: PluginElementRen
   const {
     columns = 2,
     gap = 'md',
-    minItemWidth = '280px',
+    minItemWidth = '200px',
     padding = 'md',
     containerWidth = 'container',
     background,
     border,
   } = element.props as GridElementProps;
+
+  console.log('GridRender columns', columns);
 
   const gridColumns =
     typeof columns === 'number'

@@ -5,7 +5,7 @@ import ErrorIcon from '../icons/error.svg';
 import DefaultIcon from '../icons/default.svg';
 import InfoIcon from '../icons/info.svg';
 import CheckmarkIcon from '../icons/checkmark.svg';
-import { CalloutElementProps, CalloutPluginElementKeys, CalloutTheme } from '../types';
+import { CalloutElement, CalloutElementProps, CalloutTheme } from '../types';
 import { CALLOUT_THEME_STYLES } from '../utils';
 
 const { ExtendedBlockActions, BlockOptionsMenuGroup, BlockOptionsMenuItem, BlockOptionsSeparator } = UI;
@@ -18,7 +18,7 @@ type Props = {
 
 const CalloutBlockOptions = ({ editor, block, props: calloutProps }: Props) => {
   const onChangeTheme = (theme: CalloutTheme) => {
-    Elements.updateElement<CalloutPluginElementKeys, CalloutElementProps>(editor, block.id, {
+    Elements.updateElement<CalloutElement>(editor, block.id, {
       type: 'callout',
       props: {
         theme,

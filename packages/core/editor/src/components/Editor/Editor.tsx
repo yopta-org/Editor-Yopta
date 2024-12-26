@@ -309,13 +309,13 @@ const Editor = ({
     }
   };
 
-  const editorStyles: CSSProperties = getEditorStyles({
+  const editorStyles = getEditorStyles({
     ...style,
     userSelect: selectionBox.selection ? 'none' : 'auto',
     pointerEvents: selectionBox.selection ? 'none' : 'auto',
     width: width || style?.width,
     paddingBottom: style?.paddingBottom,
-  });
+  }) as CSSProperties;
 
   return (
     <ElementFocusManager>

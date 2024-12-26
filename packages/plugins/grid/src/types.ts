@@ -8,7 +8,6 @@ export const GRID_ELEMENTS = {
   GridItemDescription: 'grid-item-description',
   GridItemMedia: 'grid-item-image',
   GridItemContent: 'grid-item-content',
-  GridItemFooter: 'grid-item-footer',
 } as const;
 
 export type GridVariant = 'default' | 'featured' | 'compact';
@@ -18,7 +17,7 @@ export type GridAlign = 'left' | 'center' | 'right' | 'between';
 export type GridPadding = 'none' | 'sm' | 'md' | 'lg';
 export type GridColumns = number | 'auto-fit' | 'auto-fill';
 export type GridMediaPosition = 'top' | 'bottom' | 'background';
-export type GridMediaFit = 'cover' | 'contain';
+export type GridMediaFit = 'cover' | 'contain' | 'fill';
 export type GridContainerWidth = 'full' | 'container' | 'narrow';
 
 export type GridElementProps = {
@@ -70,7 +69,6 @@ export type GridItemTitleElement = SlateElement<typeof GRID_ELEMENTS.GridItemTit
 export type GridItemDescriptionElement = SlateElement<typeof GRID_ELEMENTS.GridItemDescription>;
 export type GridItemMediaElement = SlateElement<typeof GRID_ELEMENTS.GridItemMedia, GridItemMediaElementProps>;
 export type GridItemContentElement = SlateElement<typeof GRID_ELEMENTS.GridItemContent, GridItemContentElementProps>;
-export type GridItemFooterElement = SlateElement<typeof GRID_ELEMENTS.GridItemFooter, GridItemFooterElementProps>;
 
 export type GridElementMap = {
   [GRID_ELEMENTS.Grid]: GridElement;
@@ -80,5 +78,4 @@ export type GridElementMap = {
   [GRID_ELEMENTS.GridItemDescription]: GridItemDescriptionElement;
   [GRID_ELEMENTS.GridItemMedia]: GridItemMediaElement;
   [GRID_ELEMENTS.GridItemContent]: GridItemContentElement;
-  [GRID_ELEMENTS.GridItemFooter]: GridItemFooterElement;
 };

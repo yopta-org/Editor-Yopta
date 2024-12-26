@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useMemo, useRef } from 'react';
+import React, { memo, MouseEvent, useCallback, useMemo, useRef } from 'react';
 import { DefaultElement, Editable, ReactEditor, RenderElementProps, Slate } from 'slate-react';
 import { useYooptaEditor, useBlockData } from '../contexts/YooptaContext/YooptaContext';
 import { EVENT_HANDLERS } from '../handlers';
@@ -54,7 +54,7 @@ const SlateEditorComponent = <TElementMap extends Record<string, SlateElement>, 
   const ELEMENTS_MAP = useMemo(() => getMappedElements(elements), [elements]);
   const MARKS_MAP = useMemo(() => getMappedMarks(marks), [marks]);
   const focused = useFocusedElement();
-  const setFocusedEntity = useSetFocusedElement();
+  const setFocusedElement = useSetFocusedElement();
 
   const slate = useSlateEditor(id, editor, block, elements, withExtensions);
   const eventHandlers = useEventHandlers(events, editor, block, slate);
@@ -84,7 +84,7 @@ const SlateEditorComponent = <TElementMap extends Record<string, SlateElement>, 
       if (!ElementComponent) return <DefaultElement {...props} attributes={attributes} />;
 
       if (!editor.readOnly) {
-        attributes['onClick'] = (event) => {
+        attributes['onClick'] = (event: MouseEvent<HTMLElement>) => {
           event.stopPropagation();
 
           if (props.element?.id === focused?.element.id) return;
@@ -93,7 +93,7 @@ const SlateEditorComponent = <TElementMap extends Record<string, SlateElement>, 
           const plugin = editor.plugins[block.type];
           if (!plugin) return;
 
-          setFocusedEntity({
+          setFocusedElement({
             element: props.element,
             blockId: id,
           });
@@ -109,7 +109,7 @@ const SlateEditorComponent = <TElementMap extends Record<string, SlateElement>, 
         <ElementComponent {...props} attributes={attributes} blockId={id} HTMLAttributes={options?.HTMLAttributes} />
       );
     },
-    [elements, focused?.element.id, setFocusedEntity, editor.path.current, editor.readOnly],
+    [elements, focused?.element.id, setFocusedElement, editor.path.current, editor.readOnly],
   );
 
   const renderLeaf = useCallback(

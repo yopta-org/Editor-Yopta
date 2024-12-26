@@ -12,21 +12,41 @@ const Portal = (props: Props) => {
   const rootEl = useRef<HTMLElement | null>(null);
   const editor = useYooptaEditor();
 
+  // useEffect(() => {
+  //   setIsMounted(true);
+  //   const editorEl = editor.refElement;
+
+  //   if (!editorEl) return;
+
+  //   const overlays = editorEl.querySelector('.yoopta-overlays') as HTMLElement;
+  //   if (!overlays) {
+  //     rootEl.current = document.createElement('div');
+  //     rootEl.current.className = 'yoopta-overlays';
+  //   } else {
+  //     rootEl.current = overlays;
+  //   }
+
+  //   editorEl.appendChild(rootEl.current);
+
+  //   return () => {
+  //     if (rootEl.current) {
+  //       rootEl.current.remove();
+  //     }
+  //   };
+  // }, []);
+
   useEffect(() => {
     setIsMounted(true);
     const editorEl = editor.refElement;
 
     if (!editorEl) return;
 
-    const overlays = editorEl.querySelector('.yoopta-overlays') as HTMLElement;
+    const overlays = editorEl.querySelector('.yoopta-overlays');
     if (!overlays) {
       rootEl.current = document.createElement('div');
       rootEl.current.className = 'yoopta-overlays';
-    } else {
-      rootEl.current = overlays;
+      editorEl.appendChild(rootEl.current);
     }
-
-    editorEl.appendChild(rootEl.current);
 
     return () => {
       if (rootEl.current) {

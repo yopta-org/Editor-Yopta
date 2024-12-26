@@ -46,11 +46,11 @@ const filterActionMenuItems = (block: YooptaBlock, searchText: string): boolean 
     const titleMatch = block.options?.display && filterBy(block.options.display, term, 'title');
     if (titleMatch) return true;
 
-    const shortcutMatch = block.options && filterBy(block.options, term, 'shortcuts');
-    if (shortcutMatch) return true;
-
     const descriptionMatch = block.options?.display && filterBy(block.options.display, term, 'description');
     if (descriptionMatch) return true;
+
+    const shortcutMatch = block.options && filterBy(block.options, term, 'shortcuts');
+    if (shortcutMatch) return true;
 
     const aliasMatch = block.options?.aliases && filterBy(block.options, term, 'aliases');
     if (aliasMatch) return true;
@@ -129,7 +129,7 @@ const ActionMenuList = ({ items, render }: ActionMenuToolProps) => {
   useEffect(() => {
     updateActionMenuPosition();
 
-    const handleActionMenuKeyUp = (event: KeyboardEvent) => {
+    const onKeyUp = (event: KeyboardEvent) => {
       const slate = Blocks.getBlockSlate(editor, { at: editor.path.current });
       const isInsideEditor = editor.refElement?.contains(event.target as Node);
 
@@ -142,7 +142,7 @@ const ActionMenuList = ({ items, render }: ActionMenuToolProps) => {
       onFilter({ text: string });
     };
 
-    const handleActionMenuKeyDown = (event: KeyboardEvent) => {
+    const onKeyDown = (event: KeyboardEvent) => {
       if (event.isComposing) return;
 
       const slate = Blocks.getBlockSlate(editor, { at: editor.path.current });
@@ -316,11 +316,11 @@ const ActionMenuList = ({ items, render }: ActionMenuToolProps) => {
 
       if (!slateEditorRef) return;
 
-      slateEditorRef.addEventListener('keydown', handleActionMenuKeyDown);
-      slateEditorRef.addEventListener('keyup', handleActionMenuKeyUp);
+      slateEditorRef.addEventListener('keydown', onKeyDown);
+      slateEditorRef.addEventListener('keyup', onKeyUp);
       return () => {
-        slateEditorRef.removeEventListener('keydown', handleActionMenuKeyDown);
-        slateEditorRef.removeEventListener('keyup', handleActionMenuKeyUp);
+        slateEditorRef.removeEventListener('keydown', onKeyDown);
+        slateEditorRef.removeEventListener('keyup', onKeyUp);
         document.removeEventListener('click', onClose);
       };
     }

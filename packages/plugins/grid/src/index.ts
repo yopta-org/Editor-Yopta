@@ -3,7 +3,6 @@ import {
   GridElement,
   GridItemContentElement,
   GridItemElement,
-  GridItemFooterElement,
   GridItemHeaderElement,
   GridItemMediaElement,
   GridItemDescriptionElement,
@@ -20,8 +19,7 @@ declare module 'slate' {
       | GridItemTitleElement
       | GridItemDescriptionElement
       | GridItemMediaElement
-      | GridItemContentElement
-      | GridItemFooterElement;
+      | GridItemContentElement;
   }
 }
 
@@ -34,5 +32,4 @@ export {
   GridItemDescriptionElement,
   GridItemMediaElement,
   GridItemContentElement,
-  GridItemFooterElement,
 };

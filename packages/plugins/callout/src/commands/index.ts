@@ -33,7 +33,7 @@ export const CalloutCommands: CalloutCommands = {
     Blocks.deleteBlock(editor, { blockId });
   },
   updateCalloutTheme: (editor: YooEditor, blockId: string, theme: CalloutTheme) => {
-    Elements.updateElement<CalloutPluginElementKeys, CalloutElementProps>(editor, blockId, {
+    Elements.updateElement<CalloutElement>(editor, blockId, {
       type: 'callout',
       props: {
         theme,

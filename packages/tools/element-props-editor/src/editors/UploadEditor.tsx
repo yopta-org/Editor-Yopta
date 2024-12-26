@@ -60,7 +60,7 @@ export const UploadEditor = ({
         {label}
         {description && (
           <span className="yoo-elements-upload-description yoo-elements-text-xs yoo-elements-font-normal yoo-elements-text-gray-500 yoo-elements-ml-1">
-            ({description})
+            {description}
           </span>
         )}
       </Label>

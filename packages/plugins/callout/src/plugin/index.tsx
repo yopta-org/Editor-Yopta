@@ -29,7 +29,7 @@ const Callout = new YooptaPlugin<CalloutElementMap>({
             { value: 'info', label: 'Info' },
             { value: 'warning', label: 'Warning' },
             { value: 'success', label: 'Success' },
-            { value: 'danger', label: 'Danger' },
+            { value: 'error', label: 'Error' },
           ],
         },
       },

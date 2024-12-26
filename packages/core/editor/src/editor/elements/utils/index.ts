@@ -55,7 +55,7 @@ type ElementsMapWithTextContent = {
 };
 
 export function buildElementChildren(
-  blockElement: PluginElement<unknown>,
+  blockElement: PluginElement<string, unknown>,
   blockElements: PluginElementsMap,
   elementsMapWithTextContent?: ElementsMapWithTextContent,
 ): SlateElement[] | Descendant[] {

@@ -3,7 +3,6 @@ import { GridElementMap } from '../types';
 import { GridRender } from '../ui/Grid';
 import { GridItemRender } from '../ui/GridItem';
 import { GridItemContentRender } from '../ui/GridItemContent';
-import { GridItemFooterRender } from '../ui/GridItemFooter';
 import { GridItemHeaderRender } from '../ui/GridItemHeader';
 import { GridItemMediaRender } from '../ui/GridItemMedia';
 import { GridItemSubtitleRender } from '../ui/GridItemSubtitle';
@@ -15,7 +14,7 @@ const GridCard = new YooptaPlugin<GridElementMap>({
     grid: {
       render: GridRender,
       props: {
-        columns: 'auto-fill',
+        columns: 2,
         gap: 'md',
         minItemWidth: '200px',
         padding: 'none',
@@ -85,7 +84,7 @@ const GridCard = new YooptaPlugin<GridElementMap>({
         background: 'none',
         border: false,
       },
-      children: ['grid-item-header', 'grid-item-content', 'grid-item-footer'],
+      children: ['grid-item-header', 'grid-item-content'],
       editors: {
         colspan: {
           type: 'number',
@@ -128,11 +127,16 @@ const GridCard = new YooptaPlugin<GridElementMap>({
         padding: 'md',
       },
       children: ['grid-item-title', 'grid-item-description'],
-    },
-    'grid-item-footer': {
-      render: GridItemFooterRender,
-      props: {
-        align: 'left',
+      editors: {
+        padding: {
+          type: 'select',
+          label: 'Padding',
+          options: [
+            { label: 'Small', value: 'sm' },
+            { label: 'Medium', value: 'md' },
+            { label: 'Large', value: 'lg' },
+          ],
+        },
       },
     },
     'grid-item-title': {
@@ -158,7 +162,7 @@ const GridCard = new YooptaPlugin<GridElementMap>({
     'grid-item-image': {
       render: GridItemMediaRender,
       props: {
-        fit: 'cover',
+        fit: 'fill',
         nodeType: 'void',
         src: '',
       },

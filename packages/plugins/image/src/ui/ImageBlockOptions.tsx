@@ -9,7 +9,7 @@ import {
   UpdateIcon,
   TextIcon,
 } from '@radix-ui/react-icons';
-import { ImageElementProps, ImagePluginElements, ImagePluginOptions } from '../types';
+import { ImageElement, ImageElementProps, ImagePluginElements, ImagePluginOptions } from '../types';
 import CheckmarkIcon from '../icons/checkmark.svg';
 import DownloadIcon from '../icons/download.svg';
 import { useState } from 'react';
@@ -49,7 +49,7 @@ const ImageBlockOptions = ({ editor, block, props: imageProps }: Props) => {
   const onSetAltText = (text: string) => setAltText(text);
   const onSaveAltText = () => {
     if (!altText) return;
-    Elements.updateElement<ImagePluginElements, ImageElementProps>(editor, block.id, {
+    Elements.updateElement<ImageElement>(editor, block.id, {
       type: 'image',
       props: { alt: altText },
     });
@@ -59,7 +59,7 @@ const ImageBlockOptions = ({ editor, block, props: imageProps }: Props) => {
 
   const onDeleteAltText = () => {
     setAltText('');
-    Elements.updateElement<ImagePluginElements, ImageElementProps>(editor, block.id, {
+    Elements.updateElement<ImageElement>(editor, block.id, {
       type: 'image',
       props: { alt: '' },
     });
@@ -68,21 +68,21 @@ const ImageBlockOptions = ({ editor, block, props: imageProps }: Props) => {
   };
 
   const onCover = () => {
-    Elements.updateElement<ImagePluginElements, ImageElementProps>(editor, block.id, {
+    Elements.updateElement<ImageElement>(editor, block.id, {
       type: 'image',
       props: { fit: 'cover' },
     });
   };
 
   const onFit = () => {
-    Elements.updateElement<ImagePluginElements, ImageElementProps>(editor, block.id, {
+    Elements.updateElement<ImageElement>(editor, block.id, {
       type: 'image',
       props: { fit: 'contain' },
     });
   };
 
   const onFill = () => {
-    Elements.updateElement<ImagePluginElements, ImageElementProps>(editor, block.id, {
+    Elements.updateElement<ImageElement>(editor, block.id, {
       type: 'image',
       props: { fit: 'fill' },
     });
@@ -126,7 +126,7 @@ const ImageBlockOptions = ({ editor, block, props: imageProps }: Props) => {
       const data = await options?.onUpload(file);
       const defaultImageProps = editor.plugins.Image.elements.image.props as ImageElementProps;
 
-      Elements.updateElement<ImagePluginElements, ImageElementProps>(editor, block.id, {
+      Elements.updateElement<ImageElement>(editor, block.id, {
         type: 'image',
         props: {
           src: data.src,

@@ -1,16 +1,16 @@
 import { Descendant, Path, Point } from 'slate';
 import { Plugin, PluginElementsMap, PluginOptions, PluginElementProps } from '../plugins/types';
 import { EditorBlurOptions } from './core/blur';
-import { deleteBlock, DeleteBlockOptions } from './blocks/deleteBlock';
-import { duplicateBlock, DuplicateBlockOptions } from './blocks/duplicateBlock';
+import { deleteBlock } from './blocks/deleteBlock';
+import { duplicateBlock } from './blocks/duplicateBlock';
 import { focusBlock } from './blocks/focusBlock';
-import { toggleBlock, ToggleBlockOptions } from './blocks/toggleBlock';
-import { GetBlockOptions } from './blocks/getBlock';
+import { toggleBlock } from './blocks/toggleBlock';
+import { getBlock, GetBlockOptions } from './blocks/getBlock';
 import { ReactEditor } from 'slate-react';
-import { applyTransforms, ApplyTransformsOptions, YooptaOperation } from './core/applyTransforms';
-import { insertBlock, InsertBlockOptions } from './blocks/insertBlock';
+import { applyTransforms, YooptaOperation } from './core/applyTransforms';
+import { insertBlock } from './blocks/insertBlock';
 import { increaseBlockDepth } from './blocks/increaseBlockDepth';
-import { SplitBlockOptions } from './blocks/splitBlock';
+import { splitBlock, SplitBlockOptions } from './blocks/splitBlock';
 import { HistoryStack, HistoryStackName, YooptaHistory } from './core/history';
 import { WithoutFirstArg } from '../utils/types';
 import { moveBlock } from './blocks/moveBlock';
@@ -21,6 +21,7 @@ import { getHTML } from '../parsers/getHTML';
 import { getMarkdown } from '../parsers/getMarkdown';
 import { getPlainText } from '../parsers/getPlainText';
 import { getEmail } from '../parsers/getEmail';
+import { mergeBlock } from './blocks/mergeBlock';
 
 // types for slate values
 export type SlateElement<K extends string = string, T = any> = {
@@ -111,9 +112,9 @@ export type YooEditor = {
   decreaseBlockDepth: WithoutFirstArg<typeof decreaseBlockDepth>;
   moveBlock: WithoutFirstArg<typeof moveBlock>;
   focusBlock: WithoutFirstArg<typeof focusBlock>;
-  mergeBlock: () => void;
-  splitBlock: (options?: SplitBlockOptions) => void;
-  getBlock: (options: GetBlockOptions) => YooptaBlockData | null;
+  mergeBlock: WithoutFirstArg<typeof mergeBlock>;
+  splitBlock: WithoutFirstArg<typeof splitBlock>;
+  getBlock: WithoutFirstArg<typeof getBlock>;
 
   // path handlers
   path: YooptaPath;

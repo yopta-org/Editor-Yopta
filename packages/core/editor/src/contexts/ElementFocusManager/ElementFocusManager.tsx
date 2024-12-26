@@ -23,6 +23,7 @@ export const ElementFocusManager: React.FC<{ children: React.ReactNode }> = ({ c
   const editor = useYooptaEditor();
 
   const onFocus = (entity: FocusedElement) => {
+    console.log('onFocus entity', entity);
     if (entity?.element.id === focusedElement?.element.id) return;
 
     const block = Blocks.getBlock(editor, { at: editor.path.current });

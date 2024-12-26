@@ -10,6 +10,8 @@ const CalloutRender = ({ extendRender, ...props }: PluginElementRenderProps) => 
   const isReadOnly = useYooptaReadOnly();
   const { theme = 'default' } = element.props || {};
 
+  console.log('CalloutRender theme', theme);
+
   if (extendRender) {
     return extendRender(props);
   }
