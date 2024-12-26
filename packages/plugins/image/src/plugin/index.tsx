@@ -89,7 +89,7 @@ const Image = new YooptaPlugin<ImageElementMap, ImagePluginOptions>({
     },
     markdown: {
       serialize: (element, text) => {
-        return `![${element.props.alt}](${element.props.src})\n`;
+        return `![${element.props.alt || element.id}](${element.props.src})\n`;
       },
     },
     email: {
