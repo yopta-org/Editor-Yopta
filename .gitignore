@@ -67,3 +67,5 @@ test-results/
 .pnp.*
 
 .env
+
+.yarn

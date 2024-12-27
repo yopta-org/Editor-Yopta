@@ -10,7 +10,11 @@
 }
 
 .yoopta-callout {
-  @apply yoo-callout-rounded-md yoo-callout-mt-2 yoo-callout-p-2 yoo-callout-pl-4 yoo-callout-leading-7 yoo-callout-text-[16px]
+  @apply yoo-callout-rounded-md yoo-callout-mt-2 yoo-callout-p-2 yoo-callout-pl-10 yoo-callout-leading-7 yoo-callout-text-[16px] yoo-callout-relative yoo-callout-gap-3
+}
+
+.yoopta-callout-icon {
+  @apply yoo-callout-mt-1.5 yoo-callout-w-4 yoo-callout-absolute yoo-callout-left-4 yoo-callout-top-2
 }
 
 .yoopta-callout-theme-default {

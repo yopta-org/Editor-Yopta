@@ -6,6 +6,8 @@ type Props = {
 };
 
 export const GithubSponsors = ({ sponsors }: Props) => {
+  if (!sponsors || !sponsors?.current) return null;
+
   return (
     <div>
       <h4 className="text-center mt-4 text-lg font-semibold">Sponsors 💖</h4>
