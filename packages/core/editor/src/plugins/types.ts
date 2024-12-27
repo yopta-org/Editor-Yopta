@@ -93,7 +93,7 @@ export type Plugin<TElementMap extends Record<string, SlateElement>, TPluginOpti
   extensions?: (slate: SlateEditor, editor: YooEditor, blockId: string) => SlateEditor;
   commands?: Record<string, (editor: YooEditor, ...args: any[]) => any>;
   elements: {
-    [K in keyof TElementMap]: PluginElement<keyof TElementMap, TElementMap[K]['props']>;
+    [K in keyof TElementMap]: PluginElement<Exclude<keyof TElementMap, K>, TElementMap[K]['props']>;
   };
   events?: PluginEvents;
   options?: PluginOptions<TPluginOptions>;

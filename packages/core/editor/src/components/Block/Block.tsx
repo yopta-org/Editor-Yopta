@@ -51,7 +51,7 @@ const Block = memo(({ children, block, blockId, onActiveDragHandleChange }: Bloc
       onBlur={onBlur}
     >
       <div style={styles.content}>{children}</div>
-      {isSelected && !editor.readOnly && <div className="yoopta-selection-block" />}
+      {!editor.readOnly && <div data-block-selected={isSelected} className="yoopta-selection-block" />}
     </div>
   );
 });
