@@ -54,7 +54,9 @@ const Callout = new YooptaPlugin<CalloutElementMap>({
 
         return `<dl data-theme="${
           element.props?.theme || 'default'
-        }" data-meta-align="${align}" data-meta-depth="${depth}" style="margin-left: ${depth}px; text-align: ${align}; padding: .5rem .5rem .5rem 1rem; margin-top: .5rem; border-radius: .375rem; color: ${
+        }" data-meta-align="${align}" data-meta-depth="${depth}" style="margin-left: ${
+          depth * 20
+        }px; text-align: ${align}; padding: .5rem .5rem .5rem 1rem; margin-top: .5rem; border-radius: .375rem; color: ${
           theme.color
         }; border-left: ${theme.borderLeft || 0}; background-color: ${theme.backgroundColor}">${serializeTextNodes(
           element.children,
@@ -64,6 +66,33 @@ const Callout = new YooptaPlugin<CalloutElementMap>({
     markdown: {
       serialize: (element, text) => {
         return `> ${serializeTextNodesIntoMarkdown(element.children)}`;
+      },
+    },
+    email: {
+      serialize: (element, text, blockMeta) => {
+        const theme: CSSProperties = CALLOUT_THEME_STYLES[element.props?.theme || 'default'];
+        const { align = 'left', depth = 0 } = blockMeta || {};
+
+        return `
+        <table style="width: 100%; ">
+          <tbody style="width: 100%;">
+            <tr>
+                <td data-theme="${
+                  element.props?.theme || 'default'
+                }" data-meta-align="${align}" data-meta-depth="${depth}" style="
+    font-size: 16px;
+    line-height: 1.75rem;
+    margin-left: ${
+      depth * 20
+    }px; text-align: ${align}; padding: .5rem .5rem .5rem 1rem; margin-top: .5rem; border-radius: .375rem; color: ${
+          theme.color
+        }; border-left: ${theme.borderLeft || 0}; background-color: ${theme.backgroundColor};">${serializeTextNodes(
+          element.children,
+        )}
+              </td>
+            </tr>
+        </tbody>
+      </table>`;
       },
     },
   },

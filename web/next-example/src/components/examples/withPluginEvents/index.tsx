@@ -26,12 +26,6 @@ import { initValue } from './initValue';
 const plugins = [
   Paragraph.extend({
     events: {
-      onCreate: (editor, blockId) => {
-        console.log('onCreate', blockId);
-      },
-      onDestroy: (editor, blockId) => {
-        console.log('onCreate', blockId);
-      },
       // ...or typical DOM event handlers
       // [NOTE] - DOM event handlers are have carrying function
       onClick(editor, slate, options) {
@@ -124,12 +118,6 @@ const MARKS = [Bold, Italic, CodeMark, Underline, Strike, Highlight];
 function WithPluginEvents() {
   const editor = useMemo(() => createYooptaEditor(), []);
   const selectionRef = useRef(null);
-
-  useEffect(() => {
-    editor.on('change', (value) => {
-      console.log('value', value);
-    });
-  }, []);
 
   return (
     <div

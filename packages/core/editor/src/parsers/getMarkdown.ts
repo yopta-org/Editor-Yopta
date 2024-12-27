@@ -1,4 +1,4 @@
-import { SlateElement, YooEditor, YooptaBlockData, YooptaContentValue } from '../editor/types';
+import { SlateElement, YooEditor, YooptaBlockBaseMeta, YooptaBlockData, YooptaContentValue } from '../editor/types';
 
 export function serialize(editor: YooEditor, blocksData: YooptaBlockData[]) {
   const blocks = blocksData.sort((a, b) => (a.meta.order > b.meta.order ? 1 : -1));
@@ -12,6 +12,7 @@ export function serialize(editor: YooEditor, blocksData: YooptaBlockData[]) {
       if (plugin.parsers?.markdown?.serialize) {
         const serialized = plugin.parsers.markdown.serialize(
           element,
+          // @ts-ignore - fixme
           element.children.map((child) => child.text).join(''),
         );
         if (serialized) return serialized;

@@ -1,16 +1,17 @@
-import { BaseText, Descendant } from 'slate';
-import { SlateElement, YooEditor, YooptaContentValue } from '../editor/types';
+import { Paths } from '../editor/paths';
+import { SlateElement, YooEditor, YooptaBlockBaseMeta, YooptaContentValue } from '../editor/types';
 import { getPluginByInlineElement } from '../utils/blockElements';
 
 const MARKS_NODE_NAME_MATCHERS_MAP = {
-  underline: { type: 'underline', tag: 'U' },
-  strike: { type: 'strike', tag: 'S' },
-  code: { type: 'code', tag: 'CODE' },
-  italic: { type: 'italic', tag: 'I' },
-  bold: { type: 'bold', tag: 'B' },
+  underline: { type: 'underline', tag: 'u' },
+  strike: { type: 'strike', tag: 's' },
+  code: { type: 'code', tag: 'code' },
+  italic: { type: 'italic', tag: 'i' },
+  bold: { type: 'bold', tag: 'strong' },
+  strong: { type: 'bold', tag: 'strong' },
 };
 
-function serializeChildren(children, plugins) {
+function serializeChildren(children, plugins, editor) {
   return children
     .map((child) => {
       let innerHtml = '';
@@ -29,7 +30,7 @@ function serializeChildren(children, plugins) {
 
         if (childPlugin && childPlugin.parsers?.html?.serialize) {
           // We don't pass block meta data to this because it's inline element inside block
-          innerHtml = childPlugin.parsers.html.serialize(child, serializeChildren(child.children, plugins));
+          innerHtml = childPlugin.parsers.html.serialize(child, serializeChildren(child.children, plugins, editor));
           return innerHtml;
         }
       }
@@ -41,9 +42,10 @@ function serializeChildren(children, plugins) {
 
 export function getHTML(editor: YooEditor, content: YooptaContentValue): string {
   const blocks = Object.values(content)
-    .filter((item) => {
-      if (Array.isArray(editor.selectedBlocks) && editor.selectedBlocks.length > 0) {
-        return editor.selectedBlocks?.includes(item.meta.order);
+    .filter((block) => {
+      const selectedPaths = Paths.getSelectedPaths(editor);
+      if (Array.isArray(selectedPaths) && selectedPaths.length > 0) {
+        return selectedPaths?.includes(block.meta.order);
       }
 
       return true;
@@ -54,7 +56,7 @@ export function getHTML(editor: YooEditor, content: YooptaContentValue): string 
     const plugin = editor.plugins[blockData.type];
 
     if (plugin && plugin.parsers?.html?.serialize) {
-      const content = serializeChildren((blockData.value[0] as SlateElement).children, editor.plugins);
+      const content = serializeChildren((blockData.value[0] as SlateElement).children, editor.plugins, editor);
       return plugin.parsers.html.serialize(blockData.value[0] as SlateElement, content, blockData.meta);
     }
 

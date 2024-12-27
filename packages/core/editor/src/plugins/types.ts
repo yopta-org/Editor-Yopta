@@ -43,17 +43,17 @@ export type PluginCustomEditorRenderProps = {
 export type PluginDefaultProps = { nodeType?: 'block' | 'inline' | 'void' | 'inlineVoid' };
 export type PluginElementProps<T> = PluginDefaultProps & T;
 
-export type PluginElement<T> = {
+export type PluginElement<TKeys, T> = {
   render: (props: PluginElementRenderProps) => JSX.Element;
   props?: PluginElementProps<T>;
   options?: PluginElementOptions;
   asRoot?: boolean;
-  children?: string[];
+  children?: TKeys[];
   rootPlugin?: string;
 };
 
 export type PluginElementsMap<TKeys extends string = string, TProps = PluginDefaultProps> = {
-  [key in TKeys]: PluginElement<TProps>;
+  [key in TKeys]: PluginElement<TKeys, TProps>;
 };
 
 export type EventHandlers = {
@@ -73,7 +73,7 @@ export type PluginEventHandlerOptions = {
 export type ElementPropsMap = Record<string, Record<string, unknown>>;
 
 export type PluginEvents = {
-  onBeforeCreate?: (editor: YooEditor, blockId: string) => SlateElement;
+  onBeforeCreate?: (editor: YooEditor) => SlateElement;
   onCreate?: (editor: YooEditor, blockId: string) => void;
   onDestroy?: (editor: YooEditor, blockId: string) => void;
 } & EventHandlers;
@@ -84,7 +84,7 @@ export type Plugin<TElementMap extends Record<string, SlateElement>, TPluginOpti
   extensions?: (slate: SlateEditor, editor: YooEditor, blockId: string) => SlateEditor;
   commands?: Record<string, (editor: YooEditor, ...args: any[]) => any>;
   elements: {
-    [K in keyof TElementMap]: PluginElement<TElementMap[K]['props']>;
+    [K in keyof TElementMap]: PluginElement<Exclude<keyof TElementMap, K>, TElementMap[K]['props']>;
   };
   events?: PluginEvents;
   options?: PluginOptions<TPluginOptions>;
@@ -93,15 +93,15 @@ export type Plugin<TElementMap extends Record<string, SlateElement>, TPluginOpti
 
 export type PluginParsers = {
   deserialize?: PluginDeserializeParser;
-  serialize?: PluginserializeParser;
+  serialize?: PluginSerializeParser;
 };
 
-export type PluginParserTypes = 'html' | 'markdown';
+export type PluginParserTypes = 'html' | 'markdown' | 'email';
 export type PluginParserValues = 'deserialize' | 'serialize';
 
-export type PluginserializeParser = (
+export type PluginSerializeParser = (
   element: SlateElement,
-  text: string,
+  content: string,
   blockMetaData?: YooptaBlockBaseMeta,
 ) => string;
 

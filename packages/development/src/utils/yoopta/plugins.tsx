@@ -10,7 +10,7 @@ import File from '@yoopta/file';
 import Embed from '@yoopta/embed';
 import Accordion, { AccordionCommands } from '@yoopta/accordion';
 import Code from '@yoopta/code';
-import Table from '@yoopta/table';
+import Table, { TableCommands } from '@yoopta/table';
 import Divider from '@yoopta/divider';
 
 import { uploadToCloudinary } from '../cloudinary';
@@ -18,45 +18,17 @@ import { Elements } from '@yoopta/editor';
 
 export const YOOPTA_PLUGINS = [
   Table.extend({
-    renders: {
-      table: (props) => {
-        return (
-          <div className="my-6 w-full overflow-y-auto">
-            <table className="w-full">
-              <tbody {...props.attributes}>{props.children}</tbody>
-            </table>
-          </div>
-        );
-      },
-      'table-row': (props) => {
-        return (
-          <tr {...props.attributes} className="m-0 !border-t p-0 even:bg-[#f4f4f5]">
-            {props.children}
-          </tr>
-        );
-      },
-      'table-data-cell': (props) => {
-        const Node = props.isDataCellAsHeader ? 'th' : 'td';
-        const style = {
-          maxWidth: props.width,
-          minWidth: props.height,
-          backgroundColor: props.selected ? '#f0f0f0' : 'transparent',
-        };
-
-        return (
-          <Node
-            {...props.attributes}
-            style={style}
-            className="!border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right"
-          >
-            {props.children}
-          </Node>
-        );
+    events: {
+      onBeforeCreate: (editor) => {
+        return TableCommands.buildTableElements(editor, { rows: 3, columns: 3 });
       },
     },
     options: {
-      HTMLAttributes: {
-        className: 'table-element-extended',
+      // HTMLAttributes: {
+      //   className: 'table-element-extended',
+      // },
+      display: {
+        title: 'Table with Shadcn',
       },
     },
   }),
@@ -104,9 +76,9 @@ export const YOOPTA_PLUGINS = [
   }),
   Paragraph.extend({
     options: {
-      HTMLAttributes: {
-        className: 'paragraph-element-extended',
-      },
+      // HTMLAttributes: {
+      //   className: 'paragraph-element-extended',
+      // },
     },
   }),
   Image.extend({
@@ -129,9 +101,9 @@ export const YOOPTA_PLUGINS = [
     },
     options: {
       maxSizes: { maxHeight: 750, maxWidth: 750 },
-      HTMLAttributes: {
-        className: 'image-element-extended',
-      },
+      // HTMLAttributes: {
+      //   className: 'image-element-extended',
+      // },
 
       onUpload: async (file: File) => {
         const data = await uploadToCloudinary(file, 'image');
@@ -147,36 +119,25 @@ export const YOOPTA_PLUGINS = [
     },
   }),
   Headings.HeadingOne.extend({
-    events: {
-      onCreate: (editor, id) => {
-        console.log('HeadingOne onCreate', editor, id);
-      },
-      onDestroy: (editor, id) => {
-        console.log('HeadingOne onDestroy', editor, id);
-      },
-    },
     options: {
-      HTMLAttributes: {
-        className: 'heading-one-element-extended',
-        style: {
-          color: 'red !important',
-        },
-      },
+      // HTMLAttributes: {
+      //   className: 'heading-one-element-extended',
+      // },
     },
   }),
   Headings.HeadingTwo.extend({
     options: {
-      HTMLAttributes: {
-        className: 'heading-two-element-extended',
-      },
+      // HTMLAttributes: {
+      //   className: 'heading-two-element-extended',
+      // },
     },
   }),
   Headings.HeadingThree,
   Blockquote.extend({
     options: {
-      HTMLAttributes: {
-        className: 'blockquote-element-extended',
-      },
+      // HTMLAttributes: {
+      //   className: 'blockquote-element-extended',
+      // },
     },
   }),
   Callout.extend({
@@ -187,16 +148,16 @@ export const YOOPTA_PLUGINS = [
       }),
     },
     options: {
-      HTMLAttributes: {
-        className: 'callout-element-extended',
-      },
+      // HTMLAttributes: {
+      //   className: 'callout-element-extended',
+      // },
     },
   }),
   Lists.BulletedList.extend({
     options: {
-      HTMLAttributes: {
-        className: 'bulleted-list-element-extended',
-      },
+      // HTMLAttributes: {
+      //   className: 'bulleted-list-element-extended',
+      // },
     },
   }),
   Lists.NumberedList,
@@ -223,9 +184,9 @@ export const YOOPTA_PLUGINS = [
       }),
     },
     options: {
-      HTMLAttributes: {
-        className: 'video-element-extended',
-      },
+      // HTMLAttributes: {
+      //   className: 'video-element-extended',
+      // },
       onUploadPoster: async (file: File) => {
         const data = await uploadToCloudinary(file, 'image');
         return data.secure_url;
@@ -253,7 +214,7 @@ export const YOOPTA_PLUGINS = [
     },
     options: {
       HTMLAttributes: {
-        className: 'link-element',
+        // className: 'link-element',
       },
     },
   }),
