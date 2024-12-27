@@ -11,13 +11,28 @@
   "dependencies": {
     "@hocuspocus/extension-logger": "^2.14.0",
     "@hocuspocus/extension-sqlite": "^2.9.0",
-    "@hocuspocus/server": "^2.9.0"
+    "@hocuspocus/server": "^2.9.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "pg": "^8.13.1",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.5",
+    "ws": "^8.18.0",
+    "y-websocket": "^2.1.0",
+    "yjs": "^13.6.10"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
     "@types/node": "^20.0.0",
+    "@types/pg": "^8.11.10",
+    "@types/sequelize": "^4.28.20",
+    "@types/ws": "^8.5.13",
     "cross-env": "^7.0.3",
     "rimraf": "^5.0.0",
     "tsup": "^8.0.0",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "eslint": "^8.56.0",
+    "prettier": "^3.1.1"
   }
 }

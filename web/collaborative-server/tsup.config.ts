@@ -1,12 +1,13 @@
 import { defineConfig } from 'tsup';
 
 export default defineConfig({
-  entry: ['src/server.ts'],
-  format: ['cjs'],
-  clean: true,
-  sourcemap: true,
-  onSuccess: process.env.NODE_ENV === 'development' ? 'node dist/server.js' : undefined,
-  env: {
-    NODE_ENV: process.env.NODE_ENV || 'development',
-  },
+  entry: ['src/index.ts'], // Основной входной файл
+  format: ['cjs', 'esm'], // Поддержка CommonJS и ES Modules
+  dts: true, // Генерация файлов определений типов
+  splitting: false, // Отключаем code splitting, так как это серверное приложение
+  sourcemap: true, // Включаем source maps для отладки
+  clean: true, // Очистка папки dist перед сборкой
+  minify: false, // Отключаем минификацию для лучшей отладки
+  outDir: 'dist', // Папка для собранных файлов
+  target: 'node18', // Целевая версия Node.js
 });
