@@ -39,14 +39,10 @@ const BulletedList = new YooptaPlugin<Pick<ListElementMap, 'bulleted-list'>>({
             const align = (el.getAttribute('data-meta-align') || 'left') as YooptaBlockData['meta']['align'];
             const depth = parseInt(el.getAttribute('data-meta-depth') || '0', 10);
 
-            const deserializedList = deserializeListNodes(editor, el);
-
-            return [buildBlockData({
-              id: generateId(),
-              type: 'BulletedList',
-              value: deserializedList,
-              meta: { order: 0, depth: depth, align },
-            })]
+            const deserializedList = deserializeListNodes(editor, el, { type: 'BulletedList', depth, align });
+            if (deserializedList.length > 0) {
+              return deserializedList;
+            }
           }
         },
       },
@@ -60,6 +56,7 @@ const BulletedList = new YooptaPlugin<Pick<ListElementMap, 'bulleted-list'>>({
     },
     markdown: {
       serialize: (element, text) => {
+        console.log({element})
         return `- ${serializeTextNodesIntoMarkdown(element.children)}`;
       },
     },
