@@ -1,5 +1,24 @@
 # Changelog
 
+## [4.9.3] - 2024-12-27
+
+### Added
+
+- `Added icons to callout render`
+- `Added **selection** of current block on *editor.path*`
+- `Deserializer for images in markdown`
+- `More video embed types (Loom & Wistia)`
+
+## [4.9.2] - 2024-11-11
+
+### Added
+
+- `Added Email-Builder by @yoopta/email-builder`
+- `Email export: accordion component by`
+- `Feature/email builder resend integration`
+- `Feature: email video export and thumbnail`
+- `Add email export, implement export for paragraph and headings`
+
 ## [4.9.1] - 2024-10-31
 
 ### Added
