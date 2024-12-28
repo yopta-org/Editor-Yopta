@@ -60,7 +60,7 @@ export function deserializeListNodes(
                         {
                             id: generateId(),
                             type: 'todo-list',
-                            children: [{ text: cleanText }],
+                            children: deserializeTextNodes(editor, listItem.childNodes),
                             props: { nodeType: 'block', checked },
                         },
                     ],
@@ -86,7 +86,7 @@ export function deserializeListNodes(
             if (blockData) {
                 const cleanedData = {
                     ...blockData,
-                    value: removeEmptyTextNodes(blockData.value),
+                    value: sanitizeTextNodes(blockData.value),
                 }
 
                 deserializedListBlocks.push(cleanedData);
@@ -110,20 +110,26 @@ export function deserializeListNodes(
     return deserializedListBlocks;
 }
 
-function removeEmptyTextNodes(descendants: Descendant[]): Descendant[] {
+function sanitizeTextNodes(descendants: Descendant[]): Descendant[] {
     return descendants
         .map((descendant) => {
             if ('children' in descendant) {
                 // Recursively clean nested children
                 return {
                     ...descendant,
-                    children: removeEmptyTextNodes(descendant.children),
+                    children: sanitizeTextNodes(descendant.children),
                 };
             }
 
             // Only include text nodes that has content
             if ('text' in descendant) {
-                return !!descendant.text.trim() ? descendant : null;
+                // Clean text content for todo lists or empty text nodes
+                const cleanText = descendant.text
+                    .replace(/\[\s*[xX\s]?\s*\]/, '') // Remove [] for todo lists
+                    .replace(/\u00a0/g, ' ') // Replace non-breaking spaces
+                    .trim();
+
+                return cleanText ? { ...descendant, text: cleanText } : null; // Remove if empty
             }
 
             return descendant;
