@@ -13,7 +13,6 @@ import { IS_FOCUSED_EDITOR } from '../utils/weakMaps';
 import { deserializeHTML } from '../parsers/deserializeHTML';
 import { useEventHandlers, useSlateEditor } from './hooks';
 import { SlateElement } from '../editor/types';
-import { Paths } from '../editor/paths';
 
 type Props<TElementMap extends Record<string, SlateElement>, TOptions> = Plugin<TElementMap, TOptions> & {
   id: string;
@@ -76,7 +75,6 @@ const SlateEditorComponent = <TElementMap extends Record<string, SlateElement>, 
       if (editor.readOnly) return;
 
       editor.setPath({ current: editor.path.current, selected: editor.path.selected, selection: selection });
-      // editor.setPath({ current: selection.anchor.path[0] });
     },
     [editor.readOnly],
   );
@@ -258,6 +256,7 @@ const SlateEditorComponent = <TElementMap extends Record<string, SlateElement>, 
       slate={slate}
       initialValue={initialValue}
       onChange={onChange}
+      onSelectionChange={onSelectionChange}
       decorate={decorate}
       renderLeaf={renderLeaf}
       renderElement={renderElement}
@@ -269,7 +268,6 @@ const SlateEditorComponent = <TElementMap extends Record<string, SlateElement>, 
       customEditor={customEditor}
       readOnly={editor.readOnly}
       onPaste={onPaste}
-      onSelectionChange={onSelectionChange}
     />
   );
 };
@@ -307,7 +305,6 @@ const SlateEditorInstance = memo<SlateEditorInstanceProps>(
     onKeyDown,
     onKeyUp,
     onFocus,
-    onBlur,
     onPaste,
     customEditor,
     decorate,

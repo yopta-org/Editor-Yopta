@@ -15,7 +15,7 @@ export function getRootBlockElementType(elems: PluginElementsMap<string, unknown
 
 export function getRootBlockElement(
   elems: PluginElementsMap<string, unknown> | undefined,
-): PluginElement<unknown> | undefined {
+): PluginElement<string, unknown> | undefined {
   if (!elems) return;
 
   const rootElementType = getRootBlockElementType(elems);
@@ -70,7 +70,7 @@ export function buildSlateNodeElement(
 }
 
 function recursivelyCollectElementChildren(
-  blockElement: PluginElement<unknown>,
+  blockElement: PluginElement<string, unknown>,
   blockElements: PluginElementsMap,
   elementsMapWithTextContent?: ElementsMapWithTextContent,
 ): SlateElement[] {
