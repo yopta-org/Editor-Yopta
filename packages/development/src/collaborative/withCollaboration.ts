@@ -1,7 +1,5 @@
 import * as Y from 'yjs';
-import { Blocks, YooEditor, YooptaBlockData, YooptaOperation } from '@yoopta/editor';
-import { withSlateYjs, YjsSlateEditor } from './slate-yjs/withSlateYjs';
-import debounce from 'lodash/debounce';
+import { YooEditor, YooptaOperation } from '@yoopta/editor';
 import BlockOrderResolver from './conflict-resolver';
 
 const LOCAL_ORIGIN = Symbol('yoopta-local-change');
@@ -23,17 +21,6 @@ export type YjsYooEditor = YooEditor & {
   disconnect: () => void;
 };
 
-const isValidState = (state: unknown): state is EditorState => {
-  return (
-    !!state &&
-    typeof state === 'object' &&
-    'operations' in state &&
-    Array.isArray((state as EditorState).operations) &&
-    'timestamp' in state &&
-    typeof (state as EditorState).timestamp === 'number'
-  );
-};
-
 export const withCollaboration = (editor: YjsYooEditor, sharedState: Y.Map<EditorState>) => {
   const { applyTransforms } = editor;
 
@@ -51,8 +38,6 @@ export const withCollaboration = (editor: YjsYooEditor, sharedState: Y.Map<Edito
     const remoteOperations = state.operations;
     const resolvedOperations = orderResolver.resolveConflicts(state, editor.children);
     console.log('handleYEvents remoteOperations', remoteOperations);
-    console.log('handleYEvents state.timestamp', state.timestamp);
-    console.log('handleYEvents editor.children', editor.children);
 
     if (remoteOperations.length > 0) {
       editor.withoutSavingHistory(() => {
@@ -96,8 +81,6 @@ export const withCollaboration = (editor: YjsYooEditor, sharedState: Y.Map<Edito
     if (ops.length > 0) {
       // debounce(() => {
       editor.sharedState.doc?.transact(() => {
-        console.log('editor.applyTransforms ops', ops);
-
         editor.sharedState.set('state', {
           operations: ops,
           timestamp: Date.now(),

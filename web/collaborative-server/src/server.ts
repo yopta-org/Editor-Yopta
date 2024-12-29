@@ -1,9 +1,10 @@
-// src/server.ts
 import { Server } from '@hocuspocus/server';
 import { SQLite } from '@hocuspocus/extension-sqlite';
 import { mkdir } from 'fs/promises';
 import { join } from 'path';
 import initialValue from './data/initialValue.json';
+import { YooptaContentValue, YooptaOperation } from '@yoopta/editor';
+import { translateOperationToYoopta } from './utils/translateOperationToYoopta';
 
 const ensureDbDir = async () => {
   const dbDir = join(process.cwd(), 'db');
@@ -38,11 +39,9 @@ const createServer = async () => {
       const { context, documentName } = data;
       console.log(`👋 Client disconnected from document: ${documentName}`);
     },
-
+    debounce: 2500,
     async onLoadDocument(data) {
       const sharedContent = data.document.getMap('content');
-      console.log('📄 Document loaded sharedContent.has:', sharedContent.has('state'));
-      console.log('sharedContent', Array.from(sharedContent.values()));
 
       if (!sharedContent.has('state')) {
         const operation = {
@@ -64,7 +63,21 @@ const createServer = async () => {
 
     async onChange(data) {
       const { documentName } = data;
-      console.log(`📝 Document changed: ${documentName}`);
+      const sharedContent = data.document.getMap('content');
+      const state = sharedContent.get('state') as { operations: YooptaOperation[] };
+
+      if (Array.isArray(state.operations) && state.operations.length > 0) {
+        const content = translateOperationToYoopta(state.operations, {});
+        console.log('translated content', content);
+      }
+
+      console.log('onChange state.operations', state.operations);
+    },
+
+    async onDestroy(data) {
+      for (const [documentName, document] of data.instance.documents.entries()) {
+        console.log(`🔥 Document destroyed: ${documentName}`);
+      }
     },
   });
 

@@ -416,8 +416,8 @@ export function applyTransforms(editor: YooEditor, ops: YooptaOperation[], optio
   console.log(
     'editor.children orders',
     Object.values(editor.children)
-      .map((block) => [block.id, block.meta.order])
-      .sort((a, b) => a[1] - b[1]),
+      .sort((aKey, bKey) => aKey.meta.order - bKey.meta.order)
+      .map((block) => `${block.meta.order}: ${block.id}`),
   );
 
   const saveHistory = editor.isSavingHistory() !== false;
