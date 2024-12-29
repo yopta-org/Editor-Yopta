@@ -213,7 +213,7 @@ const SlateEditorComponent = <TElementMap extends Record<string, SlateElement>, 
             });
 
             // [TEST]
-            editor.setPath({ current: null, selected: newPaths });
+            editor.setPath({ current: null, selected: newPaths, selection: null });
           });
 
           return;
@@ -298,13 +298,13 @@ const SlateEditorInstance = memo<SlateEditorInstanceProps>(
     slate,
     initialValue,
     onChange,
+    onSelectionChange,
     renderLeaf,
     renderElement,
     eventHandlers,
     onKeyDown,
     onKeyUp,
     onFocus,
-    onSelectionChange,
     onPaste,
     customEditor,
     decorate,
