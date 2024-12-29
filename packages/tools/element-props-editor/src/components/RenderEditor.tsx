@@ -1,4 +1,14 @@
-import { Blocks, ElementPropEditor, Elements, SlateElement, YooEditor } from '@yoopta/editor';
+import {
+  Blocks,
+  ElementPropEditor,
+  Elements,
+  SlateElement,
+  useSetFocusedElement,
+  useFocusedElement,
+  YooEditor,
+  useUpdateFocusedElement,
+} from '@yoopta/editor';
+import { useCallback, useReducer, useState } from 'react';
 import { ReactEditor } from 'slate-react';
 import { RangeSizeEditor } from 'src/editors/RangeSizeEditor';
 import { ColorEditor } from '../editors/ColorEditor';
@@ -15,6 +25,8 @@ export type RenderEditorProps = {
 };
 
 export const RenderElementPropEditor = ({ editor, propEditor, propName, element }: RenderEditorProps) => {
+  const focusedElement = useFocusedElement();
+  const updateFocusedElement = useUpdateFocusedElement();
   const value = element.props?.[propName];
 
   const handleChange = (newValue: any) => {
@@ -27,8 +39,8 @@ export const RenderElementPropEditor = ({ editor, propEditor, propName, element 
 
     console.log('handleChange element:', element);
     const elementPath = Elements.getElementPath(editor, block.id, element);
-    if (!elementPath) return;
     console.log('handleChange elementPath:', elementPath);
+    if (!elementPath) return;
 
     Elements.updateElement(editor, block.id, {
       type: element.type,
@@ -37,6 +49,10 @@ export const RenderElementPropEditor = ({ editor, propEditor, propName, element 
         [propName]: newValue,
       },
       path: elementPath,
+    });
+
+    updateFocusedElement({
+      [propName]: newValue,
     });
   };
 

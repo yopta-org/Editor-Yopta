@@ -26,7 +26,7 @@ const CONTAINER_WIDTH_STYLES = {
 const GridRender = ({ element, attributes, blockId, children }: PluginElementRenderProps<GridElement>) => {
   const editor = useYooptaEditor();
   const {
-    columns = 2,
+    columns = '2',
     gap = 'md',
     minItemWidth = '200px',
     padding = 'md',
@@ -35,8 +35,7 @@ const GridRender = ({ element, attributes, blockId, children }: PluginElementRen
     border,
   } = element.props as GridElementProps;
 
-  console.log('GridRender columns', columns);
-
+  // [TODO] - change
   const gridColumns =
     typeof columns === 'number'
       ? `yoo-grid-grid-cols-${columns}`
@@ -51,7 +50,7 @@ const GridRender = ({ element, attributes, blockId, children }: PluginElementRen
         PADDING_STYLES[padding],
         CONTAINER_WIDTH_STYLES[containerWidth],
         {
-          'border rounded-lg': border,
+          'yoo-grid-border yoo-grid-rounded-lg': border,
           [gridColumns]: typeof columns === 'number',
         },
       )}

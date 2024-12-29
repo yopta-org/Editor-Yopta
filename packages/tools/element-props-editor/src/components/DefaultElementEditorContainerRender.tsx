@@ -23,7 +23,7 @@ export const DefaultElementEditorContainerRender = () => {
   });
 
   useEffect(() => {
-    console.log('DefaultElementEditorContainerRender focusedElement', focusedElement);
+    console.log('DefaultElementEditorContainerRender _CHANGED_ focusedElement', focusedElement);
     if (!focusedElement) return;
 
     const element = document.querySelector(`[data-element-id="${focusedElement.element.id}"]`);
@@ -41,7 +41,7 @@ export const DefaultElementEditorContainerRender = () => {
       window.removeEventListener('scroll', update);
       window.removeEventListener('resize', update);
     };
-  }, [focusedElement, update]);
+  }, [focusedElement?.element, update]);
 
   const editors = useMemo(() => {
     const EMPTY_EDITORS = {} as Record<ElementPropEditorType, ElementPropEditor>;
@@ -56,13 +56,14 @@ export const DefaultElementEditorContainerRender = () => {
 
     const elementEditors = plugin.elements?.[focusedElement?.element?.type]?.editors;
     return elementEditors || EMPTY_EDITORS;
-  }, [focusedElement, editor.path]);
+  }, [focusedElement?.element, editor.path]);
 
   if (!focusedElement) return null;
 
   const editorEntries = Object.entries(editors) as Array<[ElementPropEditorType, ElementPropEditor]>;
-  console.log('DefaultElementEditorContainerRender editors', editors);
   if (editorEntries.length === 0) return null;
+
+  console.log('focusedElement.element', focusedElement.element);
 
   return (
     <Portal id="edit-element">
@@ -70,9 +71,6 @@ export const DefaultElementEditorContainerRender = () => {
         ref={refs.setFloating}
         onClick={(e) => e.stopPropagation()}
         onMouseDown={(e) => e.stopPropagation()}
-        // onBlur={() => {
-        //   console.log('DefaultElementEditorContainerRender onBlur');
-        // }}
         style={floatingStyles}
         className="yoo-elements-z-50 yoo-elements-w-full yoo-elements-max-w-[220px] yoo-elements-p-2 yoo-elements-bg-white yoo-elements-rounded-lg yoo-elements-shadow-lg yoo-elements-border yoo-elements-border-gray-200 yoo-elements-max-h-[264px] yoo-elements-overflow-y-auto"
       >

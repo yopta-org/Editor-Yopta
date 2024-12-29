@@ -77,6 +77,10 @@ export {
 export type { ElementPropEditor, ElementPropEditorType } from './types/propsEditor';
 export default YooptaEditor;
 export { YooptaEditorProps, YooptaOnChangeOptions };
-export { useFocusedElement, useSetFocusedElement } from './contexts/ElementFocusManager/ElementFocusManager';
+export {
+  useFocusedElement,
+  useSetFocusedElement,
+  useUpdateFocusedElement,
+} from './contexts/ElementFocusManager/ElementFocusManager';
 
 import './styles.css';
