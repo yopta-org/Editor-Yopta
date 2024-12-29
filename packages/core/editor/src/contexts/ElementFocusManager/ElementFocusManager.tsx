@@ -13,7 +13,7 @@ type FocusedElement = {
 type FocusContextValue = {
   focusedElement: FocusedElement;
   onFocus: (focusEntity: FocusedElement) => void;
-  onUpdateFocusedElement: (props: Omit<SlateElement['props'], 'nodeType'>) => void;
+  onUpdateFocusedElement: (element: SlateElement) => void;
 };
 
 const FocusContext = createContext<FocusContextValue>({
@@ -71,14 +71,17 @@ export const ElementFocusManager: React.FC<{ children: React.ReactNode }> = ({ c
     };
   }, [editor.refElement, editor.path.current]);
 
-  const onUpdateFocusedElement = (props: Omit<SlateElement['props'], 'nodeType'>) => {
+  const onUpdateFocusedElement = (element: SlateElement) => {
     if (!focusedElement) return;
 
-    const slate = Blocks.getBlockSlate(editor, { id: focusedElement.blockId });
-    if (!slate) return;
+    console.log('onUpdateFocusedElement is refs equal', element === focusedElement?.element);
+    focusedElement.element = element;
 
-    const elementPath = ReactEditor.findPath(slate, focusedElement.element);
-    console.log('onUpdateFocusedElement elementPath', elementPath);
+    // const slate = Blocks.getBlockSlate(editor, { id: focusedElement.blockId });
+    // if (!slate) return;
+
+    // const elementPath = ReactEditor.findPath(slate, focusedElement.element);
+    // console.log('onUpdateFocusedElement elementPath', elementPath);
 
     // we need to save reference of element, so we need update props without lost reference of object
     // focusedElement.element.props = { ...focusedElement.element.props, ...props };

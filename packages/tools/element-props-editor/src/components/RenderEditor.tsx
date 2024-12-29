@@ -25,7 +25,6 @@ export type RenderEditorProps = {
 };
 
 export const RenderElementPropEditor = ({ editor, propEditor, propName, element }: RenderEditorProps) => {
-  const focusedElement = useFocusedElement();
   const updateFocusedElement = useUpdateFocusedElement();
   const value = element.props?.[propName];
 
@@ -44,15 +43,16 @@ export const RenderElementPropEditor = ({ editor, propEditor, propName, element 
 
     Elements.updateElement(editor, block.id, {
       type: element.type,
+      path: elementPath,
       props: {
         ...elementProps,
         [propName]: newValue,
       },
-      path: elementPath,
     });
 
-    updateFocusedElement({
-      [propName]: newValue,
+    Promise.resolve().then(() => {
+      const changedElement = Elements.getElement(editor, block.id, { path: elementPath, type: element.type });
+      updateFocusedElement(changedElement!);
     });
   };
 

@@ -255,22 +255,22 @@ const SlateEditorComponent = <TElementMap extends Record<string, SlateElement>, 
       const ranges = [] as NodeEntry[] & { withPlaceholder?: boolean }[];
       if (editor.readOnly) return ranges;
 
-      const [node, path] = nodeEntry;
-      const isCurrent = editor.path.current === block.meta.order;
+      // const [node, path] = nodeEntry;
+      // const isCurrent = editor.path.current === block.meta.order;
 
-      if (slate.selection && isCurrent) {
-        if (
-          !Editor.isEditor(node) &&
-          Editor.string(slate, [path[0]]) === '' &&
-          Range.includes(slate.selection, path) &&
-          Range.isCollapsed(slate.selection)
-        ) {
-          ranges.push({
-            ...slate.selection,
-            withPlaceholder: true,
-          });
-        }
-      }
+      // if (slate.selection && isCurrent) {
+      //   if (
+      //     !Editor.isEditor(node) &&
+      //     Editor.string(slate, [path[0]]) === '' &&
+      //     Range.includes(slate.selection, path) &&
+      //     Range.isCollapsed(slate.selection)
+      //   ) {
+      //     ranges.push({
+      //       ...slate.selection,
+      //       withPlaceholder: true,
+      //     });
+      //   }
+      // }
 
       return ranges;
     },
