@@ -74,7 +74,18 @@ export {
   YooptaOperation,
 } from './editor/core/applyTransforms';
 
-export type { ElementPropEditor, ElementPropEditorType } from './types/propsEditor';
+export type {
+  ElementPropEditor,
+  ElementPropEditorType,
+  SelectPropEditor,
+  ColorPropEditor,
+  NumberPropEditor,
+  TogglePropEditor,
+  TextPropEditor,
+  SizePropEditor,
+  UploadPropEditor,
+  RangeSizePropEditor,
+} from './types/propsEditor';
 export default YooptaEditor;
 export { YooptaEditorProps, YooptaOnChangeOptions };
 export {

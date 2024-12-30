@@ -49,20 +49,15 @@ export type SizePropEditor = BasePropEditor & {
   units: ('px' | 'rem' | '%')[];
 };
 
+type RangeSizeOption = {
+  label: string;
+  min: number;
+  max: number;
+};
+
 export type RangeSizePropEditor = BasePropEditor & {
   type: 'range-size';
-  options: {
-    width: {
-      label: string;
-      min: number;
-      max: number;
-    };
-    height: {
-      label: string;
-      min: number;
-      max: number;
-    };
-  };
+  options: RangeSizeOption[];
 };
 
 export type UploadPropEditor = BasePropEditor & {

@@ -52,10 +52,10 @@ const Image = new YooptaPlugin<ImageElementMap, ImagePluginOptions>({
         sizes: {
           type: 'range-size',
           label: 'Size',
-          options: {
-            width: { label: 'Width', min: 0, max: 1000 },
-            height: { label: 'Height', min: 0, max: 1000 },
-          },
+          options: [
+            { label: 'Width', min: 0, max: 1000 },
+            { label: 'Height', min: 0, max: 1000 },
+          ],
         },
       },
     },

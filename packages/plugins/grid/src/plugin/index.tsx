@@ -13,17 +13,16 @@ const GridCard = new YooptaPlugin<GridElementMap>({
   elements: {
     grid: {
       render: GridRender,
+      asRoot: true,
       props: {
         columns: 2,
         gap: 'md',
-        minItemWidth: '200px',
         padding: 'none',
         containerWidth: 'full',
         background: 'transparent',
         border: false,
       },
-      asRoot: true,
-      children: ['grid-item', 'grid-item', 'grid-item'],
+      children: ['grid-item'],
       editors: {
         columns: {
           type: 'select',
@@ -46,11 +45,6 @@ const GridCard = new YooptaPlugin<GridElementMap>({
             { label: 'Medium', value: 'md' },
             { label: 'Large', value: 'lg' },
           ],
-        },
-        minItemWidth: {
-          type: 'size',
-          label: 'Min Item Width',
-          units: ['px', 'rem', '%'],
         },
         background: {
           type: 'color',
@@ -85,36 +79,6 @@ const GridCard = new YooptaPlugin<GridElementMap>({
         border: false,
       },
       children: ['grid-item-header', 'grid-item-content'],
-      editors: {
-        colspan: {
-          type: 'number',
-          label: 'Colspan',
-        },
-        rowspan: {
-          type: 'number',
-          label: 'Rowspan',
-        },
-        variant: {
-          type: 'select',
-          label: 'Variant',
-          options: [
-            { label: 'Default', value: 'default' },
-            { label: 'Card', value: 'card' },
-            { label: 'Simple', value: 'simple' },
-          ],
-        },
-        aspectRatio: {
-          type: 'select',
-          label: 'Aspect Ratio',
-          options: [
-            { label: '1:1', value: '1:1' },
-            { label: '16:9', value: '16:9' },
-            { label: '4:3', value: '4:3' },
-            { label: '3:2', value: '3:2' },
-            { label: '2:1', value: '2:1' },
-          ],
-        },
-      },
     },
     'grid-item-header': {
       render: GridItemHeaderRender,

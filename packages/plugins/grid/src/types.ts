@@ -23,7 +23,6 @@ export type GridContainerWidth = 'full' | 'container' | 'narrow';
 export type GridElementProps = {
   columns: GridColumns;
   gap: GridPadding;
-  minItemWidth?: string;
   padding?: GridPadding;
   containerWidth?: GridContainerWidth;
   background?: string;

@@ -28,7 +28,6 @@ const GridRender = ({ element, attributes, blockId, children }: PluginElementRen
   const {
     columns = '2',
     gap = 'md',
-    minItemWidth = '200px',
     padding = 'md',
     containerWidth = 'container',
     background,
@@ -39,7 +38,7 @@ const GridRender = ({ element, attributes, blockId, children }: PluginElementRen
   const gridColumns =
     typeof columns === 'number'
       ? `yoo-grid-grid-cols-${columns}`
-      : `yoo-grid-grid-template-columns: repeat(${columns}, minmax(${minItemWidth}, 1fr))`;
+      : `yoo-grid-grid-template-columns: repeat(${columns}, minmax(200px, 1fr))`;
 
   return (
     <div
@@ -56,7 +55,7 @@ const GridRender = ({ element, attributes, blockId, children }: PluginElementRen
       )}
       style={{
         ...(typeof columns !== 'number' && {
-          gridTemplateColumns: `repeat(${columns}, minmax(${minItemWidth}, 1fr))`,
+          gridTemplateColumns: `repeat(${columns}, minmax(200px, 1fr))`,
         }),
         ...(background && { backgroundColor: background }),
       }}
@@ -80,23 +79,3 @@ const GridRender = ({ element, attributes, blockId, children }: PluginElementRen
 };
 
 export { GridRender };
-
-// grid
-//   grid-item
-//     grid-item-header
-//       grid-item-image
-//     grid-item-content
-//       grid-item-title
-//       grid-item-description
-//     grid-item-footer
-//   grid-item
-//     grid-item-header
-//       grid-item-image
-//     grid-item-content
-//       grid-item-title
-//       grid-item-description
-//     grid-item-footer
-//     grid-item
-//       grid-item-header
-//       grid-item-content
-//       grid-item-footer

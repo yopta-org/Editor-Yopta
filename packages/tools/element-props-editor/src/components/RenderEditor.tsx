@@ -91,9 +91,9 @@ export const RenderElementPropEditor = ({ editor, propEditor, propName, element 
         <ColorEditor
           value={value}
           onChange={handleChange}
-          presets={propEditor.presets}
           label={propEditor.label}
           description={propEditor.description}
+          presets={propEditor.presets}
         />
       );
 
