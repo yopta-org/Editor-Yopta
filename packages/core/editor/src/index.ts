@@ -24,6 +24,7 @@ export { getRootBlockElementType, getRootBlockElement } from './utils/blockEleme
 export { findPluginBlockByPath } from './utils/findPluginBlockByPath';
 export { findSlateBySelectionPath } from './utils/findSlateBySelectionPath';
 export { deserializeTextNodes } from './parsers/deserializeTextNodes';
+export { deserializeListNodes } from './parsers/deserializeListNodes';
 export { serializeTextNodes, serializeTextNodesIntoMarkdown } from './parsers/serializeTextNodes';
 
 export { createYooptaEditor } from './editor';

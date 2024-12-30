@@ -5,7 +5,7 @@ import {
   deserializeTextNodes,
   serializeTextNodes,
   serializeTextNodesIntoMarkdown,
-  Blocks,
+  Blocks, deserializeListNodes,
 } from '@yoopta/editor';
 import { NumberedListCommands } from '../commands';
 import { NumberedListRender } from '../elements/NumberedList';
@@ -39,35 +39,13 @@ const NumberedList = new YooptaPlugin<Pick<ListElementMap, 'numbered-list'>>({
         nodeNames: ['OL'],
         parse(el, editor) {
           if (el.nodeName === 'OL') {
-            const listItems = el.querySelectorAll('li');
-
             const align = (el.getAttribute('data-meta-align') || 'left') as YooptaBlockData['meta']['align'];
             const depth = parseInt(el.getAttribute('data-meta-depth') || '0', 10);
 
-            const numberedListBlocks: YooptaBlockData[] = Array.from(listItems)
-              .filter((listItem) => {
-                const textContent = listItem.textContent || '';
-                const isTodoListItem = /\[\s*\S?\s*\]/.test(textContent);
-
-                return !isTodoListItem;
-              })
-              .map((listItem, i) => {
-                return Blocks.buildBlockData({
-                  id: generateId(),
-                  type: 'NumberedList',
-                  value: [
-                    {
-                      id: generateId(),
-                      type: 'numbered-list',
-                      children: deserializeTextNodes(editor, listItem.childNodes),
-                      props: { nodeType: 'block' },
-                    },
-                  ],
-                  meta: { order: 0, depth, align },
-                });
-              });
-
-            if (numberedListBlocks.length > 0) return numberedListBlocks;
+            const deserializedList = deserializeListNodes(editor, el, { type: 'NumberedList', depth, align });
+            if (deserializedList.length > 0) {
+              return deserializedList;
+            }
           }
         },
       },

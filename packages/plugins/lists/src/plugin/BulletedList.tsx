@@ -1,6 +1,6 @@
 import {
   buildBlockData,
-  deserializeTextNodes,
+  deserializeListNodes,
   generateId,
   serializeTextNodes,
   serializeTextNodesIntoMarkdown,
@@ -36,35 +36,13 @@ const BulletedList = new YooptaPlugin<Pick<ListElementMap, 'bulleted-list'>>({
         nodeNames: ['UL'],
         parse(el, editor) {
           if (el.nodeName === 'UL') {
-            const listItems = el.querySelectorAll('li');
-
             const align = (el.getAttribute('data-meta-align') || 'left') as YooptaBlockData['meta']['align'];
             const depth = parseInt(el.getAttribute('data-meta-depth') || '0', 10);
 
-            const bulletListBlocks: YooptaBlockData[] = Array.from(listItems)
-              .filter((listItem) => {
-                const textContent = listItem.textContent || '';
-                const isTodoListItem = /\[\s*\S?\s*\]/.test(textContent);
-
-                return !isTodoListItem;
-              })
-              .map((listItem) => {
-                return buildBlockData({
-                  id: generateId(),
-                  type: 'BulletedList',
-                  value: [
-                    {
-                      id: generateId(),
-                      type: 'bulleted-list',
-                      children: deserializeTextNodes(editor, listItem.childNodes),
-                      props: { nodeType: 'block' },
-                    },
-                  ],
-                  meta: { order: 0, depth: depth, align },
-                });
-              });
-
-            if (bulletListBlocks.length > 0) return bulletListBlocks;
+            const deserializedList = deserializeListNodes(editor, el, { type: 'BulletedList', depth, align });
+            if (deserializedList.length > 0) {
+              return deserializedList;
+            }
           }
         },
       },
@@ -78,6 +56,7 @@ const BulletedList = new YooptaPlugin<Pick<ListElementMap, 'bulleted-list'>>({
     },
     markdown: {
       serialize: (element, text) => {
+        console.log({element})
         return `- ${serializeTextNodesIntoMarkdown(element.children)}`;
       },
     },
