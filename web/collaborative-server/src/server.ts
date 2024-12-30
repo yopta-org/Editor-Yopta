@@ -66,12 +66,14 @@ const createServer = async () => {
       const sharedContent = data.document.getMap('content');
       const state = sharedContent.get('state') as { operations: YooptaOperation[] };
 
+      console.log(`📝 State changed: ${documentName}`, state);
+
       if (Array.isArray(state.operations) && state.operations.length > 0) {
         const content = translateOperationToYoopta(state.operations, {});
         console.log('translated content', content);
       }
 
-      console.log('onChange state.operations', state.operations);
+      // console.log('onChange state.operations', state.operations);
     },
 
     async onDestroy(data) {
