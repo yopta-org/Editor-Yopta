@@ -39,6 +39,7 @@ const BulletedList = new YooptaPlugin<Pick<ListElementMap, 'bulleted-list'>>({
             const align = (el.getAttribute('data-meta-align') || 'left') as YooptaBlockData['meta']['align'];
             const depth = parseInt(el.getAttribute('data-meta-depth') || '0', 10);
 
+            // [TODO] - Fix losing marks when deserializing
             const deserializedList = deserializeListNodes(editor, el, { type: 'BulletedList', depth, align });
             if (deserializedList.length > 0) {
               return deserializedList;
@@ -56,7 +57,7 @@ const BulletedList = new YooptaPlugin<Pick<ListElementMap, 'bulleted-list'>>({
     },
     markdown: {
       serialize: (element, text) => {
-        console.log({element})
+        // [TODO] - Add depth to markdown
         return `- ${serializeTextNodesIntoMarkdown(element.children)}`;
       },
     },
