@@ -26,9 +26,9 @@ export const sequelize = new Sequelize({
 export async function initializeDatabase() {
   try {
     await sequelize.query(`
-      SELECT 'CREATE DATABASE yoopta_collab'
+      SELECT 'CREATE DATABASE ${process.env.DB_NAME || 'yoopta_collab'}'
       WHERE NOT EXISTS (
-        SELECT FROM pg_database WHERE datname = 'yoopta_collab'
+        SELECT FROM pg_database WHERE datname = '${process.env.DB_NAME || 'yoopta_collab'}'
       )
     `);
 

@@ -6,7 +6,10 @@
     "dev": "npm run clean && cross-env NODE_ENV=development tsup --watch",
     "build": "npm run clean && cross-env NODE_ENV=production tsup",
     "start": "cross-env NODE_ENV=production node dist/server.js",
-    "clean": "rimraf dist db"
+    "clean": "rimraf dist db",
+    "migration:new": "./node_modules/.bin/sequelize migration:create --name",
+    "migrate": "./node_modules/.bin/sequelize db:migrate",
+    "migrate:undo": "./node_modules/.bin/sequelize db:migrate:undo"
   },
   "dependencies": {
     "@hocuspocus/extension-logger": "^2.14.0",
@@ -29,10 +32,11 @@
     "@types/sequelize": "^4.28.20",
     "@types/ws": "^8.5.13",
     "cross-env": "^7.0.3",
-    "rimraf": "^5.0.0",
-    "tsup": "^8.0.0",
-    "typescript": "^5.0.0",
     "eslint": "^8.56.0",
-    "prettier": "^3.1.1"
+    "prettier": "^3.1.1",
+    "rimraf": "^5.0.0",
+    "sequelize-cli": "^6.6.2",
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0"
   }
 }
