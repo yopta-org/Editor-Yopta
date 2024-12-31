@@ -1,7 +1,7 @@
-import { Descendant } from 'slate';
+import { Descendant, Element } from 'slate';
 import { deserializeTextNodes, generateId, YooEditor, YooptaBlockData } from '@yoopta/editor';
 
-type ListHTMLElement = HTMLUListElement | HTMLOListElement | Element;
+type ListHTMLElement = HTMLUListElement | HTMLOListElement | HTMLElement;
 
 type DeserializeListBlockOptions = {
   depth?: number;
@@ -77,9 +77,16 @@ export function deserializeListNodes(
       }
 
       if (blockData) {
+        const slateChildren = sanitizeTextNodes(blockData.value as Descendant[]).map((child) => {
+          if (Element.isElement(child)) {
+            return child.children.length > 0 ? child : { ...child, children: [{ text: '' }] };
+          }
+          return child;
+        });
+
         const cleanedData = {
           ...blockData,
-          value: sanitizeTextNodes(blockData.value as Descendant[]),
+          value: slateChildren,
         };
 
         deserializedListBlocks.push(cleanedData);
@@ -107,7 +114,6 @@ function sanitizeTextNodes(descendants: Descendant[]): Descendant[] {
   return descendants
     .map((descendant) => {
       if ('children' in descendant) {
-        // Recursively clean nested children
         return {
           ...descendant,
           children: sanitizeTextNodes(descendant.children),
@@ -119,8 +125,7 @@ function sanitizeTextNodes(descendants: Descendant[]): Descendant[] {
         // Clean text content for todo lists or empty text nodes
         const cleanText = descendant.text
           .replace(/\[\s*[xX\s]?\s*\]/, '') // Remove [] for todo lists
-          .replace(/\u00a0/g, ' ') // Replace non-breaking spaces
-          .trim();
+          .replace(/\u00a0/g, ' '); // Replace non-breaking spaces
 
         return cleanText ? { ...descendant, text: cleanText } : null; // Remove if empty
       }
