@@ -24,26 +24,6 @@
 }
 
 /* Todo list */
-/* .yoopta-todo-list {
-  @apply yoo-lists-relative yoo-lists-flex yoo-lists-items-start yoo-lists-gap-3 yoo-lists-py-1;
-}
-
-.yoopta-todo-list-checkbox {
-  @apply yoo-lists-relative yoo-lists-mt-1 yoo-lists-flex yoo-lists-h-4 yoo-lists-w-4 yoo-lists-shrink-0 yoo-lists-cursor-pointer yoo-lists-items-center yoo-lists-justify-center yoo-lists-rounded yoo-lists-border yoo-lists-transition-all yoo-lists-duration-200 yoo-lists-ease-in-out focus:yoo-lists-outline-none focus:yoo-lists-ring-2 focus:yoo-lists-ring-blue-500 focus:yoo-lists-ring-offset-2
-}
-
-.yoopta-todo-list-checkbox-icon {
-  @apply yoo-lists-h-3 yoo-lists-w-3 yoo-lists-stroke-[3]
-}
-
-.yoopta-todo-list-checkbox-input {
-  @apply yoo-lists-sr-only
-}
-
-.yoopta-todo-list-content {
-  @apply yoo-lists-flex-1 yoo-lists-transition-all yoo-lists-duration-200
-} */
-
 .yoopta-todo-list {
   @apply yoo-lists-relative yoo-lists-flex yoo-lists-items-start yoo-lists-gap-3 yoo-lists-py-1;
 }
