@@ -6,6 +6,7 @@ import YooptaEditor, {
   YooEditor,
   YooptaBlockData,
   YooptaContentValue,
+  YooptaPath,
 } from '@yoopta/editor';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
@@ -794,6 +795,8 @@ const BasicExample = () => {
     setValue(value);
   };
 
+  const onPathChange = (path: YooptaPath) => {};
+
   // useEffect(() => {
   //   editor.withoutSavingHistory(() => {
   //     const id = generateId();
@@ -819,6 +822,7 @@ const BasicExample = () => {
           style={EDITOR_STYLE}
           value={value}
           onChange={onChange}
+          onPathChange={onPathChange}
         />
       </div>
     </>
