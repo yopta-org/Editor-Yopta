@@ -51,8 +51,10 @@ const NumberedList = new YooptaPlugin<Pick<ListElementMap, 'numbered-list'>>({
       },
     },
     markdown: {
-      serialize: (element, text) => {
-        return `- ${serializeTextNodesIntoMarkdown(element.children)}`;
+      serialize: (element, text, blockMeta) => {
+        const { align = 'left', depth = 0 } = blockMeta || {};
+        const indent = '  '.repeat(depth);
+        return `${indent}- ${serializeTextNodesIntoMarkdown(element.children)}`;
       },
     },
     email: {

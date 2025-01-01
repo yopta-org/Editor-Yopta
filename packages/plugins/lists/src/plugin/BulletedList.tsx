@@ -55,9 +55,10 @@ const BulletedList = new YooptaPlugin<Pick<ListElementMap, 'bulleted-list'>>({
       },
     },
     markdown: {
-      serialize: (element, text) => {
-        // [TODO] - Add depth to markdown
-        return `- ${serializeTextNodesIntoMarkdown(element.children)}`;
+      serialize: (element, text, blockMeta) => {
+        const { align = 'left', depth = 0 } = blockMeta || {};
+        const indent = '  '.repeat(depth);
+        return `${indent}- ${serializeTextNodesIntoMarkdown(element.children)}`;
       },
     },
     email: {

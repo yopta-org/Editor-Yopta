@@ -53,8 +53,12 @@ const TodoList = new YooptaPlugin<Pick<ListElementMap, 'todo-list'>>({
       },
     },
     markdown: {
-      serialize: (element, text) => {
-        return `- ${element.props.checked ? '[x]' : '[ ]'} ${serializeTextNodesIntoMarkdown(element.children)}`;
+      serialize: (element, text, blockMeta) => {
+        const { align = 'left', depth = 0 } = blockMeta || {};
+        const indent = '  '.repeat(depth);
+        return `${indent}- ${element.props.checked ? '[x]' : '[ ]'} ${serializeTextNodesIntoMarkdown(
+          element.children,
+        )}`;
       },
     },
     email: {
