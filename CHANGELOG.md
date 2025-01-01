@@ -1,5 +1,19 @@
 # Changelog
 
+## [4.9.4] - 2025-01-01
+
+### Added
+
+- `Added color picker to highlight color`
+- `Update UI for TodoList`
+- `Added _onPathChange_ prop to <YooptaEditor />`
+
+### Fixed
+
+- `Fixed depth issues for Todo/Bulleted/Numbered lists`
+- `Fixed indent for lists while serializing in markdown string`
+- `Fixed firing _onDestroy_ event after delete block`
+
 ## [4.9.3] - 2024-12-27
 
 ### Added
