@@ -1,5 +1,14 @@
-import YooptaEditor, { createYooptaEditor, YooptaOnChangeOptions, YooEditor, YooptaContentValue } from '@yoopta/editor';
-import { useMemo, useRef, useState } from 'react';
+import YooptaEditor, {
+  Blocks,
+  createYooptaEditor,
+  generateId,
+  YooptaOnChangeOptions,
+  YooEditor,
+  YooptaBlockData,
+  YooptaContentValue,
+  YooptaPath,
+} from '@yoopta/editor';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { MARKS } from '../../utils/yoopta/marks';
 import { YOOPTA_PLUGINS } from '../../utils/yoopta/plugins';
@@ -270,6 +279,17 @@ const BasicExample = () => {
     setValue(value);
   };
 
+  const onPathChange = (path: YooptaPath) => {};
+
+  // useEffect(() => {
+  //   editor.withoutSavingHistory(() => {
+  //     const id = generateId();
+
+  //     editor.setEditorValue(data as YooptaContentValue);
+  //     editor.focusBlock(id);
+  //   });
+  // }, []);
+
   return (
     <>
       <div className="px-[100px] max-w-[900px] mx-auto my-10 flex flex-col items-center" ref={selectionRef}>
@@ -286,6 +306,7 @@ const BasicExample = () => {
           style={EDITOR_STYLE}
           value={value}
           onChange={onChange}
+          onPathChange={onPathChange}
         />
       </div>
     </>
