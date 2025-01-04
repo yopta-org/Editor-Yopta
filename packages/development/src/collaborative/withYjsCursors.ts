@@ -92,7 +92,6 @@ export function withYjsCursors(
       },
       timestamp: Date.now(),
     };
-
     e.awareness.setLocalState(cursorState);
   };
 
@@ -162,7 +161,7 @@ export function withYjsCursors(
     e.awareness.off('change', awarenessChangeHandler);
     e.off('path-change', updateCursor);
     e.awareness.setLocalState(null);
-    CURSOR_CHANGE_EVENT_LISTENERS.delete(e); // очищаем слушатели
+    CURSOR_CHANGE_EVENT_LISTENERS.delete(e);
     disconnect?.();
   };
 

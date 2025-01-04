@@ -382,8 +382,6 @@ export function applyTransforms(editor: YooEditor, ops: YooptaOperation[], optio
     operations.push({ type: 'validate_block_paths' });
   }
 
-  // console.log('applyTransforms operations', operations);
-
   if (operations.length > 1) {
     // if type is insert_block, we need to sort these operations by order
     operations.sort((a, b) => {
@@ -395,6 +393,8 @@ export function applyTransforms(editor: YooEditor, ops: YooptaOperation[], optio
     });
   }
 
+  console.log('applyTransforms operations', operations);
+
   for (const operation of operations) {
     // run `set_slate` operation only if source is history
     if (operation.type === 'set_slate' && source === 'api') {
@@ -404,8 +404,6 @@ export function applyTransforms(editor: YooEditor, ops: YooptaOperation[], optio
     applyOperation(editor, operation);
   }
 
-  console.log('operations', operations);
-
   if (!isDraft(editor.children)) editor.children = createDraft(editor.children);
   editor.children = finishDraft(editor.children);
 
@@ -413,12 +411,12 @@ export function applyTransforms(editor: YooEditor, ops: YooptaOperation[], optio
     editor.path = finishDraft(editor.path);
   }
 
-  console.log(
-    'editor.children orders',
-    Object.values(editor.children)
-      .sort((aKey, bKey) => aKey.meta.order - bKey.meta.order)
-      .map((block) => `${block.meta.order}: ${block.id}`),
-  );
+  // console.log(
+  //   'editor.children orders',
+  //   Object.values(editor.children)
+  //     .sort((aKey, bKey) => aKey.meta.order - bKey.meta.order)
+  //     .map((block) => `${block.meta.order}: ${block.id}`),
+  // );
 
   const saveHistory = editor.isSavingHistory() !== false;
   if (saveHistory) {

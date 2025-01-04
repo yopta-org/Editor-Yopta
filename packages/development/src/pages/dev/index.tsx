@@ -1,31 +1,18 @@
-import YooptaEditor, {
-  createYooptaEditor,
-  YooEditor,
-  YooptaBlockData,
-  YooptaContentValue,
-  YooptaOnChangeOptions,
-  YooptaOperation,
-} from '@yoopta/editor';
+import YooptaEditor, { createYooptaEditor, YooptaContentValue, YooptaOnChangeOptions } from '@yoopta/editor';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { faker } from '@faker-js/faker';
 
 import { MARKS } from '../../utils/yoopta/marks';
 import { YOOPTA_PLUGINS } from '../../utils/yoopta/plugins';
 import { TOOLS } from '../../utils/yoopta/tools';
-import { FixedToolbar } from '../../components/FixedToolbar/FixedToolbar';
-import { HocuspocusProvider } from '@hocuspocus/provider';
 import * as Y from 'yjs';
 import { EditorState, withCollaboration, YjsYooEditor } from '@/collaborative/withCollaboration';
-import {
-  CursorState,
-  EditorWithAwareness,
-  RemoteCursorChangeEventListener,
-  withYjsCursors,
-} from '@/collaborative/withYjsCursors';
-import { Awareness } from 'y-protocols/awareness';
+import { withYjsCursors } from '@/collaborative/withYjsCursors';
+import { Awareness, encodeAwarenessUpdate } from 'y-protocols/awareness';
 import { RemoteOverlayCursor } from '@/collaborative/RemoteCursorOverlay';
 import { withYjsHistory } from '@/collaborative/withYjsHistory';
 import Head from 'next/head';
+import { WebSocketProvider } from '@/collaborative/WebSocketProvider';
 
 const EDITOR_STYLE = {
   width: 750,
@@ -44,12 +31,11 @@ const BasicExample = () => {
 
   const provider = useMemo(
     () =>
-      new HocuspocusProvider({
-        name: 'yoopta-collab',
-        url: 'ws://localhost:1234',
+      new WebSocketProvider({
+        url: 'ws://localhost:1234', // Добавьте путь, если используете
+        documentName: 'yoopta-collab',
         onConnect: () => setConnected(true),
         onDisconnect: () => setConnected(false),
-        connect: false,
       }),
     [],
   );
@@ -78,7 +64,7 @@ const BasicExample = () => {
 
   useEffect(() => {
     provider.connect();
-    return () => provider.disconnect();
+    // return () => provider.disconnect();
   }, [provider]);
 
   useEffect(() => {

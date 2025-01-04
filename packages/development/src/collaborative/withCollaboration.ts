@@ -29,7 +29,6 @@ export const withCollaboration = (editor: YjsYooEditor, sharedState: Y.Map<Edito
   editor.isLocalOrigin = (origin) => origin === editor.localOrigin;
 
   function handleYEvents(event: Y.YMapEvent<EditorState>, transaction: Y.Transaction) {
-    console.log('handleYEvents transaction.origin', transaction.origin);
     if (editor.isLocalOrigin(transaction.origin)) return;
 
     const state = sharedState.get('state');
@@ -37,7 +36,6 @@ export const withCollaboration = (editor: YjsYooEditor, sharedState: Y.Map<Edito
 
     const remoteOperations = state.operations;
     const resolvedOperations = orderResolver.resolveConflicts(state, editor.children);
-    console.log('handleYEvents remoteOperations', remoteOperations);
 
     if (remoteOperations.length > 0) {
       editor.withoutSavingHistory(() => {
@@ -62,7 +60,6 @@ export const withCollaboration = (editor: YjsYooEditor, sharedState: Y.Map<Edito
       );
       if (ops.length > 0) {
         editor.withoutSavingHistory(() => {
-          console.log('editor.connect ops', ops);
           applyTransforms(ops, { validatePaths: true });
         });
       }
