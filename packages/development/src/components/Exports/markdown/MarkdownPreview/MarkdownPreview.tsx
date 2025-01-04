@@ -39,7 +39,7 @@ type ResultHTMLProps = {
 };
 
 const ResultMD = ({ editor, value }: ResultHTMLProps) => {
-  const [debounceValue] = useDebounce(value, 100);
+  const [debounceValue] = useDebounce(value, 1000);
   const [markdown, setMarkdown] = useState<string>('');
 
   useEffect(() => {
