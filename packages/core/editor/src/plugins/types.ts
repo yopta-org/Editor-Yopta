@@ -89,6 +89,9 @@ export type Plugin<TElementMap extends Record<string, SlateElement>, TPluginOpti
   events?: PluginEvents;
   options?: PluginOptions<TPluginOptions>;
   parsers?: Partial<Record<PluginParserTypes, PluginParsers>>;
+  translations?: {
+    [language: string]: Record<string, string>;
+  };
 };
 
 export type PluginParsers = {

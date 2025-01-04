@@ -6,7 +6,7 @@ import YooptaEditor, {
   YooEditor,
   YooptaBlockData,
   YooptaContentValue,
-  YooptaPath,
+  YooptaPath, useTranslation,
 } from '@yoopta/editor';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
@@ -789,6 +789,7 @@ const BasicExample = () => {
   const editor: YooEditor = useMemo(() => createYooptaEditor(), []);
   const selectionRef = useRef<HTMLDivElement>(null);
   const [value, setValue] = useState<YooptaContentValue>(data);
+  const {setLanguage, getAvailableKeys} = useTranslation();
 
   const onChange = (value: YooptaContentValue, options: YooptaOnChangeOptions) => {
     console.log('onChange', value, options);
@@ -809,20 +810,44 @@ const BasicExample = () => {
   return (
     <>
       <div className="px-[100px] max-w-[900px] mx-auto my-10 flex flex-col items-center" ref={selectionRef}>
-        <FixedToolbar editor={editor} DEFAULT_DATA={data} />
+        <FixedToolbar editor={editor} DEFAULT_DATA={data}/>
+        <div className="flex gap-4">
+        <button className='border-primary border-2 p-2' onClick={() => setLanguage('es')}>Switch to Spanish</button>
+        <button className='border-primary border-2 p-2' onClick={() => setLanguage('en')}>Switch to English</button>
+        </div>
         <YooptaEditor
-          editor={editor}
-          plugins={YOOPTA_PLUGINS}
-          selectionBoxRoot={selectionRef}
-          marks={MARKS}
-          autoFocus={true}
-          readOnly={false}
-          placeholder="Type / to open menu"
-          tools={TOOLS}
-          style={EDITOR_STYLE}
-          value={value}
-          onChange={onChange}
-          onPathChange={onPathChange}
+            editor={editor}
+            plugins={YOOPTA_PLUGINS}
+            selectionBoxRoot={selectionRef}
+            marks={MARKS}
+            autoFocus={true}
+            readOnly={false}
+            tools={TOOLS}
+            style={EDITOR_STYLE}
+            value={value}
+            onChange={onChange}
+            onPathChange={onPathChange}
+            translations={{
+              en: {
+                core: {
+                  editor_placeholder: 'Write whatever...'
+                },
+                table: {
+                  title: 'This is the title of Table',
+                  description: 'This is the description of Table'
+                }
+              },
+              es: {
+                core: {
+                  editor_placeholder: 'Hey, this is Spanish!'
+                },
+                table: {
+                  title: 'Tabla',
+                  description: 'Tabla is Table in Spanish'
+                }
+              },
+
+            }}
         />
       </div>
     </>

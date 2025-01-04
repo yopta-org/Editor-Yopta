@@ -88,6 +88,12 @@ const BulletedList = new YooptaPlugin<Pick<ListElementMap, 'bulleted-list'>>({
       },
     },
   },
+  translations: {
+    en: {
+      title: 'Bulleted List',
+      description: 'Description of bulleted list',
+    }
+  }
 });
 
 export { BulletedList };

@@ -44,7 +44,7 @@ const SlateEditorComponent = <TElementMap extends Record<string, SlateElement>, 
   events,
   options,
   extensions: withExtensions,
-  placeholder = `Type '/' for commands`,
+  placeholder = 'core.editor_placeholder',
 }: Props<TElementMap, TOptions>) => {
   const editor = useYooptaEditor();
   const block = useBlockData(id);
