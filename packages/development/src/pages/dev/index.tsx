@@ -789,7 +789,7 @@ const BasicExample = () => {
   const editor: YooEditor = useMemo(() => createYooptaEditor(), []);
   const selectionRef = useRef<HTMLDivElement>(null);
   const [value, setValue] = useState<YooptaContentValue>(data);
-  const {setLanguage, getAvailableKeys} = useTranslation();
+  const {setLanguage} = useTranslation();
 
   const onChange = (value: YooptaContentValue, options: YooptaOnChangeOptions) => {
     console.log('onChange', value, options);
@@ -812,8 +812,9 @@ const BasicExample = () => {
       <div className="px-[100px] max-w-[900px] mx-auto my-10 flex flex-col items-center" ref={selectionRef}>
         <FixedToolbar editor={editor} DEFAULT_DATA={data}/>
         <div className="flex gap-4">
-        <button className='border-primary border-2 p-2' onClick={() => setLanguage('es')}>Switch to Spanish</button>
-        <button className='border-primary border-2 p-2' onClick={() => setLanguage('en')}>Switch to English</button>
+          <button className='border-primary border-2 p-2' onClick={() => setLanguage('es')}>Switch to Spanish</button>
+          <button className='border-primary border-2 p-2' onClick={() => setLanguage('en')}>Switch to English</button>
+          <button className='border-primary border-2 p-2' onClick={() => setLanguage('fr')}>Switch to French</button>
         </div>
         <YooptaEditor
             editor={editor}
@@ -828,25 +829,12 @@ const BasicExample = () => {
             onChange={onChange}
             onPathChange={onPathChange}
             translations={{
-              en: {
-                core: {
-                  editor_placeholder: 'Write whatever...'
-                },
+              fr: {
                 table: {
-                  title: 'This is the title of Table',
-                  description: 'This is the description of Table'
+                  title: 'Table',
+                  description: 'Table est Table en français'
                 }
               },
-              es: {
-                core: {
-                  editor_placeholder: 'Hey, this is Spanish!'
-                },
-                table: {
-                  title: 'Tabla',
-                  description: 'Tabla is Table in Spanish'
-                }
-              },
-
             }}
         />
       </div>

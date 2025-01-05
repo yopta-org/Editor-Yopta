@@ -10,7 +10,7 @@ import { BulletedListRender } from '../elements/BulletedList';
 import { onKeyDown } from '../events/onKeyDown';
 import { ListElementMap } from '../types';
 import { deserializeListNodes } from '../utils/deserializeListNodes';
-import {defaultLocales} from '../locales';
+import {defaultBulletedListLocales} from '../locales';
 
 const BulletedList = new YooptaPlugin<Pick<ListElementMap, 'bulleted-list'>>({
   type: 'BulletedList',
@@ -89,7 +89,7 @@ const BulletedList = new YooptaPlugin<Pick<ListElementMap, 'bulleted-list'>>({
       },
     },
   },
-  translations: defaultLocales
+  translations: defaultBulletedListLocales
 });
 
 export { BulletedList };

@@ -1,7 +1,18 @@
-import {enLocale} from './en';
-import {esLocale} from './es';
+import {bulletedListEnLocale, numberedListEnLocale, todoListEnLocale} from './en';
+import {bulletedListEsLocale, numberedListEsLocale, todoListEsLocale} from './es';
 
-export const defaultLocales = {
-    ...enLocale,
-    ...esLocale,
+
+export const defaultBulletedListLocales = {
+    en: bulletedListEnLocale,
+    es: bulletedListEsLocale
+}
+
+export const defaultNumberedListLocales = {
+    en: numberedListEnLocale,
+    es: numberedListEsLocale
+}
+
+export const defaultTodoListLocales = {
+    en: todoListEnLocale,
+    es: todoListEsLocale
 }
