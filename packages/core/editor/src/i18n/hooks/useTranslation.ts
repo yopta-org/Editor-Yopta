@@ -1,29 +1,30 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { YooptaTranslationManager } from '../TranslationManager';
 import { UseTranslationReturn } from './types';
 
 export const useTranslation = (): UseTranslationReturn => {
-    const [language, setLanguage] = useState(YooptaTranslationManager.getCurrentLanguage());
-
-    // Directly reference the translation function without using state
-    const t = useCallback((key: string) => YooptaTranslationManager.translate(key), []);
+    const [language, setLanguage] = useState(() => YooptaTranslationManager.getCurrentLanguage());
+    const [t, setT] = useState(() => (key: string) => YooptaTranslationManager.translate(key));
 
     useEffect(() => {
-        // Update the language state when the translation manager's language changes
-        const unsubscribe = YooptaTranslationManager.subscribe(() => {
+        const handleUpdate = () => {
             setLanguage(YooptaTranslationManager.getCurrentLanguage());
-        });
+            setT(() => (key: string) => YooptaTranslationManager.translate(key));
+        };
+
+        const unsubscribe = YooptaTranslationManager.subscribe(handleUpdate);
+
+        // Initialize the state in case it changes before mounting
+        handleUpdate();
 
         return () => unsubscribe();
     }, []);
 
-    const changeLanguage = useCallback((lang: string) => {
+    const changeLanguage = (lang: string) => {
         YooptaTranslationManager.setLanguage(lang);
-    }, []);
+    };
 
-    const getAvailableKeys = useCallback(() => {
-        return YooptaTranslationManager.getAvailableKeys();
-    }, []);
+    const getAvailableKeys = () => YooptaTranslationManager.getAvailableKeys();
 
     return {
         t,
