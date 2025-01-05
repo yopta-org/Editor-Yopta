@@ -37,6 +37,18 @@
  */
 export interface Translations {
     [language: string]: {
-        [namespace: string]: Record<string, string>;
+        [namespace: string]: NestedTranslations;
     };
+}
+
+export interface PluginTranslations {
+    [language: string]: {
+        [key: string]: string | NestedTranslations;
+        title: string;
+        description: string;
+    };
+}
+
+interface NestedTranslations {
+    [key: string]: string | NestedTranslations;
 }
