@@ -359,7 +359,7 @@ const ActionMenuList = ({ items, render }: ActionMenuToolProps) => {
 
   const style = { ...floatingStyles, ...transitionStyles };
 
-  const menuContent = render ? render({ ...renderProps, actions: blockTypes }) : <DefaultActionMenuRender {...renderProps} actions={blockTypes} />;
+  const menuContent = render ? render({ ...renderProps, actions }) : <DefaultActionMenuRender {...renderProps} actions={actions} />;
 
 
   // [TODO] - take care about SSR
