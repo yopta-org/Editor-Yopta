@@ -42,13 +42,14 @@ export interface Translations {
 }
 
 export interface PluginTranslations {
-    [language: string]: {
-        [key: string]: string | NestedTranslations;
-        title: string;
-        description: string;
-    };
+    [language: string]: MandatoryPluginTranslations & NestedTranslations;
 }
 
-interface NestedTranslations {
+type MandatoryPluginTranslations = {
+    title: string;
+    description: string;
+};
+
+export interface NestedTranslations {
     [key: string]: string | NestedTranslations;
 }

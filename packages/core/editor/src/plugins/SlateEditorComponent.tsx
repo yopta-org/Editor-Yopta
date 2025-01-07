@@ -14,7 +14,7 @@ import { deserializeHTML } from '../parsers/deserializeHTML';
 import { useEventHandlers, useSlateEditor } from './hooks';
 import { SlateElement } from '../editor/types';
 
-type Props<TElementMap extends Record<string, SlateElement>, TOptions> = Plugin<TElementMap, TOptions> & {
+type Props<TElementMap extends Record<string, SlateElement>, TOptions> = Omit<Plugin<TElementMap, TOptions>, 'translations'> & {
   id: string;
   marks?: YooptaMark<any>[];
   options: Plugin<TElementMap, TOptions>['options'];

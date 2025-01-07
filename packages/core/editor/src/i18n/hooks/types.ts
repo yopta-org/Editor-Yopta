@@ -1,3 +1,5 @@
+import { NestedTranslations } from '../types';
+
 export interface UseTranslationReturn {
     /**
      * Translates a key into the current language.
@@ -48,5 +50,5 @@ export interface UseAddTranslationsReturn {
      * @param namespace - The namespace grouping the translations (e.g., 'core', 'plugin').
      * @param translations - A record of key-value pairs representing the translations.
      */
-    addTranslations: (language: string, namespace: string, translations: Record<string, string>) => void;
+    addTranslations: (language: string, namespace: string, translations: NestedTranslations) => void;
 }

@@ -1,5 +1,5 @@
 import {defaultLocales} from './locales';
-import {Translations} from './types';
+import {NestedTranslations, Translations} from './types';
 
 type Listener = () => void;
 
@@ -20,7 +20,7 @@ class TranslationManager {
     /**
      * Add translations for a specific namespace and language.
      */
-    addTranslations(language: string, namespace: string, newTranslations: Record<string, string>): void {
+    addTranslations(language: string, namespace: string, newTranslations: NestedTranslations): void {
         if (!this.translations[language]) {
             this.translations[language] = {};
         }
@@ -36,39 +36,21 @@ class TranslationManager {
     }
 
     /**
-     * Override translations provided by the user.
-     */
-    overrideTranslations(overrides: Translations): void {
-        Object.entries(overrides).forEach(([language, namespaces]) => {
-            if (!this.userOverrides[language]) {
-                this.userOverrides[language] = {};
-            }
-
-            Object.entries(namespaces).forEach(([namespace, translations]) => {
-                if (!this.userOverrides[language][namespace]) {
-                    this.userOverrides[language][namespace] = {};
-                }
-
-                this.userOverrides[language][namespace] = {
-                    ...this.userOverrides[language][namespace],
-                    ...translations,
-                };
-            });
-        });
-    }
-
-    /**
      * Fetch a translation for a specific key.
      */
     translate(key: string): string {
         const [namespace, ...rest] = key.split('.');
-        const finalKey = rest.join('.');
 
-        return (
-            this.userOverrides?.[this.currentLanguage]?.[namespace]?.[finalKey] ??
-            this.translations?.[this.currentLanguage]?.[namespace]?.[finalKey] ??
-            key
-        );
+        // Helper function to safely access nested translations
+        const getNestedValue = (obj: any, keyPath: string[]): any => {
+            return keyPath.reduce((acc, key) => (acc && typeof acc === 'object' ? acc[key] : undefined), obj);
+        };
+
+        const resolvedTranslation =
+            getNestedValue(this.userOverrides?.[this.currentLanguage]?.[namespace], rest) ??
+            getNestedValue(this.translations?.[this.currentLanguage]?.[namespace], rest);
+
+        return typeof resolvedTranslation === 'string' ? resolvedTranslation : key;
     }
 
     /**
