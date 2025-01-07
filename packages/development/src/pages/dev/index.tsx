@@ -1,12 +1,9 @@
 import YooptaEditor, {
-  Blocks,
   createYooptaEditor,
-  generateId,
   YooptaOnChangeOptions,
   YooEditor,
-  YooptaBlockData,
   YooptaContentValue,
-  YooptaPath, useTranslation,
+  YooptaPath,
 } from '@yoopta/editor';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
@@ -789,7 +786,6 @@ const BasicExample = () => {
   const editor: YooEditor = useMemo(() => createYooptaEditor(), []);
   const selectionRef = useRef<HTMLDivElement>(null);
   const [value, setValue] = useState<YooptaContentValue>(data);
-  const {setLanguage, currentLanguage} = useTranslation();
 
   const onChange = (value: YooptaContentValue, options: YooptaOnChangeOptions) => {
     console.log('onChange', value, options);
@@ -811,20 +807,6 @@ const BasicExample = () => {
     <>
       <div className="px-[100px] max-w-[900px] mx-auto my-10 flex flex-col items-center" ref={selectionRef}>
         <FixedToolbar editor={editor} DEFAULT_DATA={data}/>
-        <div className="flex gap-4">
-          <button
-              className={`border-primary border-2 p-2 ${currentLanguage === 'en' ? 'bg-blue-500' : undefined}`}
-              onClick={() => setLanguage('en')}
-          >English</button>
-          <button
-              className={`border-primary border-2 p-2 ${currentLanguage === 'es' ? 'bg-blue-500' : undefined}`}
-              onClick={() => setLanguage('es')}
-          >Spanish</button>
-          <button
-              className={`border-primary border-2 p-2 ${currentLanguage === 'fr' ? 'bg-blue-500' : undefined}`}
-              onClick={() => setLanguage('fr')}
-          >French</button>
-        </div>
         <YooptaEditor
             editor={editor}
             plugins={YOOPTA_PLUGINS}
@@ -837,14 +819,6 @@ const BasicExample = () => {
             value={value}
             onChange={onChange}
             onPathChange={onPathChange}
-            translations={{
-              fr: {
-                table: {
-                  title: 'Table',
-                  description: 'Table est Table en français'
-                }
-              },
-            }}
         />
       </div>
     </>
