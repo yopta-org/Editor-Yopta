@@ -8,11 +8,11 @@ import { TOOLS } from '../../utils/yoopta/tools';
 import * as Y from 'yjs';
 import { EditorState, withCollaboration, YjsYooEditor } from '@/collaborative/withCollaboration';
 import { withYjsCursors } from '@/collaborative/withYjsCursors';
-import { Awareness, encodeAwarenessUpdate } from 'y-protocols/awareness';
+import { Awareness } from 'y-protocols/awareness';
 import { RemoteOverlayCursor } from '@/collaborative/RemoteCursorOverlay';
 import { withYjsHistory } from '@/collaborative/withYjsHistory';
 import Head from 'next/head';
-import { WebSocketProvider } from '@/collaborative/WebSocketProvider';
+import { WebSocketProviderClient } from '@/collaborative/WebSocketProviderClient';
 
 const EDITOR_STYLE = {
   width: 750,
@@ -31,8 +31,8 @@ const BasicExample = () => {
 
   const provider = useMemo(
     () =>
-      new WebSocketProvider({
-        url: 'ws://localhost:1234', // Добавьте путь, если используете
+      new WebSocketProviderClient({
+        url: 'ws://localhost:1234',
         documentName: 'yoopta-collab',
         onConnect: () => setConnected(true),
         onDisconnect: () => setConnected(false),
@@ -42,18 +42,15 @@ const BasicExample = () => {
 
   const editor = useMemo(() => {
     const sharedContent = provider.document.getMap('content') as Y.Map<EditorState>;
+    const awareness = provider.awareness;
 
     return withYjsHistory(
-      withYjsCursors(
-        withCollaboration(createYooptaEditor() as YjsYooEditor, sharedContent),
-        provider.awareness as Awareness,
-        {
-          data: {
-            name: username,
-            color: rgb(),
-          },
+      withYjsCursors(withCollaboration(createYooptaEditor() as YjsYooEditor, sharedContent), awareness, {
+        data: {
+          name: username,
+          color: rgb(),
         },
-      ),
+      }),
       {
         captureTimeout: 500,
         onStackItemAdded: () => console.log('Added to history'),

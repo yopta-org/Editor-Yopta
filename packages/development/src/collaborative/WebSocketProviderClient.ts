@@ -6,13 +6,20 @@ type WebSocketMessage = {
   documentName: string;
   state?: number[];
   update?: number[];
-  awareness?: number[]; // Бинарные данные awareness
+  awareness?: number[];
   auth?: {
     token: string;
   };
 };
 
-export class WebSocketProvider {
+export type WebSocketProviderClientOptions = {
+  url: string;
+  documentName: string;
+  onConnect?: () => void;
+  onDisconnect?: () => void;
+};
+
+export class WebSocketProviderClient {
   private socket: WebSocket | null = null;
   private ydoc: Y.Doc;
   private awarenessInstance: Awareness;
@@ -30,16 +37,10 @@ export class WebSocketProvider {
   private onConnectCallback?: () => void;
   private onDisconnectCallback?: () => void;
 
-  constructor(options: {
-    url: string;
-    documentName: string;
-    awarenessInstance?: Awareness;
-    onConnect?: () => void;
-    onDisconnect?: () => void;
-  }) {
+  constructor(options: WebSocketProviderClientOptions) {
     this.documentName = options.documentName;
     this.ydoc = new Y.Doc();
-    this.awarenessInstance = options.awarenessInstance || new Awareness(this.ydoc);
+    this.awarenessInstance = new Awareness(this.ydoc);
     this.url = options.url;
 
     this.onConnectCallback = options.onConnect;
@@ -48,7 +49,6 @@ export class WebSocketProvider {
     this.awarenessInstance.on('change', this.handleAwarenessChange);
 
     this.ydoc.on('update', (update: Uint8Array, origin: any) => {
-      console.log('Yjs update: origin:', origin);
       if (origin !== 'REMOTE') {
         this.sendUpdate(update);
       }
@@ -59,8 +59,10 @@ export class WebSocketProvider {
     const changedClients = [...added, ...updated, ...removed];
     const awarenessUpdate = encodeAwarenessUpdate(this.awarenessInstance, changedClients);
 
+    console.log('WebSocketProviderClient CHANGES FIRED:', { added, updated, removed });
+
     if (!this.socket || this.socket.readyState !== WebSocket.OPEN) {
-      // console.warn('Attempting to send awareness update while socket is not open');
+      console.warn('Attempting to send awareness update while socket is not open');
       return;
     }
 
@@ -88,41 +90,6 @@ export class WebSocketProvider {
     return url.toString();
   }
 
-  private handleMessage = (event: MessageEvent) => {
-    try {
-      const data = JSON.parse(event.data) as WebSocketMessage;
-      console.log('WebSocket handleMessage:', data);
-
-      switch (data.type) {
-        case 'sync':
-          if (data.state) {
-            const stateUpdate = new Uint8Array(data.state);
-            Y.applyUpdate(this.ydoc, stateUpdate, 'REMOTE');
-          }
-          break;
-
-        case 'update':
-          if (data.update) {
-            const updateData = new Uint8Array(data.update);
-            Y.applyUpdate(this.ydoc, updateData, 'REMOTE');
-          }
-          break;
-
-        case 'awareness':
-          if (data.awareness) {
-            const awarenessUpdate = new Uint8Array(data.awareness);
-            this.applyAwarenessUpdate(awarenessUpdate);
-          }
-          break;
-
-        default:
-          console.warn('Unknown message type:', data);
-      }
-    } catch (error) {
-      console.error('Failed to process message:', error);
-    }
-  };
-
   private establishConnection() {
     try {
       this.socket = new WebSocket(this.buildUrl());
@@ -132,11 +99,11 @@ export class WebSocketProvider {
         this.reconnectAttempts = 0;
         this.reconnectTimeout = 1000;
 
-        const initialState = Y.encodeStateAsUpdate(this.ydoc);
+        // const initialState = Y.encodeStateAsUpdate(this.ydoc);
         this.sendMessage({
           type: 'sync',
           documentName: this.documentName,
-          state: Array.from(initialState),
+          // state: Array.from(initialState),
         });
 
         this.onConnectCallback?.();
@@ -165,6 +132,42 @@ export class WebSocketProvider {
       throw error;
     }
   }
+
+  private handleMessage = (event: MessageEvent) => {
+    try {
+      const data = JSON.parse(event.data) as WebSocketMessage;
+
+      switch (data.type) {
+        case 'sync':
+          if (data.state) {
+            const stateUpdate = new Uint8Array(data.state);
+            Y.applyUpdate(this.ydoc, stateUpdate, 'REMOTE');
+          }
+          break;
+
+        case 'update':
+          if (data.update) {
+            const updateData = new Uint8Array(data.update);
+            Y.applyUpdate(this.ydoc, updateData, 'REMOTE');
+          }
+          break;
+
+        case 'awareness':
+          if (data.awareness) {
+            console.log('WebSocketProviderClient eceived awareness update:', data.awareness);
+
+            const awarenessUpdate = new Uint8Array(data.awareness);
+            applyAwarenessUpdate(this.awarenessInstance, awarenessUpdate, 'REMOTE');
+          }
+          break;
+
+        default:
+          console.warn('Unknown message type:', data);
+      }
+    } catch (error) {
+      console.error('Failed to process message:', error);
+    }
+  };
 
   public isOnline(): boolean {
     return this.isConnected;
@@ -199,14 +202,6 @@ export class WebSocketProvider {
 
     this.onConnectCallback = undefined;
     this.onDisconnectCallback = undefined;
-  }
-
-  private applyAwarenessUpdate(update: Uint8Array) {
-    try {
-      applyAwarenessUpdate(this.awarenessInstance, update, 'REMOTE');
-    } catch (error) {
-      console.error('Failed to apply awareness update:', error);
-    }
   }
 
   private sendMessage(message: any) {

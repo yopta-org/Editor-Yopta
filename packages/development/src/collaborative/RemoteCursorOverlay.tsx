@@ -12,6 +12,7 @@ export const RemoteOverlayCursor = ({ editor }: RemoteOverlayCursorProps) => {
 
   useEffect(() => {
     const handleCursorsUpdate: RemoteCursorChangeEventListener = (event) => {
+      console.log('Cursors updated:', event);
       setCursors((prevCursors) => {
         const newCursors = new Map(prevCursors);
 
