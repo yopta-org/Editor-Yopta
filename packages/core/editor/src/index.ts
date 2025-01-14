@@ -92,6 +92,8 @@ export {
   useFocusedElement,
   useSetFocusedElement,
   useUpdateFocusedElement,
+  useElementFocusManager,
+  useResetFocusedElement,
 } from './contexts/ElementFocusManager/ElementFocusManager';
 
 import './styles.css';

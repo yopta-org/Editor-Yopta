@@ -59,13 +59,10 @@ export function updateElement<T extends SlateElement = SlateElement>(
   Editor.withoutNormalizing(slate, () => {
     const updatePath = options.path;
 
-    console.log('updateElement updatePath', updatePath);
     const [elementEntry] = Editor.nodes<SlateElement>(slate, {
       at: updatePath || [0],
       match: (n) => Element.isElement(n) && n.type === options.type,
     });
-
-    console.log('updateElement elementEntry', elementEntry);
 
     const path = elementEntry?.[1];
     if (!Path.isPath(path)) return;

@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useReducer, useRef, useState } from 'react';
-import { Transforms } from 'slate';
+import { Range, Transforms } from 'slate';
 import { ReactEditor } from 'slate-react';
 import { Blocks } from '../../editor/blocks';
 import { SlateElement } from '../../editor/types';
@@ -14,12 +14,14 @@ type FocusContextValue = {
   focusedElement: FocusedElement;
   onFocus: (focusEntity: FocusedElement) => void;
   onUpdateFocusedElement: (element: SlateElement) => void;
+  onResetFocusedElement: () => void;
 };
 
 const FocusContext = createContext<FocusContextValue>({
   focusedElement: null,
   onFocus: () => {},
   onUpdateFocusedElement: () => {},
+  onResetFocusedElement: () => {},
 });
 
 export function useForceRender() {
@@ -29,14 +31,33 @@ export function useForceRender() {
 }
 
 export const ElementFocusManager: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // const [focusedElement, setFocusedElement] = useState<FocusedElement>(null);
   const focusedElementRef = useRef<FocusedElement>(null);
   const focusedElement = focusedElementRef.current;
   const editor = useYooptaEditor();
   const forceRender = useForceRender();
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        focusedElementRef.current = null;
+        forceRender();
+      }
+    };
+
+    editor.refElement?.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      editor.refElement?.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [editor.refElement, editor.path.current]);
+
   const onFocus = (entity: FocusedElement) => {
-    console.log('onFocus entity', entity);
+    const domSelection = window.getSelection();
+    if (domSelection?.isCollapsed === false && domSelection?.anchorOffset !== domSelection?.focusOffset) {
+      focusedElementRef.current = null;
+      return;
+    }
+
     if (entity?.element.id === focusedElement?.element.id) return;
 
     const block = Blocks.getBlock(editor, { at: editor.path.current });
@@ -56,25 +77,9 @@ export const ElementFocusManager: React.FC<{ children: React.ReactNode }> = ({ c
 
   const contextRef = useRef<FocusContextValue>({} as FocusContextValue);
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        focusedElementRef.current = null;
-        forceRender();
-      }
-    };
-
-    editor.refElement?.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      editor.refElement?.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [editor.refElement, editor.path.current]);
-
   const onUpdateFocusedElement = (element: SlateElement) => {
     if (!focusedElement) return;
 
-    console.log('onUpdateFocusedElement is refs equal', element === focusedElement?.element);
     focusedElement.element = element;
 
     // const slate = Blocks.getBlockSlate(editor, { id: focusedElement.blockId });
@@ -89,9 +94,43 @@ export const ElementFocusManager: React.FC<{ children: React.ReactNode }> = ({ c
     forceRender();
   };
 
-  contextRef.current = { focusedElement, onFocus, onUpdateFocusedElement };
+  const onSelectionChange = () => {
+    const domSelection = window.getSelection();
+    console.log('_focus_ onSelectionChange');
+
+    if (domSelection?.isCollapsed === false && domSelection?.anchorOffset !== domSelection?.focusOffset) {
+      focusedElementRef.current = null;
+      return;
+    }
+
+    // focusedElementRef.current = null;
+    // forceRender();
+  };
+
+  useEffect(() => {
+    if (focusedElement) {
+      window.document.addEventListener('selectionchange', onSelectionChange);
+      return () => window.document.removeEventListener('selectionchange', onSelectionChange);
+    }
+  }, [focusedElement, editor.path.current]);
+
+  const onResetFocusedElement = () => {
+    focusedElementRef.current = null;
+    console.log('__onResetFocusedElement__', focusedElementRef.current);
+    forceRender();
+  };
+
+  contextRef.current = { focusedElement, onFocus, onUpdateFocusedElement, onResetFocusedElement };
 
   return <FocusContext.Provider value={contextRef.current}>{children}</FocusContext.Provider>;
+};
+
+export const useElementFocusManager = () => {
+  const context = useContext(FocusContext);
+  if (!context) {
+    throw new Error('useElementFocusManager must be used within ElementFocusManager');
+  }
+  return context;
 };
 
 export const useFocusedElement = () => {
@@ -116,4 +155,12 @@ export const useUpdateFocusedElement = () => {
     throw new Error('useUpdateFocusedElementProps must be used within ElementFocusManager');
   }
   return context.onUpdateFocusedElement;
+};
+
+export const useResetFocusedElement = () => {
+  const context = useContext(FocusContext);
+  if (!context) {
+    throw new Error('useResetFocusedElement must be used within ElementFocusManager');
+  }
+  return context.onResetFocusedElement;
 };

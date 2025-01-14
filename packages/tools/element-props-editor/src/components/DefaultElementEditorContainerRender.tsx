@@ -63,8 +63,6 @@ export const DefaultElementEditorContainerRender = () => {
   const editorEntries = Object.entries(editors) as Array<[ElementPropEditorType, ElementPropEditor]>;
   if (editorEntries.length === 0) return null;
 
-  console.log('focusedElement.element', focusedElement.element);
-
   return (
     <Portal id="edit-element">
       <div
