@@ -30,6 +30,7 @@ export type YooptaEditorProps = {
   marks?: YooptaMark<any>[];
   value?: YooptaContentValue;
   onChange?: (value: YooptaContentValue, options: YooptaOnChangeOptions) => void;
+  onPathChange?: (path: YooptaPath) => void;
   autoFocus?: boolean;
   className?: string;
   selectionBoxRoot?: HTMLElement | React.MutableRefObject<HTMLElement | null> | false;
@@ -62,6 +63,7 @@ const YooptaEditor = ({
   width,
   style,
   onChange,
+  onPathChange,
 }: YooptaEditorProps) => {
   const marks = useMemo(() => {
     if (marksProps) return [FakeSelectionMark, ...marksProps];
@@ -99,6 +101,7 @@ const YooptaEditor = ({
 
   const onEditorPathChange = useCallback((path: YooptaPath) => {
     setStatePath(path);
+    onPathChange?.(path);
   }, []);
 
   const onValueChange = useCallback((value, options: YooptaOnChangeOptions) => {

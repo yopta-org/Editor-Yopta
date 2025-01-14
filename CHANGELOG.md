@@ -1,5 +1,38 @@
 # Changelog
 
+## [4.9.4] - 2025-01-01
+
+### Added
+
+- `Added color picker to highlight color`
+- `Update UI for TodoList`
+- `Added _onPathChange_ prop to <YooptaEditor />`
+
+### Fixed
+
+- `Fixed depth issues for Todo/Bulleted/Numbered lists`
+- `Fixed indent for lists while serializing in markdown string`
+- `Fixed firing _onDestroy_ event after delete block`
+
+## [4.9.3] - 2024-12-27
+
+### Added
+
+- `Added icons to callout render`
+- `Added **selection** of current block on *editor.path*`
+- `Deserializer for images in markdown`
+- `More video embed types (Loom & Wistia)`
+
+## [4.9.2] - 2024-11-11
+
+### Added
+
+- `Added Email-Builder by @yoopta/email-builder`
+- `Email export: accordion component by`
+- `Feature/email builder resend integration`
+- `Feature: email video export and thumbnail`
+- `Add email export, implement export for paragraph and headings`
+
 ## [4.9.1] - 2024-10-31
 
 ### Added
