@@ -36,20 +36,20 @@
  *   - The value (string) is the translated text for that key.
  */
 export interface Translations {
-    [language: string]: {
-        [namespace: string]: NestedTranslations;
-    };
+  [language: string]: {
+    [namespace: string]: NestedTranslations;
+  };
 }
 
 export interface PluginTranslations {
-    [language: string]: MandatoryPluginTranslations & NestedTranslations;
+  [language: string]: MandatoryPluginTranslations & NestedTranslations;
 }
 
 type MandatoryPluginTranslations = {
-    title: string;
-    description: string;
+  title: string;
+  description: string;
 };
 
 export interface NestedTranslations {
-    [key: string]: string | NestedTranslations;
+  [key: string]: string | NestedTranslations;
 }

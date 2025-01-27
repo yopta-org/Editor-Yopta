@@ -21,6 +21,7 @@ import { getHTML } from '../parsers/getHTML';
 import { getMarkdown } from '../parsers/getMarkdown';
 import { getPlainText } from '../parsers/getPlainText';
 import { getEmail } from '../parsers/getEmail';
+import { getLabelText } from './i18n/getLabelText';
 
 export type YooptaBlockData<T = Descendant | SlateElement> = {
   id: string;
@@ -125,6 +126,9 @@ export type YooEditor = {
   // core handlers
   applyTransforms: WithoutFirstArg<typeof applyTransforms>;
   batchOperations: (fn: () => void) => void;
+
+  // default labels. get label by current language. default: 'en'
+  getLabelText: WithoutFirstArg<typeof getLabelText>;
 
   // events handlers
   on: <K extends keyof YooptaEventsMap>(event: K, fn: (payload: YooptaEventsMap[K]) => void) => void;
