@@ -1,0 +1,133 @@
+{
+  "plugins": {
+    "Paragraph": {
+      "display": {
+        "title": "Párrafo",
+        "description": "Párrafo de texto"
+      }
+    },
+    "Blockquote": {
+      "display": {
+        "title": "Cita",
+        "description": "Bloque de cita"
+      }
+    },
+    "Callout": {
+      "display": {
+        "title": "Llamada",
+        "description": "Bloque de llamada"
+      }
+    },
+    "Accordion": {
+      "display": {
+        "title": "Acordeón",
+        "description": "Bloque de acordeón"
+      }
+    },
+    "BulletedList": {
+      "display": {
+        "title": "Lista con viñetas",
+        "description": "Lista con viñetas"
+      }
+    },
+    "NumberedList": {
+      "display": {
+        "title": "Lista numerada",
+        "description": "Lista numerada"
+      }
+    },
+    "TodoList": {
+      "display": {
+        "title": "Lista de tareas",
+        "description": "Lista de tareas"
+      }
+    },
+    "Image": {
+      "display": {
+        "title": "Imagen",
+        "description": "Imagen"
+      }
+    },
+    "Video": {
+      "display": {
+        "title": "Vídeo",
+        "description": "Vídeo"
+      }
+    },
+    "File": {
+      "display": {
+        "title": "Archivo",
+        "description": "Archivo para descargar"
+      }
+    },
+    "Table": {
+      "display": {
+        "title": "Tabla",
+        "description": "Tabla"
+      }
+    },
+    "Code": {
+      "display": {
+        "title": "Código",
+        "description": "Bloque de código"
+      }
+    },
+    "Divider": {
+      "display": {
+        "title": "Separador",
+        "description": "Separador"
+      }
+    },
+    "HeadingOne": {
+      "display": {
+        "title": "Título 1",
+        "description": "Título de primer nivel"
+      }
+    },
+    "HeadingTwo": {
+      "display": {
+        "title": "Título 2",
+        "description": "Título de segundo nivel"
+      }
+    },
+    "HeadingThree": {
+      "display": {
+        "title": "Título 3",
+        "description": "Título de tercer nivel"
+      }
+    }
+  },
+  "editor": {
+    "blockOptions": {
+      "delete": "Borrar",
+      "duplicate": "Duplicar",
+      "turnInto": "Convertir en",
+      "copyBlockLink": "Copiar enlace al bloque"
+    },
+    "placeholder": "Escribe '/' para comandos"
+  },
+  "tools": {
+    "toolbar": {
+      "highlightColor": {
+        "text": "Texto",
+        "background": "Fondo",
+        "customColor": "Color personalizado"
+      },
+      "linkTitle": "Enlace"
+    },
+    "link": {
+      "target": "Objetivo del enlace",
+      "rel": "Relación del enlace",
+      "update": "Actualizar",
+      "add": "Añadir",
+      "delete": "Eliminar enlace",
+      "url": "URL",
+      "title": "Título",
+      "additionalProps": "Propiedades adicionales",
+      "titlePlaceholder": "Editar título del enlace",
+      "urlPlaceholder": "Editar URL del enlace",
+      "targetPlaceholder": "Editar objetivo del enlace",
+      "relPlaceholder": "Editar relación del enlace"
+    }
+  }
+}
