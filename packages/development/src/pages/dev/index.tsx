@@ -4,6 +4,7 @@ import YooptaEditor, {
   YooptaContentValue,
   YooptaPath,
   createYooptaEditor,
+  buildBlockData,
 } from '@yoopta/editor';
 import { useMemo, useRef, useState } from 'react';
 import { withTranslations } from '@yoopta/i18n';
@@ -39,7 +40,9 @@ const BasicExample = () => {
   }, []);
 
   const selectionRef = useRef<HTMLDivElement>(null);
-  const [value, setValue] = useState<YooptaContentValue>(YOOPTA_DEFAULT_VALUE);
+  const [value, setValue] = useState<YooptaContentValue>({
+    'block-1': buildBlockData({ id: 'block-1' }),
+  });
 
   const onChange = (value: YooptaContentValue, options: YooptaOnChangeOptions) => {
     console.log('onChange', value, options);

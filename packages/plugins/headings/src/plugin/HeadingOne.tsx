@@ -6,7 +6,6 @@ import {
 } from '@yoopta/editor';
 import { HeadingOneCommands } from '../commands';
 import { HeadingOneElement } from '../types';
-import {defaultHeadingOneLocales} from '../locales';
 
 const HeadingOneRender = ({ extendRender, ...props }: PluginElementRenderProps) => {
   const { element, HTMLAttributes = {}, attributes, children } = props;
@@ -84,7 +83,6 @@ const HeadingOne = new YooptaPlugin<Record<'heading-one', HeadingOneElement>>({
       },
     },
   },
-  translations: defaultHeadingOneLocales,
 });
 
 export { HeadingOne };

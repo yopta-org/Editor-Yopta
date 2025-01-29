@@ -190,15 +190,4 @@ useBlockData(blockId);
  * @returns {PluginOptions<TOptions>} The options of the plugin.
  */
 useYooptaPluginOptions<TOptions>(blockType);
-
-/**
- * Hook to interact with the Yoopta Editor translation system.
- *
- * @returns {UseTranslationReturn} An object with:
- * - `t(key: string)`: Fetch a translation by key (e.g., `t('core.save')`).
- * - `currentLanguage`: The active language (e.g., `'en'`).
- * - `setLanguage(lang: string)`: Change the active language (e.g., `setLanguage('es')`).
- * - `getAvailableKeys()`: Get all translation keys for the current language. Provided as a utility function to know all available keys at runtime.
- */
-useTranslation()
 ```

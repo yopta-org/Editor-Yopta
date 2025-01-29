@@ -3,7 +3,6 @@ import { ImageCommands } from '../commands';
 import { ImageElementMap, ImageElementProps, ImagePluginElements, ImagePluginOptions } from '../types';
 import { ImageRender } from '../ui/Image';
 import { limitSizes } from '../utils/limitSizes';
-import {defaultLocales} from '../locales';
 
 const ALIGNS_TO_JUSTIFY = {
   left: 'flex-start',
@@ -118,7 +117,6 @@ const Image = new YooptaPlugin<ImageElementMap, ImagePluginOptions>({
       },
     },
   },
-  translations: defaultLocales,
 });
 
 export { Image };

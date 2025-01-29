@@ -4,7 +4,6 @@ import { TodoListRender } from '../elements/TodoList';
 import { onKeyDown } from '../events/onKeyDown';
 import { ListElementMap } from '../types';
 import { deserializeListNodes } from '../utils/deserializeListNodes';
-import { defaultTodoListLocales } from '../locales';
 
 const TodoList = new YooptaPlugin<Pick<ListElementMap, 'todo-list'>>({
   type: 'TodoList',
@@ -88,7 +87,6 @@ const TodoList = new YooptaPlugin<Pick<ListElementMap, 'todo-list'>>({
       },
     },
   },
-  translations: defaultTodoListLocales
 });
 
 export { TodoList };

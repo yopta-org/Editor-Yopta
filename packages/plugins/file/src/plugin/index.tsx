@@ -2,7 +2,6 @@ import { generateId, YooptaPlugin } from '@yoopta/editor';
 import { FileCommands } from '../commands';
 import { FileElementMap, FilePluginOptions } from '../types';
 import { FileRender } from '../ui/File';
-import {defaultLocales} from '../locales';
 
 const ALIGNS_TO_JUSTIFY = {
   left: 'flex-start',
@@ -113,7 +112,6 @@ const File = new YooptaPlugin<FileElementMap, FilePluginOptions>({
       },
     },
   },
-  translations: defaultLocales,
 });
 
 export { File };

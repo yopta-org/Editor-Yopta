@@ -18,8 +18,6 @@ import { FakeSelectionMark } from './marks/FakeSelectionMark';
 import { generateId } from './utils/generateId';
 import { YooptaOperation } from './editor/core/applyTransforms';
 import { validateYooptaValue } from './utils/validateYooptaValue';
-import {Translations} from './i18n/types';
-import {useAddTranslations} from './i18n/hooks/useAddTranslations';
 
 export type YooptaOnChangeOptions = {
   operations: YooptaOperation[];
@@ -42,8 +40,6 @@ export type YooptaEditorProps = {
   readOnly?: boolean;
   width?: number | string;
   style?: CSSProperties;
-
-  translations?: Translations;
 };
 
 type EditorState = {
@@ -68,24 +64,16 @@ const YooptaEditor = ({
   style,
   onChange,
   onPathChange,
-    translations: userTranslations = {},
 }: YooptaEditorProps) => {
-  const {addTranslations} = useAddTranslations();
   const marks = useMemo(() => {
     if (marksProps) return [FakeSelectionMark, ...marksProps];
     return [FakeSelectionMark];
   }, [marksProps]);
 
   const plugins = useMemo(() => {
-    return pluginsProps.map((plugin) => {
-      const pluginInstance = plugin.getPlugin as Plugin<Record<string, SlateElement>>;
-
-      // Merge plugin translations into the global translation registry
-      Object.entries(pluginInstance.translations || {}).forEach(([language, pluginTranslations]) => {
-        addTranslations(language, pluginInstance.type.toLowerCase(), pluginTranslations);
-      });
-
-      return pluginInstance;
+    return pluginsProps.map((pluginInstance) => {
+      const plugin = pluginInstance.getPlugin as Plugin<Record<string, SlateElement>>;
+      return plugin;
     });
   }, [pluginsProps]);
 
@@ -102,12 +90,6 @@ const YooptaEditor = ({
         `Initial value is not valid. Should be an object with blocks. You passed: ${JSON.stringify(value)}`,
       );
     }
-
-    Object.entries(userTranslations).forEach(([language, translations]) => {
-      Object.entries(translations).forEach(([namespace, translation]) => {
-        addTranslations(language, namespace, translation);
-      });
-    });
 
     editor.children = (isValueValid ? value : {}) as YooptaContentValue;
     editor.blockEditorsMap = buildBlockSlateEditors(editor);

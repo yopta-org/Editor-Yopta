@@ -3,7 +3,6 @@ import { VideoCommands } from '../commands';
 import { VideoElementMap, VideoPluginOptions } from '../types';
 import { VideoRender } from '../ui/Video';
 import { limitSizes } from '../utils/limitSizes';
-import {defaultLocales} from '../locales';
 
 const ALIGNS_TO_JUSTIFY = {
   left: 'flex-start',
@@ -217,7 +216,6 @@ const Video = new YooptaPlugin<VideoElementMap, VideoPluginOptions>({
       },
     },
   },
-  translations: defaultLocales,
 });
 
 export { Video };

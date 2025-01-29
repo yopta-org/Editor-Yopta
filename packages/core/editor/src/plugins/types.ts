@@ -3,7 +3,6 @@ import { RenderElementProps as RenderSlateElementProps, RenderLeafProps } from '
 import { SlateEditor, SlateElement, YooEditor, YooptaBlockBaseMeta, YooptaBlockData } from '../editor/types';
 import { EditorEventHandlers } from '../types/eventHandlers';
 import { HOTKEYS_TYPE } from '../utils/hotkeys';
-import { PluginTranslations } from '../i18n/types';
 
 export enum NodeType {
   Block = 'block',

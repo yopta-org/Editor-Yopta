@@ -10,7 +10,6 @@ import { CalloutCommands } from '../commands';
 import { CalloutElementMap, CalloutTheme } from '../types';
 import { CalloutRender } from '../ui/Callout';
 import { CALLOUT_THEME_STYLES } from '../utils';
-import {defaultLocales} from '../locales';
 
 const Callout = new YooptaPlugin<CalloutElementMap>({
   type: 'Callout',
@@ -97,7 +96,6 @@ const Callout = new YooptaPlugin<CalloutElementMap>({
       },
     },
   },
-  translations: defaultLocales,
 });
 
 export { Callout };
