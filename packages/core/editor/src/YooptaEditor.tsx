@@ -71,9 +71,8 @@ const YooptaEditor = ({
   }, [marksProps]);
 
   const plugins = useMemo(() => {
-    return pluginsProps.map((pluginInstance) => {
-      const plugin = pluginInstance.getPlugin as Plugin<Record<string, SlateElement>>;
-      return plugin;
+    return pluginsProps.map((plugin) => {
+      return plugin.getPlugin as Plugin<Record<string, SlateElement>>;
     });
   }, [pluginsProps]);
 
@@ -125,6 +124,14 @@ const YooptaEditor = ({
     }
   }, []);
 
+  const onEditorLangChange = useCallback((lang: string) => {
+    console.log('YooptaEditor - language change', lang)
+    setEditorState(prev => ({
+      ...prev,
+      editor: { ...prev.editor, language: lang }
+    }));
+  }, []);
+
   useEffect(() => {
     const changeHandler = (options) => {
       onValueChange(options.value, { operations: options.operations });
@@ -132,10 +139,12 @@ const YooptaEditor = ({
 
     editor.on('change', changeHandler);
     editor.on('path-change', onEditorPathChange);
+    editor.on('language-change', onEditorLangChange);
 
     return () => {
       editor.off('change', changeHandler);
       editor.off('path-change', onEditorPathChange);
+      editor.off('language-change', onEditorLangChange);
     };
   }, [editor, onValueChange]);
 

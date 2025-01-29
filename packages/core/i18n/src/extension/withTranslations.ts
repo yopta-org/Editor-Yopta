@@ -1,4 +1,5 @@
 import { I18nYooEditor } from '../types';
+import {YooEditor} from '@yoopta/editor';
 
 type TranslationOptions = {
   language: string;
@@ -15,21 +16,22 @@ function getNestedValue(obj: any, path: string[]): string | undefined {
   }, obj);
 }
 
-export function withTranslations(editor: I18nYooEditor, options: TranslationOptions): I18nYooEditor {
+export function withTranslations(editor: YooEditor, options: TranslationOptions): I18nYooEditor {
+  const i18nEditor = editor as I18nYooEditor;
   const { translations, defaultLanguage, language } = options;
 
-  const { getLabelText } = editor;
+  const { getLabelText } = i18nEditor;
   const languages = Object.keys(translations);
 
-  editor.getLabelText = (key) => {
+  i18nEditor.getLabelText = (key) => {
     const keyParts = key.split('.');
 
-    const currentLangValue = getNestedValue(translations[editor.language], keyParts);
+    const currentLangValue = getNestedValue(translations[i18nEditor.language], keyParts);
     if (typeof currentLangValue === 'string') {
       return currentLangValue;
     }
 
-    const defaultLangValue = getNestedValue(translations[editor.defaultLanguage], keyParts);
+    const defaultLangValue = getNestedValue(translations[i18nEditor.defaultLanguage], keyParts);
 
     if (typeof defaultLangValue === 'string') {
       return defaultLangValue;
@@ -38,18 +40,18 @@ export function withTranslations(editor: I18nYooEditor, options: TranslationOpti
     return getLabelText(key);
   };
 
-  editor.languages = languages;
+  i18nEditor.languages = languages;
 
-  editor.setLanguage = (lang: string) => {
+  i18nEditor.setLanguage = (lang: string) => {
     if (translations[lang]) {
-      editor.language = lang;
-      // editor.emit
+      i18nEditor.language = lang;
+      i18nEditor.emit('language-change', lang);
     }
   };
 
-  editor.translations = translations;
-  editor.defaultLanguage = defaultLanguage;
-  editor.language = language;
+  i18nEditor.translations = translations;
+  i18nEditor.defaultLanguage = defaultLanguage;
+  i18nEditor.language = language;
 
-  return editor;
+  return i18nEditor;
 }

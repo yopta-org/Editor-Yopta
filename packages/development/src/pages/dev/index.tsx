@@ -1,13 +1,12 @@
 import YooptaEditor, {
   YooptaOnChangeOptions,
-  YooEditor,
   YooptaContentValue,
   YooptaPath,
   createYooptaEditor,
   buildBlockData,
 } from '@yoopta/editor';
 import { useMemo, useRef, useState } from 'react';
-import { withTranslations } from '@yoopta/i18n';
+import { I18nYooEditor, withTranslations} from '@yoopta/i18n';
 
 import { MARKS } from '../../utils/yoopta/marks';
 import { YOOPTA_PLUGINS } from '../../utils/yoopta/plugins';
@@ -30,7 +29,7 @@ const TRANSLATIONS = {
 };
 
 const BasicExample = () => {
-  const editor: YooEditor = useMemo(() => {
+  const editor: I18nYooEditor = useMemo(() => {
     const baseEditor = createYooptaEditor();
     return withTranslations(baseEditor, {
       translations: TRANSLATIONS,

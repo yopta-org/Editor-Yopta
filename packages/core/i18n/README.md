@@ -1,126 +1,77 @@
-# Exports
+# i18n
 
-Exports is core package for exporting/importing yoopta content in different formats
-The package `@yoopta/exports` supports exporting/importing in the next formats:
+It has the export of the following useful modules:
 
-- HTML
-- Markdown
-- Plain text
+`import { withTranslation, useTranslation, type I18nYooEditor } from '@yoopta/i18n'` 
+
+- withTranslation - required method for extending the editor's work with i18n
+- useTranslation - hook for using language switching methods and translating texts by keys
+- I18nYooEditor - extended type for YooEditor
 
 ### Installation
 
 ```bash
-yarn add @yoopta/exports
+yarn add @yoopta/i18n
 ```
 
 ### Usage
 
-HTML exports/imports example
+```tsx
+import { withTranslations } from '@yoopta/i18n';
 
-```jsx
-import { html } from '@yoopta/exports';
+import esTranslations from '@/locales/es.json';
+import ruTranslations from '@/locales/ru.json';
+import czTranslations from '@/locales/cz.json';
 
-const Editor = () => {
-  const editor = useMemo(() => createYooptaEditor(), []);
+const TRANSLATIONS = {
+  es: esTranslations,
+  ru: ruTranslations,
+  cz: czTranslations,
+};
 
-  // from html to @yoopta content
-  const deserializeHTML = () => {
-    const htmlString = '<h1>First title</h1>';
-    const content = html.deserialize(editor, htmlString);
-
-    editor.setEditorValue(content);
-  };
-
-  // from @yoopta content to html string
-  const serializeHTML = () => {
-    const data = editor.getEditorValue();
-    const htmlString = html.serialize(editor, data);
-    console.log('html string', htmlString);
-  };
+const ExampleWithTranslations = () => {
+  const editor: YooEditor = useMemo(() => {
+    const baseEditor = createYooptaEditor();
+    return withTranslations(baseEditor, {
+      translations: TRANSLATIONS,
+      defaultLanguage: 'en',
+      language: 'ru',
+    });
+  }, []);
 
   return (
-    <div>
-      <button onClick={deserializeHTML}>Deserialize from html to content</button>
-      <button onClick={serializeHTML}>Serialize from content to html</button>
-
-      <YooptaEditor editor={editor} plugins={plugins} />
-    </div>
+    <YooptaEditor
+      editor={editor}
+      plugins={YOOPTA_PLUGINS}
+      selectionBoxRoot={selectionRef}
+      marks={MARKS}
+      tools={TOOLS}
+      style={EDITOR_STYLE}
+      value={value}
+      onChange={onChange}
+      onPathChange={onPathChange}
+      autoFocus={true}
+      readOnly={false}
+    />
   );
 };
 ```
 
----
+### I18n API
+With the withTranslation extension for the editor, Yoopta will have the following additional methods and keys:
 
-Markdown exports/imports example
-
-```jsx
-import { markdown } from '@yoopta/exports';
-
-const Editor = () => {
-  const editor = useMemo(() => createYooptaEditor(), []);
-
-  // from markdown to @yoopta content
-  const deserializeMarkdown = () => {
-    const markdownString = '# First title';
-    const value = markdown.deserialize(editor, markdownString);
-
-    editor.setEditorValue(value);
-  };
-
-  // from @yoopta content to markdown string
-  const serializeMarkdown = () => {
-    const data = editor.getEditorValue();
-    const markdownString = markdown.serialize(editor, data);
-    console.log('markdown string', markdownString);
-  };
-
-  return (
-    <div>
-      <button onClick={deserializeMarkdown}>Deserialize from markdown to content</button>
-      <button onClick={serializeMarkdown}>Serialize from content to markdown</button>
-
-      <YooptaEditor editor={editor} plugins={plugins} />
-    </div>
-  );
-};
+```typescript
+export type I18nYooEditor<YKeys extends string = string> = YooEditor & {
+  // your object of translations
+  translations: Record<YKeys, Record<string, string>>;
+  // current language
+  language: string;
+  // all available languages
+  languages: string[];
+  // default language
+  defaultLanguage: string;
+  // method to change language
+  setLanguage: (lang: string) => void;
+}
 ```
 
-Plain text exports/imports example
-
-```jsx
-import { plainText } from '@yoopta/exports';
-
-const Editor = () => {
-  const editor = useMemo(() => createYooptaEditor(), []);
-
-  // from plain text to @yoopta content
-  const deserializeText = () => {
-    const textString = '# First title';
-    const value = plainText.deserialize(editor, textString);
-
-    editor.setEditorValue(value);
-  };
-
-  // from @yoopta content to plain text string
-  const serializeText = () => {
-    const data = editor.getEditorValue();
-    const textString = plainText.serialize(editor, data);
-    console.log('plain text string', textString);
-  };
-
-  return (
-    <div>
-      <button onClick={deserializeText}>Deserialize from plain text to content</button>
-      <button onClick={serializeText}>Serialize from content to plain text</button>
-
-      <YooptaEditor editor={editor} plugins={plugins} />
-    </div>
-  );
-};
-```
-
-Examples
-
-- Page - [https://yoopta.dev/examples/withExports](https://yoopta.dev/examples/withExports)
-  - Example with HTML - [https://yoopta.dev/examples/withExports/html](https://yoopta.dev/examples/withExports/html)
-  - Example with Markdown - [https://yoopta.dev/examples/withExports/markdown](https://yoopta.dev/examples/withExports/markdown)

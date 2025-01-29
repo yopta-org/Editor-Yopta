@@ -84,6 +84,7 @@ export type YooptaEventsMap = {
   blur: boolean;
   'block:copy': YooptaBlockData;
   'path-change': YooptaPath;
+  'language-change': string;
 };
 
 export type BaseCommands = Record<string, (...args: any[]) => any>;
