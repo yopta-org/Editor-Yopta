@@ -1,7 +1,7 @@
 import { useYooptaEditor } from '@yoopta/editor';
-import {I18nYooEditor} from '../types';
+import { I18nYooEditor } from '../types';
 
- interface UseTranslationReturn {
+interface UseTranslationReturn {
   /**
    * Translates a key into the current language.
    * The key format is `namespace.key`, e.g., `editor.blockOptions.delete`.

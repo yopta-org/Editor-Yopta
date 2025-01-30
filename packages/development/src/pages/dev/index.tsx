@@ -34,7 +34,7 @@ const BasicExample = () => {
     return withTranslations(baseEditor, {
       translations: TRANSLATIONS,
       defaultLanguage: 'en',
-      language: 'ru',
+      language: 'en',
     });
   }, []);
 
