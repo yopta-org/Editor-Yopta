@@ -1,11 +1,5 @@
-import { I18nYooEditor } from '../types';
-import {YooEditor} from '@yoopta/editor';
-
-type TranslationOptions = {
-  language: string;
-  defaultLanguage: string;
-  translations: I18nYooEditor['translations'];
-};
+import { I18nYooEditor, TranslationOptions } from '../types';
+import { YooEditor } from '@yoopta/editor';
 
 function getNestedValue(obj: any, path: string[]): string | undefined {
   return path.reduce((acc, part) => {

@@ -1,5 +1,5 @@
-import { useYooptaEditor } from '@yoopta/editor';
-import { I18nYooEditor } from '../types';
+import { useI18nYooEditor } from '../context/YooptaI18nProvider';
+import { useCallback, useEffect, useState } from 'react';
 
 interface UseTranslationReturn {
   /**
@@ -19,6 +19,11 @@ interface UseTranslationReturn {
   currentLanguage: string;
 
   /**
+   * A list of all supported languages available in the editor.
+   */
+  languages: string[];
+
+  /**
    * Changes the current language to the specified value.
    * Emits the event 'language-change'.
    *
@@ -28,7 +33,23 @@ interface UseTranslationReturn {
 }
 
 export function useTranslation(): UseTranslationReturn {
-  const editor = useYooptaEditor() as I18nYooEditor;
+  const editor = useI18nYooEditor();
+  const [currentLanguage, setCurrentLanguage] = useState(editor.language);
 
-  return { t: editor.getLabelText, currentLanguage: editor.language, setLanguage: editor.setLanguage };
+  const handleLanguageChange = useCallback(
+    (lang: string) => {
+      setCurrentLanguage(lang);
+    },
+    [setCurrentLanguage],
+  );
+
+  useEffect(() => {
+    editor.on('language-change', handleLanguageChange);
+
+    return () => {
+      editor.off('language-change', handleLanguageChange);
+    };
+  }, []);
+
+  return { t: editor.getLabelText, currentLanguage, setLanguage: editor.setLanguage, languages: editor.languages };
 }

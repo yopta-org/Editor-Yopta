@@ -1,4 +1,3 @@
-import { useCallback, useEffect, useState } from 'react';
 import { ParagraphCommands } from '@yoopta/paragraph';
 import { EmbedCommands } from '@yoopta/embed';
 import { ImageCommands } from '@yoopta/image';
@@ -10,7 +9,7 @@ import { AccordionCommands } from '@yoopta/accordion';
 import { TodoListCommands } from '@yoopta/lists';
 import { HeadingOneCommands } from '@yoopta/headings';
 import { Blocks, YooptaPathIndex } from '@yoopta/editor';
-import { I18nYooEditor } from '@yoopta/i18n';
+import { I18nYooEditor, useTranslation } from '@yoopta/i18n';
 
 type Props = {
   editor: I18nYooEditor;
@@ -18,22 +17,7 @@ type Props = {
 };
 
 export const FixedToolbar = ({ editor, DEFAULT_DATA }: Props) => {
-  const [currentLanguage, setCurrentLanguage] = useState<string>(editor.language);
-
-  const handleLanguageChange = useCallback(
-    (lang: string) => {
-      setCurrentLanguage(lang);
-    },
-    [setCurrentLanguage],
-  );
-
-  useEffect(() => {
-    editor.on('language-change', handleLanguageChange);
-
-    return () => {
-      editor.off('language-change', handleLanguageChange);
-    };
-  }, []);
+  const { currentLanguage, setLanguage, languages } = useTranslation();
 
   return (
     <div className="bg-white z-50">
@@ -82,14 +66,14 @@ export const FixedToolbar = ({ editor, DEFAULT_DATA }: Props) => {
         <div className="flex flex-col px-2">
           <span>Languages</span>
           <div className="flex">
-            {editor.languages.map((lang) => {
+            {languages.map((lang) => {
               const isCurrent = lang === currentLanguage;
 
               return (
                 <button
                   key={lang}
                   className={`text-xs cursor-pointer shadow-md border-0 p-2 ${isCurrent ? 'bg-blue-500' : ''}`}
-                  onClick={() => editor.setLanguage(lang)}
+                  onClick={() => setLanguage(lang)}
                 >
                   {lang}
                 </button>
