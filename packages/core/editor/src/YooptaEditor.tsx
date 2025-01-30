@@ -124,14 +124,6 @@ const YooptaEditor = ({
     }
   }, []);
 
-  const onEditorLangChange = useCallback((lang: string) => {
-    console.log('YooptaEditor - language change', lang)
-    setEditorState(prev => ({
-      ...prev,
-      editor: { ...prev.editor, language: lang }
-    }));
-  }, []);
-
   useEffect(() => {
     const changeHandler = (options) => {
       onValueChange(options.value, { operations: options.operations });
@@ -139,12 +131,10 @@ const YooptaEditor = ({
 
     editor.on('change', changeHandler);
     editor.on('path-change', onEditorPathChange);
-    editor.on('language-change', onEditorLangChange);
 
     return () => {
       editor.off('change', changeHandler);
       editor.off('path-change', onEditorPathChange);
-      editor.off('language-change', onEditorLangChange);
     };
   }, [editor, onValueChange]);
 
