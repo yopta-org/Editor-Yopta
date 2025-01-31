@@ -40,4 +40,4 @@ export const DEFAULT_LABEL_TEXT_MAP = {
 };
 
 // [TODO] - add types
-export type LabelKeys = {};
+export type LabelKeys = string;

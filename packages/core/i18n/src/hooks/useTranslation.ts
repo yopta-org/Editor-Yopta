@@ -1,5 +1,6 @@
-import { useI18nYooEditor } from '../context/YooptaI18nProvider';
 import { useCallback, useEffect, useState } from 'react';
+import { useYooptaEditor } from '@yoopta/editor';
+import { I18nYooEditor } from '../types';
 
 interface UseTranslationReturn {
   /**
@@ -33,8 +34,10 @@ interface UseTranslationReturn {
 }
 
 export function useTranslation(): UseTranslationReturn {
-  const editor = useI18nYooEditor();
+  const editor = useYooptaEditor() as I18nYooEditor;
   const [currentLanguage, setCurrentLanguage] = useState(editor.language);
+
+  console.log('useTranslation', { currentLanguage, setLanguage: editor.setLanguage, languages: editor.languages });
 
   const handleLanguageChange = useCallback(
     (lang: string) => {

@@ -25,6 +25,15 @@
       "display": {
         "title": "Вызов",
         "description": "Блок вызова"
+      },
+      "options": {
+        "theme": {
+          "default": "По умолчанию",
+          "warning": "Предупреждение",
+          "success": "Успех",
+          "error": "Опасность",
+          "info": "Информация"
+        }
       }
     },
     "Accordion": {
@@ -73,6 +82,10 @@
       "display": {
         "title": "Таблица",
         "description": "Таблица"
+      },
+      "options": {
+        "toggleHeaderRow": "Переключить строку заголовка",
+        "toggleHeaderColumn": "Переключить столбец заголовка"
       }
     },
     "Code": {

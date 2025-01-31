@@ -17,7 +17,9 @@ type Props = {
 };
 
 export const FixedToolbar = ({ editor, DEFAULT_DATA }: Props) => {
-  const { currentLanguage, setLanguage, languages } = useTranslation();
+  const { currentLanguage, setLanguage, languages = [] } = useTranslation();
+
+  console.log({ currentLanguage, setLanguage, languages });
 
   return (
     <div className="bg-white z-50">

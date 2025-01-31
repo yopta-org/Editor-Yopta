@@ -77,8 +77,6 @@ type Props = {
   onChange?: (value: YooptaContentValue, options: YooptaOnChangeOptions) => void;
   /* Path change handler */
   onPathChange?: (path: YooptaPath) => void;
-  /* Custom translations for the editor. Allows you to override current translations or add a new whole language. */
-  translations?: Translations;
 };
 ```
 

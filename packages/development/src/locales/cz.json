@@ -25,6 +25,15 @@
       "display": {
         "title": "Výzva",
         "description": "Blokové volání"
+      },
+      "options": {
+        "theme": {
+          "default": "Výchozí",
+          "success": "Úspěch",
+          "warning": "Varování",
+          "error": "Nebezpečí",
+          "info": "Informace"
+        }
       }
     },
     "Accordion": {
@@ -73,6 +82,10 @@
       "display": {
         "title": "Tabulka",
         "description": "Tabulka"
+      },
+      "options": {
+        "toggleHeaderRow": "Přepnout řádek záhlaví",
+        "toggleHeaderColumn": "Přepnout sloupec záhlaví"
       }
     },
     "Code": {

@@ -4,9 +4,8 @@ import YooptaEditor, {
   YooptaContentValue,
   YooptaPath,
   createYooptaEditor,
-  buildBlockData,
 } from '@yoopta/editor';
-import { I18nYooEditor, I18nYooEditorProvider, withTranslations } from '@yoopta/i18n';
+import { I18nYooEditor, withTranslations } from '@yoopta/i18n';
 
 import { MARKS } from '@/utils/yoopta/marks';
 import { YOOPTA_PLUGINS } from '@/utils/yoopta/plugins';
@@ -35,15 +34,17 @@ const TRANSLATION_OPTIONS = {
 };
 
 const BasicExample = () => {
-  const editor: I18nYooEditor = useMemo(() => {
+  const editor: I18nYooEditor<keyof typeof TRANSLATIONS> = useMemo(() => {
     const baseEditor = createYooptaEditor();
-    return withTranslations(baseEditor, TRANSLATION_OPTIONS);
+    return withTranslations(baseEditor, {
+      translations: TRANSLATIONS,
+      language: 'es',
+      defaultLanguage: 'es',
+    });
   }, []);
 
   const selectionRef = useRef<HTMLDivElement>(null);
-  const [value, setValue] = useState<YooptaContentValue>({
-    'block-1': buildBlockData({ id: 'block-1' }),
-  });
+  const [value, setValue] = useState<YooptaContentValue>(YOOPTA_DEFAULT_VALUE);
 
   const onChange = (value: YooptaContentValue, options: YooptaOnChangeOptions) => {
     console.log('onChange', value, options);

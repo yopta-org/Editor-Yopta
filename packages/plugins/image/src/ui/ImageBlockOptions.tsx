@@ -153,7 +153,8 @@ const ImageBlockOptions = ({ editor, block, props: imageProps }: Props) => {
           <button type="button" className="yoopta-block-options-button yoo-image-justify-between" onClick={onFit}>
             <span className="yoo-image-flex">
               <RowSpacingIcon width={16} height={16} className="yoo-image-w-4 yoo-image-h-4 yoo-image-mr-2" />
-              Fit
+              {/* Fit */}
+              {editor.getLabelText('plugins.Image.options.fit.contain') || 'Fit'}
             </span>
             {imageProps?.fit === 'contain' && (
               <CheckmarkIcon width={16} height={16} className="yoo-image-w-4 yoo-image-h-4" />
@@ -164,7 +165,8 @@ const ImageBlockOptions = ({ editor, block, props: imageProps }: Props) => {
           <button type="button" className="yoopta-block-options-button yoo-image-justify-between" onClick={onFill}>
             <span className="yoo-image-flex">
               <WidthIcon width={16} height={16} className="yoo-image-w-4 yoo-image-h-4 yoo-image-mr-2" />
-              Fill
+              {/* Fill */}
+              {editor.getLabelText('plugins.Image.options.fit.fill') || 'Fill'}
             </span>
             {imageProps?.fit === 'fill' && (
               <CheckmarkIcon width={16} height={16} className="yoo-image-w-4 yoo-image-h-4" />
@@ -175,7 +177,8 @@ const ImageBlockOptions = ({ editor, block, props: imageProps }: Props) => {
           <button type="button" className="yoopta-block-options-button yoo-image-justify-between" onClick={onCover}>
             <span className="yoo-image-flex">
               <SizeIcon width={16} height={16} className="yoo-image-w-4 yoo-image-h-4 yoo-image-mr-2" />
-              Cover
+              {/* Cover */}
+              {editor.getLabelText('plugins.Image.options.fit.cover') || 'Cover'}
             </span>
             {imageProps?.fit === 'cover' && (
               <CheckmarkIcon width={16} height={16} className="yoo-image-w-4 yoo-image-h-4" />

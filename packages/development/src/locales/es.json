@@ -16,6 +16,15 @@
       "display": {
         "title": "Llamada",
         "description": "Bloque de llamada"
+      },
+      "options": {
+        "theme": {
+          "default": "Por defecto",
+          "success": "Éxito",
+          "warning": "Advertencia",
+          "error": "Peligro",
+          "info": "Información"
+        }
       }
     },
     "Accordion": {
@@ -46,6 +55,13 @@
       "display": {
         "title": "Imagen",
         "description": "Imagen"
+      },
+      "options": {
+        "fit": {
+          "contain": "Contener",
+          "cover": "Cubrir",
+          "fill": "Rellenar"
+        }
       }
     },
     "Video": {
@@ -64,6 +80,10 @@
       "display": {
         "title": "Tabla",
         "description": "Tabla"
+      },
+      "options": {
+        "toggleHeaderRow": "Alternar fila de encabezado",
+        "toggleHeaderColumn": "Alternar columna de encabezado"
       }
     },
     "Code": {

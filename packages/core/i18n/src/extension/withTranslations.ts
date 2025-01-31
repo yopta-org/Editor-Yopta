@@ -1,5 +1,11 @@
-import { I18nYooEditor, TranslationOptions } from '../types';
 import { YooEditor } from '@yoopta/editor';
+import { I18nYooEditor, Translations } from '../types';
+
+type TranslationOptions<K extends string> = {
+  language: K;
+  defaultLanguage: K;
+  translations: Translations<K>;
+};
 
 function getNestedValue(obj: any, path: string[]): string | undefined {
   return path.reduce((acc, part) => {
@@ -10,33 +16,35 @@ function getNestedValue(obj: any, path: string[]): string | undefined {
   }, obj);
 }
 
-export function withTranslations(editor: YooEditor, options: TranslationOptions): I18nYooEditor {
-  const i18nEditor = editor as I18nYooEditor;
+export function withTranslations<K extends string>(
+  editor: YooEditor,
+  options: TranslationOptions<K>,
+): I18nYooEditor<K> {
+  const i18nEditor = editor as I18nYooEditor<K>;
+
   const { translations, defaultLanguage, language } = options;
 
   const { getLabelText } = i18nEditor;
-  const languages = Object.keys(translations);
+  const languageKeys = Object.keys(translations) as K[];
 
-  i18nEditor.getLabelText = (key) => {
+  i18nEditor.getLabelText = (key: string) => {
     const keyParts = key.split('.');
 
-    const currentLangValue = getNestedValue(translations[i18nEditor.language], keyParts);
+    const currentLangValue = getNestedValue(
+      translations[i18nEditor.language] || translations[i18nEditor.defaultLanguage],
+      keyParts,
+    );
+
     if (typeof currentLangValue === 'string') {
       return currentLangValue;
-    }
-
-    const defaultLangValue = getNestedValue(translations[i18nEditor.defaultLanguage], keyParts);
-
-    if (typeof defaultLangValue === 'string') {
-      return defaultLangValue;
     }
 
     return getLabelText(key);
   };
 
-  i18nEditor.languages = languages;
+  i18nEditor.languages = languageKeys;
 
-  i18nEditor.setLanguage = (lang: string) => {
+  i18nEditor.setLanguage = (lang: K) => {
     if (translations[lang]) {
       i18nEditor.language = lang;
       i18nEditor.emit('language-change', lang);
