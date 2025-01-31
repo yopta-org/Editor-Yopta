@@ -8,16 +8,16 @@ import { TableCommands } from '@yoopta/table';
 import { AccordionCommands } from '@yoopta/accordion';
 import { TodoListCommands } from '@yoopta/lists';
 import { HeadingOneCommands } from '@yoopta/headings';
-import { Blocks, YooEditor, YooptaPathIndex } from '@yoopta/editor';
-import { useTranslation } from '@yoopta/i18n';
+import { Blocks, YooptaPathIndex } from '@yoopta/editor';
+import { I18nYooEditor, useTranslation } from '@yoopta/i18n';
 
 type Props = {
-  editor: YooEditor;
+  editor: I18nYooEditor;
   DEFAULT_DATA: any;
 };
 
 export const FixedToolbar = ({ editor, DEFAULT_DATA }: Props) => {
-  const { t } = useTranslation();
+  const { currentLanguage, setLanguage, languages } = useTranslation();
 
   return (
     <div className="bg-white z-50">
@@ -51,7 +51,7 @@ export const FixedToolbar = ({ editor, DEFAULT_DATA }: Props) => {
           className="p-2 text-xs shadow-md border-r hover:bg-[#64748b] hover:text-[#fff]"
         >
           {/* Insert Image */}
-          {t('editor.blockOptions.turnInto')}
+          {editor.getLabelText('editor.blockOptions.turnInto') || 'Turn into'}
         </button>
         <button
           type="button"
@@ -63,20 +63,23 @@ export const FixedToolbar = ({ editor, DEFAULT_DATA }: Props) => {
         >
           Toggle into Blockquote
         </button>
-        <div className="flex">
-          {editor.languages.map((lang) => {
-            const isCurrent = lang === editor.language;
+        <div className="flex flex-col px-2">
+          <span>Languages</span>
+          <div className="flex">
+            {languages.map((lang) => {
+              const isCurrent = lang === currentLanguage;
 
-            return (
-              <button
-                key={lang}
-                className={`text-xs cursor-pointer shadow-md border-0 p-2 ${isCurrent ? 'bg-blue-500' : ''}`}
-                onClick={() => editor.setLanguage(lang)}
-              >
-                {lang}
-              </button>
-            );
-          })}
+              return (
+                <button
+                  key={lang}
+                  className={`text-xs cursor-pointer shadow-md border-0 p-2 ${isCurrent ? 'bg-blue-500' : ''}`}
+                  onClick={() => setLanguage(lang)}
+                >
+                  {lang}
+                </button>
+              );
+            })}
+          </div>
         </div>
         <button
           type="button"

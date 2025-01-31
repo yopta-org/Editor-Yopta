@@ -1,18 +1,17 @@
+import { useMemo, useRef, useState } from 'react';
 import YooptaEditor, {
   YooptaOnChangeOptions,
-  YooEditor,
   YooptaContentValue,
   YooptaPath,
   createYooptaEditor,
   buildBlockData,
 } from '@yoopta/editor';
-import { useMemo, useRef, useState } from 'react';
-import { withTranslations } from '@yoopta/i18n';
+import { I18nYooEditor, I18nYooEditorProvider, withTranslations } from '@yoopta/i18n';
 
-import { MARKS } from '../../utils/yoopta/marks';
-import { YOOPTA_PLUGINS } from '../../utils/yoopta/plugins';
-import { TOOLS } from '../../utils/yoopta/tools';
-import { FixedToolbar } from '../../components/FixedToolbar/FixedToolbar';
+import { MARKS } from '@/utils/yoopta/marks';
+import { YOOPTA_PLUGINS } from '@/utils/yoopta/plugins';
+import { TOOLS } from '@/utils/yoopta/tools';
+import { FixedToolbar } from '@/components/FixedToolbar/FixedToolbar';
 import { YOOPTA_DEFAULT_VALUE } from '@/utils/yoopta/value';
 
 import esTranslations from '@/locales/es.json';
@@ -29,14 +28,16 @@ const TRANSLATIONS = {
   cz: czTranslations,
 };
 
+const TRANSLATION_OPTIONS = {
+  translations: TRANSLATIONS,
+  defaultLanguage: 'en',
+  language: 'en',
+};
+
 const BasicExample = () => {
-  const editor: YooEditor = useMemo(() => {
+  const editor: I18nYooEditor = useMemo(() => {
     const baseEditor = createYooptaEditor();
-    return withTranslations(baseEditor, {
-      translations: TRANSLATIONS,
-      defaultLanguage: 'en',
-      language: 'ru',
-    });
+    return withTranslations(baseEditor, TRANSLATION_OPTIONS);
   }, []);
 
   const selectionRef = useRef<HTMLDivElement>(null);
@@ -54,20 +55,22 @@ const BasicExample = () => {
   return (
     <>
       <div className="px-[100px] max-w-[900px] mx-auto my-10 flex flex-col items-center" ref={selectionRef}>
-        <FixedToolbar editor={editor} DEFAULT_DATA={YOOPTA_DEFAULT_VALUE} />
-        <YooptaEditor
-          editor={editor}
-          plugins={YOOPTA_PLUGINS}
-          selectionBoxRoot={selectionRef}
-          marks={MARKS}
-          tools={TOOLS}
-          style={EDITOR_STYLE}
-          value={value}
-          onChange={onChange}
-          onPathChange={onPathChange}
-          autoFocus={true}
-          readOnly={false}
-        />
+        <I18nYooEditorProvider editor={editor} options={TRANSLATION_OPTIONS}>
+          <FixedToolbar editor={editor} DEFAULT_DATA={YOOPTA_DEFAULT_VALUE} />
+          <YooptaEditor
+            editor={editor}
+            plugins={YOOPTA_PLUGINS}
+            selectionBoxRoot={selectionRef}
+            marks={MARKS}
+            tools={TOOLS}
+            style={EDITOR_STYLE}
+            value={value}
+            onChange={onChange}
+            onPathChange={onPathChange}
+            autoFocus={true}
+            readOnly={false}
+          />
+        </I18nYooEditorProvider>
       </div>
     </>
   );

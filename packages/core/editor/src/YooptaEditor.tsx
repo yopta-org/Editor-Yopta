@@ -71,9 +71,8 @@ const YooptaEditor = ({
   }, [marksProps]);
 
   const plugins = useMemo(() => {
-    return pluginsProps.map((pluginInstance) => {
-      const plugin = pluginInstance.getPlugin as Plugin<Record<string, SlateElement>>;
-      return plugin;
+    return pluginsProps.map((plugin) => {
+      return plugin.getPlugin as Plugin<Record<string, SlateElement>>;
     });
   }, [pluginsProps]);
 
