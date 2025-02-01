@@ -9,7 +9,7 @@ import { AccordionCommands } from '@yoopta/accordion';
 import { TodoListCommands } from '@yoopta/lists';
 import { HeadingOneCommands } from '@yoopta/headings';
 import { Blocks, YooptaPathIndex } from '@yoopta/editor';
-import { I18nYooEditor, useTranslation } from '@yoopta/i18n';
+import { I18nYooEditor } from '@yoopta/i18n';
 
 type Props = {
   editor: I18nYooEditor;
@@ -17,10 +17,6 @@ type Props = {
 };
 
 export const FixedToolbar = ({ editor, DEFAULT_DATA }: Props) => {
-  const { currentLanguage, setLanguage, languages = [] } = useTranslation();
-
-  console.log({ currentLanguage, setLanguage, languages });
-
   return (
     <div className="bg-white z-50">
       <div className="flex justify-center mb-2">
@@ -53,7 +49,7 @@ export const FixedToolbar = ({ editor, DEFAULT_DATA }: Props) => {
           className="p-2 text-xs shadow-md border-r hover:bg-[#64748b] hover:text-[#fff]"
         >
           {/* Insert Image */}
-          {editor.getLabelText('editor.blockOptions.turnInto') || 'Turn into'}
+          {editor.t('editor.blockOptions.turnInto') || 'Turn into'}
         </button>
         <button
           type="button"
@@ -63,19 +59,20 @@ export const FixedToolbar = ({ editor, DEFAULT_DATA }: Props) => {
           }}
           className="p-2 text-xs shadow-md border-r hover:bg-[#64748b] hover:text-[#fff]"
         >
-          Toggle into Blockquote
+          {/* Toggle into Blockquote */}
+          {editor.t('toggle.into.blockquote') || 'Toggle into Blockquote'}
         </button>
         <div className="flex flex-col px-2">
           <span>Languages</span>
           <div className="flex">
-            {languages.map((lang) => {
-              const isCurrent = lang === currentLanguage;
+            {editor.languages.map((lang) => {
+              const isCurrent = lang === editor.language;
 
               return (
                 <button
                   key={lang}
                   className={`text-xs cursor-pointer shadow-md border-0 p-2 ${isCurrent ? 'bg-blue-500' : ''}`}
-                  onClick={() => setLanguage(lang)}
+                  onClick={() => editor.setLanguage(lang)}
                 >
                   {lang}
                 </button>

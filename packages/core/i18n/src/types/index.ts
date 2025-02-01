@@ -54,4 +54,5 @@ export type I18nYooEditor<Keys extends string = string> = YooEditor & {
   defaultLanguage: Keys;
   languages: Keys[];
   setLanguage: (lang: Keys) => void;
+  t: (key: string) => string;
 };

@@ -56,22 +56,20 @@ const BasicExample = () => {
   return (
     <>
       <div className="px-[100px] max-w-[900px] mx-auto my-10 flex flex-col items-center" ref={selectionRef}>
-        <I18nYooEditorProvider editor={editor} options={TRANSLATION_OPTIONS}>
-          <FixedToolbar editor={editor} DEFAULT_DATA={YOOPTA_DEFAULT_VALUE} />
-          <YooptaEditor
-            editor={editor}
-            plugins={YOOPTA_PLUGINS}
-            selectionBoxRoot={selectionRef}
-            marks={MARKS}
-            tools={TOOLS}
-            style={EDITOR_STYLE}
-            value={value}
-            onChange={onChange}
-            onPathChange={onPathChange}
-            autoFocus={true}
-            readOnly={false}
-          />
-        </I18nYooEditorProvider>
+        <FixedToolbar editor={editor} DEFAULT_DATA={YOOPTA_DEFAULT_VALUE} />
+        <YooptaEditor
+          editor={editor}
+          plugins={YOOPTA_PLUGINS}
+          selectionBoxRoot={selectionRef}
+          marks={MARKS}
+          tools={TOOLS}
+          style={EDITOR_STYLE}
+          value={value}
+          onChange={onChange}
+          onPathChange={onPathChange}
+          autoFocus={true}
+          readOnly={false}
+        />
       </div>
     </>
   );

@@ -1,4 +1,9 @@
 {
+  "toggle": {
+    "into": {
+      "blockquote": "Convertir en cita"
+    }
+  },
   "plugins": {
     "Paragraph": {
       "display": {
@@ -57,11 +62,26 @@
         "description": "Imagen"
       },
       "options": {
+        "placeholder": {
+          "tabs": {
+            "upload": ""
+          }
+        },
         "fit": {
           "contain": "Contener",
           "cover": "Cubrir",
           "fill": "Rellenar"
-        }
+        },
+        "alt": {
+          "title": "Texto alternativo",
+          "label": "Texto alternativo",
+          "placeholder": "Editar texto alternativo",
+          "delete": "Eliminar texto alternativo",
+          "save": "Guardar"
+        },
+        "replaceImage": "Reemplazar",
+        "downloadImage": "Download es",
+        "align": "Aligniore"
       }
     },
     "Video": {

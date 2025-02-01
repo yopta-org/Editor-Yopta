@@ -54,6 +54,7 @@ export function withTranslations<K extends string>(
   i18nEditor.translations = translations;
   i18nEditor.defaultLanguage = defaultLanguage;
   i18nEditor.language = language;
+  i18nEditor.t = i18nEditor.getLabelText;
 
   return i18nEditor;
 }
