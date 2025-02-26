@@ -1,9 +1,4 @@
 {
-  "toggle": {
-    "into": {
-      "blockquote": "Convertir en cita"
-    }
-  },
   "plugins": {
     "Paragraph": {
       "display": {
@@ -62,9 +57,19 @@
         "description": "Imagen"
       },
       "options": {
+        "replaceImage": "Reemplazar",
+        "downloadImage": "Descargar",
+        "align": "Aligniore",
         "placeholder": {
-          "tabs": {
-            "upload": ""
+          "title": "Título de la imagen",
+          "loading": "Cargando",
+          "upload": {
+            "label": "Subir imagen"
+          },
+          "external": {
+            "label": "URL de la imagen",
+            "placeholder": "Introduce la URL de la imagen",
+            "button": "Insertar"
           }
         },
         "fit": {
@@ -78,16 +83,36 @@
           "placeholder": "Editar texto alternativo",
           "delete": "Eliminar texto alternativo",
           "save": "Guardar"
-        },
-        "replaceImage": "Reemplazar",
-        "downloadImage": "Download es",
-        "align": "Aligniore"
+        }
       }
     },
     "Video": {
       "display": {
         "title": "Vídeo",
         "description": "Vídeo"
+      },
+      "options": {
+        "replaceVideo": "Reemplazar",
+        "downloadVideo": "Descargar",
+        "addPosterImage": "Añadir imagen de portada",
+        "align": "Aligniore",
+        "fit": {
+          "contain": "Contener",
+          "cover": "Cubrir",
+          "fill": "Rellenar"
+        },
+        "placeholder": {
+          "title": "Título del vídeo",
+          "loading": "Cargando",
+          "upload": {
+            "label": "Subir vídeo"
+          },
+          "external": {
+            "label": "URL del vídeo",
+            "placeholder": "Introduce la URL del vídeo",
+            "button": "Insertar"
+          }
+        }
       }
     },
     "File": {

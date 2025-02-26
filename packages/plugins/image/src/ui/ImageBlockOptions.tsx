@@ -153,7 +153,6 @@ const ImageBlockOptions = ({ editor, block, props: imageProps }: Props) => {
           <button type="button" className="yoopta-block-options-button yoo-image-justify-between" onClick={onFit}>
             <span className="yoo-image-flex">
               <RowSpacingIcon width={16} height={16} className="yoo-image-w-4 yoo-image-h-4 yoo-image-mr-2" />
-              {/* Fit */}
               {editor.getLabelText('plugins.Image.options.fit.contain') || 'Fit'}
             </span>
             {imageProps?.fit === 'contain' && (
@@ -165,7 +164,6 @@ const ImageBlockOptions = ({ editor, block, props: imageProps }: Props) => {
           <button type="button" className="yoopta-block-options-button yoo-image-justify-between" onClick={onFill}>
             <span className="yoo-image-flex">
               <WidthIcon width={16} height={16} className="yoo-image-w-4 yoo-image-h-4 yoo-image-mr-2" />
-              {/* Fill */}
               {editor.getLabelText('plugins.Image.options.fit.fill') || 'Fill'}
             </span>
             {imageProps?.fit === 'fill' && (
@@ -177,7 +175,6 @@ const ImageBlockOptions = ({ editor, block, props: imageProps }: Props) => {
           <button type="button" className="yoopta-block-options-button yoo-image-justify-between" onClick={onCover}>
             <span className="yoo-image-flex">
               <SizeIcon width={16} height={16} className="yoo-image-w-4 yoo-image-h-4 yoo-image-mr-2" />
-              {/* Cover */}
               {editor.getLabelText('plugins.Image.options.fit.cover') || 'Cover'}
             </span>
             {imageProps?.fit === 'cover' && (
@@ -250,7 +247,6 @@ const ImageBlockOptions = ({ editor, block, props: imageProps }: Props) => {
         <BlockOptionsMenuItem>
           <button type="button" className="yoopta-block-options-button" onClick={onDownload}>
             <DownloadIcon width={16} height={16} className="yoo-image-w-4 yoo-image-h-4 yoo-image-mr-2" />
-            {/* Download */}
             {editor.getLabelText('plugins.Image.options.downloadImage') || 'Download'}
           </button>
         </BlockOptionsMenuItem>
