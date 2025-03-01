@@ -94,7 +94,9 @@
       "options": {
         "replaceVideo": "Reemplazar",
         "downloadVideo": "Descargar",
-        "addPosterImage": "Añadir imagen de portada",
+        "addPosterVideo": "Añadir imagen de portada",
+        "replacePosterVideo": "Reemplazar imagen de portada",
+        "openVideo": "Abrir imagen",
         "align": "Aligniore",
         "fit": {
           "contain": "Contener",
@@ -119,6 +121,47 @@
       "display": {
         "title": "Archivo",
         "description": "Archivo para descargar"
+      },
+      "options": {
+        "replaceFile": "Reemplazar",
+        "downloadFile": "Descargar",
+        "openFile": "Abrir archivo",
+        "align": "Aligniore",
+        "placeholder": {
+          "title": "Título del archivo",
+          "loading": "Cargando",
+          "upload": {
+            "label": "Subir archivo"
+          },
+          "external": {
+            "label": "URL del archivo",
+            "placeholder": "Introduce la URL del archivo",
+            "button": "Insertar"
+          }
+        }
+      }
+    },
+    "Embed": {
+      "display": {
+        "title": "Incrustar",
+        "description": "Incrustar"
+      },
+      "options": {
+        "replaceEmbed": "Reemplazar",
+        "openEmbed": "Abrir incrustado",
+        "align": "Aligniore",
+        "placeholder": {
+          "title": "Título del incrustado",
+          "loading": "Cargando",
+          "upload": {
+            "label": "Subir incrustado"
+          },
+          "external": {
+            "label": "URL del incrustado",
+            "placeholder": "Introduce la URL del incrustado",
+            "button": "Insertar"
+          }
+        }
       }
     },
     "Table": {
@@ -128,13 +171,33 @@
       },
       "options": {
         "toggleHeaderRow": "Alternar fila de encabezado",
-        "toggleHeaderColumn": "Alternar columna de encabezado"
+        "toggleHeaderColumn": "Alternar columna de encabezado",
+        "rowOptions": {
+          "insertAbove": "Insertar fila arriba",
+          "insertBelow": "Insertar fila abajo",
+          "moveUp": "Mover fila arriba",
+          "moveDown": "Mover fila abajo",
+          "delete": "Eliminar fila"
+        },
+        "columnOptions": {
+          "insertLeft": "Insertar columna a la izquierda",
+          "insertRight": "Insertar columna a la derecha",
+          "moveLeft": "Mover columna a la izquierda",
+          "moveRight": "Mover columna a la derecha",
+          "delete": "Eliminar columna"
+        }
       }
     },
     "Code": {
       "display": {
         "title": "Código",
         "description": "Bloque de código"
+      },
+      "options": {
+        "language": "Lenguaje",
+        "theme": "Tema",
+        "copyCode": "Copiar código",
+        "copyCodeSuccess": "Código copiado"
       }
     },
     "Divider": {
